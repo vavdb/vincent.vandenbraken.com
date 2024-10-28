@@ -8,12 +8,12 @@
 <body>
     <div class="container">
         <header>
-            <h1>Wellness Massage Center T13</h1>
+            <h1>Wellness Massage Center</h1>
         </header>
         
         <section class="reservation-section">
             <h2>Book Your Appointment</h2>
-            <form class="reservation-form">
+            <form class="reservation-form" onsubmit="redirectToThankYou(event)">
                 <label for="name">Client Name:</label>
                 <input type="text" id="name" name="name" placeholder="Enter your name" value="Leydi" readonly>
 
@@ -36,5 +36,12 @@
             <p>&copy; 2024 Wellness Massage Center</p>
         </footer>
     </div>
+
+    <script>
+        function redirectToThankYou(event) {
+            event.preventDefault();
+            window.location.href = 'thank-you.html';
+        }
+    </script>
 </body>
 </html>

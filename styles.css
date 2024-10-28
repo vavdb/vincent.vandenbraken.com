@@ -11,11 +11,12 @@ body {
 .container {
     width: 50%;
     margin: 0 auto;
+    margin-top: 40px;
     padding: 20px;
     background: #fff;
     border-radius: 15px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    background-image: url('peony-flower-bg.png'); /* Placeholder for background image */
+    background-image: url('peony-flower-bg.jpeg'); /* Placeholder for background image */
     background-repeat: no-repeat;
     background-position: right bottom;
 }
