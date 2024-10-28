@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wellness Massage Reservation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Wellness Massage Center T13</h1>
+        </header>
+        
+        <section class="reservation-section">
+            <h2>Book Your Appointment</h2>
+            <form class="reservation-form">
+                <label for="name">Client Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" value="Leydi" readonly>
+
+                <label for="masseur">Select Masseur:</label>
+                <select id="masseur" name="masseur" disabled>
+                    <option value="vincent" selected>Vincent</option>
+                </select>
+
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" value="2024-10-28" readonly>
+
+                <label for="time">Time:</label>
+                <input type="time" id="time" name="time" value="22:00" readonly>
+
+                <button type="submit" class="book-btn">Confirm Reservation</button>
+            </form>
+        </section>
+
+        <footer>
+            <p>&copy; 2024 Wellness Massage Center</p>
+        </footer>
+    </div>
+</body>
+</html>

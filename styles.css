@@ -1,0 +1,75 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4eef8;
+    color: #5e4b5e;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    background-image: url('peony-flower-bg.png'); /* Placeholder for background image */
+    background-repeat: no-repeat;
+    background-position: right bottom;
+}
+
+header {
+    text-align: center;
+    padding: 10px 0;
+}
+
+h1 {
+    color: #885588;
+    font-size: 36px;
+}
+
+h2 {
+    color: #6a4575;
+}
+
+.reservation-section {
+    padding: 20px 0;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #c8a2c8;
+    border-radius: 5px;
+    background-color: #f9f0f9;
+}
+
+.book-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #c8a2c8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.book-btn:hover {
+    background-color: #a06ba0;
+}
+
+footer {
+    text-align: center;
+    padding: 15px 0;
+    font-size: 14px;
+    color: #a06ba0;
+}
