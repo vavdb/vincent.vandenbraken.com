@@ -304,6 +304,13 @@ section { margin-top: 36px; }
   margin-bottom: 12px;
 }
 
+.cluster--orange {
+  border-left-color: var(--v-orange);
+  background: linear-gradient(90deg, rgba(255, 145, 0, 0.06), transparent 70%);
+}
+
+.cluster--orange .cluster-note { color: var(--v-orange); }
+
 /* SIMPLE LIST */
 .simple-list {
   list-style: none;
@@ -363,6 +370,8 @@ section { margin-top: 36px; }
   .role__bullets li::before, .simple-list li::before { color: #00C853 !important; }
   .cluster { border-color: #7C4DFF !important; background: #faf8ff !important; }
   .cluster-note { color: #7C4DFF !important; }
+  .cluster--orange { border-color: #FF9100 !important; background: #fff8eb !important; }
+  .cluster--orange .cluster-note { color: #FF9100 !important; }
   section { page-break-inside: avoid; }
   .role { page-break-inside: avoid; }
 }
@@ -499,51 +508,55 @@ section { margin-top: 36px; }
     </ul>
   </article>
 
-  <article class="role">
-    <div class="role__header">
-      <div>
-        <span class="role__title">Technical Team Lead</span> ·
-        <span class="role__company">Belastingdienst (via Quintor)</span>
-      </div>
-      <span class="role__period">mei 2018 – mrt 2019</span>
-    </div>
-    <div class="role__stack">Stack: .NET Core · CI/CD · Test Automation</div>
-    <ul class="role__bullets">
-      <li>Lead technical architect na initiële dashboard-opdracht.</li>
-      <li>ORM, structured logging, automated testing, automated deployment.</li>
-      <li>Testautomatisering opgezet ter vervanging handmatige regressie.</li>
-    </ul>
-  </article>
+  <div class="cluster cluster--orange">
+    <p class="cluster-note">// CLUSTER · DETACHERING VIA QUINTOR — drie opdrachten 2017–2019, eigen klant en domein per opdracht.</p>
 
-  <article class="role">
-    <div class="role__header">
-      <div>
-        <span class="role__title">Full Stack .NET Developer</span> ·
-        <span class="role__company">Rabobank (via Quintor)</span>
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Technical Team Lead</span> ·
+          <span class="role__company">Belastingdienst</span>
+        </div>
+        <span class="role__period">mei 2018 – mrt 2019</span>
       </div>
-      <span class="role__period">sep 2017 – apr 2018</span>
-    </div>
-    <div class="role__stack">Stack: .NET MVC · Analysis Services · CI/CD</div>
-    <ul class="role__bullets">
-      <li>Project Stuurset Financieel herbouwd; database vervangen door cube.</li>
-      <li>Pull request peer review ingevoerd als procesverbetering.</li>
-    </ul>
-  </article>
+      <div class="role__stack">Stack: .NET Core · CI/CD · Test Automation</div>
+      <ul class="role__bullets">
+        <li>Lead technical architect na initiële dashboard-opdracht.</li>
+        <li>ORM, structured logging, automated testing, automated deployment.</li>
+        <li>Testautomatisering opgezet ter vervanging handmatige regressie.</li>
+      </ul>
+    </article>
 
-  <article class="role">
-    <div class="role__header">
-      <div>
-        <span class="role__title">Frontend Developer</span> ·
-        <span class="role__company">Evidos (via Quintor)</span>
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Full Stack .NET Developer</span> ·
+          <span class="role__company">Rabobank</span>
+        </div>
+        <span class="role__period">sep 2017 – apr 2018</span>
       </div>
-      <span class="role__period">jun 2017 – aug 2017</span>
-    </div>
-    <div class="role__stack">Stack: ASP.NET Core MVC · TypeScript · OAuth/OIDC</div>
-    <ul class="role__bullets">
-      <li>HTML5 canvas handtekening-positionering, integratie bestaande API.</li>
-      <li>Authenticatie via OpenID Connect en OAuth.</li>
-    </ul>
-  </article>
+      <div class="role__stack">Stack: .NET MVC · Analysis Services · CI/CD</div>
+      <ul class="role__bullets">
+        <li>Project Stuurset Financieel herbouwd; database vervangen door cube.</li>
+        <li>Pull request peer review ingevoerd als procesverbetering.</li>
+      </ul>
+    </article>
+
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Frontend Developer</span> ·
+          <span class="role__company">Evidos</span>
+        </div>
+        <span class="role__period">jun 2017 – aug 2017</span>
+      </div>
+      <div class="role__stack">Stack: ASP.NET Core MVC · TypeScript · OAuth/OIDC</div>
+      <ul class="role__bullets">
+        <li>HTML5 canvas handtekening-positionering, integratie bestaande API.</li>
+        <li>Authenticatie via OpenID Connect en OAuth.</li>
+      </ul>
+    </article>
+  </div>
 
   <article class="role">
     <div class="role__header">
