@@ -282,17 +282,26 @@ section { margin-top: 36px; }
   line-height: 1.5;
 }
 
-/* CLUSTER NOTE */
+/* CLUSTER */
+.cluster {
+  border-left: 2px solid var(--v-purple);
+  padding: 14px 0 4px 16px;
+  margin-bottom: 12px;
+  background: linear-gradient(90deg, rgba(179, 136, 255, 0.06), transparent 70%);
+  border-radius: 0 8px 8px 0;
+}
+
+.cluster .role:last-child {
+  margin-bottom: 0;
+}
+
 .cluster-note {
   font-family: var(--font-primary);
   font-size: 11px;
+  font-weight: 600;
   color: var(--v-purple);
-  letter-spacing: 0.3px;
-  padding: 10px 14px;
+  letter-spacing: 0.5px;
   margin-bottom: 12px;
-  border-left: 2px solid var(--v-purple);
-  background: rgba(179, 136, 255, 0.06);
-  border-radius: 4px;
 }
 
 /* SIMPLE LIST */
@@ -352,7 +361,8 @@ section { margin-top: 36px; }
   .stat__num--orange { color: #FF9100 !important; }
   .stat__num--purple { color: #7C4DFF !important; }
   .role__bullets li::before, .simple-list li::before { color: #00C853 !important; }
-  .cluster-note { color: #7C4DFF !important; background: #f8f8f8 !important; border-color: #7C4DFF !important; }
+  .cluster { border-color: #7C4DFF !important; background: #faf8ff !important; }
+  .cluster-note { color: #7C4DFF !important; }
   section { page-break-inside: avoid; }
   .role { page-break-inside: avoid; }
 }
@@ -405,57 +415,59 @@ section { margin-top: 36px; }
 <section>
   <div class="section-label section-label--green">// WERKERVARING</div>
 
-  <p class="cluster-note">// CLUSTER · LIFE-SCIENCES HOLDING — drie volgende rollen: zusterorganisaties onder één holding, elk eigen management, domein en stakeholders.</p>
+  <div class="cluster">
+    <p class="cluster-note">// CLUSTER · LIFE-SCIENCES HOLDING — drie zusterorganisaties onder één holding, elk eigen management, domein en stakeholders.</p>
 
-  <article class="role">
-    <div class="role__header">
-      <div>
-        <span class="role__title">Technical Lead</span> ·
-        <span class="role__company">SkinConsult</span>
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Technical Lead</span> ·
+          <span class="role__company">SkinConsult</span>
+        </div>
+        <span class="role__period">dec 2021 – aug 2026</span>
       </div>
-      <span class="role__period">dec 2021 – aug 2026</span>
-    </div>
-    <div class="role__stack">Stack: .NET · Azure · Blazor · AI-agent workflows · Team leadership</div>
-    <ul class="role__bullets">
-      <li>Technische eindverantwoordelijke voor cosmetovigilance SaaS-platform (EU-regulatoire compliance).</li>
-      <li>Modernisering legacy tool naar modulair AI-enabled platform; phased modernization zonder productie-onderbreking.</li>
-      <li>Remote team leadership; code reviews, pair programming, async-first workflow.</li>
-      <li>Uitvoerige post-merge code review extern team (offshore handover) over security, UI-compliance, raw SQL en migraties; gestructureerde severity-classificatie en remediation-plan.</li>
-    </ul>
-  </article>
+      <div class="role__stack">Stack: .NET · Azure · Blazor · AI-agent workflows · Team leadership</div>
+      <ul class="role__bullets">
+        <li>Technische eindverantwoordelijke voor cosmetovigilance SaaS-platform (EU-regulatoire compliance).</li>
+        <li>Modernisering legacy tool naar modulair AI-enabled platform; phased modernization zonder productie-onderbreking.</li>
+        <li>Remote team leadership; code reviews, pair programming, async-first workflow.</li>
+        <li>Uitvoerige post-merge code review extern team (offshore handover) over security, UI-compliance, raw SQL en migraties; gestructureerde severity-classificatie en remediation-plan.</li>
+      </ul>
+    </article>
 
-  <article class="role">
-    <div class="role__header">
-      <div>
-        <span class="role__title">Technical Consultant</span> ·
-        <span class="role__company">Allergie Centra Nederland</span>
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Technical Consultant</span> ·
+          <span class="role__company">Allergie Centra Nederland</span>
+        </div>
+        <span class="role__period">jun 2023 – aug 2026</span>
       </div>
-      <span class="role__period">jun 2023 – aug 2026</span>
-    </div>
-    <div class="role__stack">Stack: Azure · .NET · Integration Services · Cloudflare · GitHub Actions · Azure DevOps</div>
-    <ul class="role__bullets">
-      <li>Technische consultancy op Azure-systemen, parallel aan SkinConsult.</li>
-      <li>Custom integraties en automatisering: API's, datapijplijnen, document-workflows, externe-data scrapers.</li>
-      <li>Edge + DevOps end-to-end: Cloudflare, GitHub Actions, Azure DevOps pipelines, infrastructure-as-code.</li>
-      <li>Security- en privacy-vraagstukken: data-grenzen, autorisatie, audit-trail in patient-data-context.</li>
-    </ul>
-  </article>
+      <div class="role__stack">Stack: Azure · .NET · Integration Services · Cloudflare · GitHub Actions · Azure DevOps</div>
+      <ul class="role__bullets">
+        <li>Technische consultancy op Azure-systemen, parallel aan SkinConsult.</li>
+        <li>Custom integraties en automatisering: API's, datapijplijnen, document-workflows, externe-data scrapers.</li>
+        <li>Edge + DevOps end-to-end: Cloudflare, GitHub Actions, Azure DevOps pipelines, infrastructure-as-code.</li>
+        <li>Security- en privacy-vraagstukken: data-grenzen, autorisatie, audit-trail in patient-data-context.</li>
+      </ul>
+    </article>
 
-  <article class="role">
-    <div class="role__header">
-      <div>
-        <span class="role__title">Technical Lead</span> ·
-        <span class="role__company">Dermatologisch Centrum Utrecht</span>
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Technical Lead</span> ·
+          <span class="role__company">Dermatologisch Centrum Utrecht</span>
+        </div>
+        <span class="role__period">dec 2021 – mei 2023</span>
       </div>
-      <span class="role__period">dec 2021 – mei 2023</span>
-    </div>
-    <div class="role__stack">Stack: .NET · Azure · Blazor · Cloudflare · GitHub Actions · Azure DevOps · Cloud-native (remote)</div>
-    <ul class="role__bullets">
-      <li>Cloud-native back-office en domeinspecifieke workflow-API's (background workers, async event-pipelines).</li>
-      <li>DevOps end-to-end: Cloudflare-edge, Azure infra, GitHub-based releases, Azure DevOps build/deploy pipelines.</li>
-      <li>Parallelle rol met SkinConsult.</li>
-    </ul>
-  </article>
+      <div class="role__stack">Stack: .NET · Azure · Blazor · Cloudflare · GitHub Actions · Azure DevOps · Cloud-native (remote)</div>
+      <ul class="role__bullets">
+        <li>Cloud-native back-office en domeinspecifieke workflow-API's (background workers, async event-pipelines).</li>
+        <li>DevOps end-to-end: Cloudflare-edge, Azure infra, GitHub-based releases, Azure DevOps build/deploy pipelines.</li>
+        <li>Parallelle rol met SkinConsult.</li>
+      </ul>
+    </article>
+  </div>
 
   <article class="role">
     <div class="role__header">
