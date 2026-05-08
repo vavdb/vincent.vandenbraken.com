@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>CV — Vincent van den Braken</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --v-bg-deep:       #080B0A;
+  --v-bg-surface:    #0D1210;
+  --v-bg-elevated:   #141C18;
+  --v-border:        #1E2D25;
+  --v-border-glow:   #00E67620;
+  --v-green-primary: #00E676;
+  --v-green-dim:     #00C853;
+  --v-green-glow:    #00E67633;
+  --v-orange:        #FF9100;
+  --v-orange-dim:    #FF6D00;
+  --v-purple:        #B388FF;
+  --v-text-primary:  #F0FFF4;
+  --v-text-secondary:#A8B5AD;
+  --v-text-muted:    #5A6B60;
+  --font-primary:    'JetBrains Mono', monospace;
+  --font-secondary:  'Geist', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background-color: var(--v-bg-deep);
+  background-image:
+    linear-gradient(rgba(0, 230, 118, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 230, 118, 0.04) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-attachment: fixed;
+  color: var(--v-text-primary);
+  font-family: var(--font-secondary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 56px 64px;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+  padding-bottom: 28px;
+  border-bottom: 2px solid;
+  border-image: linear-gradient(90deg, var(--v-green-primary), var(--v-orange) 50%, var(--v-purple)) 1;
+}
+
+.header__name {
+  font-family: var(--font-primary);
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--v-text-primary);
+}
+
+.header__title {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--v-green-primary);
+  margin-top: 6px;
+  letter-spacing: 0.5px;
+}
+
+.header__contact {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  color: var(--v-text-muted);
+  text-align: right;
+  line-height: 1.8;
+  letter-spacing: 0.3px;
+}
+
+.header__contact a { color: var(--v-text-secondary); text-decoration: none; }
+.header__contact a:hover { color: var(--v-green-primary); }
+
+.availability {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--v-green-primary);
+  background-color: var(--v-green-glow);
+  border: 1px solid var(--v-border-glow);
+  border-radius: 999px;
+  padding: 4px 12px;
+  margin-top: 14px;
+}
+
+.availability__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--v-green-primary);
+  box-shadow: 0 0 4px var(--v-green-primary);
+}
+
+/* SECTIONS */
+section { margin-top: 36px; }
+
+.section-label {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--v-purple);
+  margin-bottom: 10px;
+}
+
+.section-label--green { color: var(--v-green-primary); }
+.section-label--orange { color: var(--v-orange); }
+.section-label--purple { color: var(--v-purple); }
+
+.section__body p {
+  font-size: 14px;
+  color: var(--v-text-secondary);
+  line-height: 1.7;
+  margin-bottom: 8px;
+}
+
+/* STATS */
+.stats {
+  display: flex;
+  border: 1px solid var(--v-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--v-bg-surface);
+  margin-top: 12px;
+}
+
+.stat {
+  flex: 1;
+  padding: 18px 12px;
+  text-align: center;
+  border-right: 1px solid var(--v-border);
+}
+.stat:last-child { border-right: none; }
+
+.stat__num {
+  font-family: var(--font-primary);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.stat__num--green { color: var(--v-green-primary); }
+.stat__num--orange { color: var(--v-orange); }
+.stat__num--purple { color: var(--v-purple); }
+.stat__num--primary { color: var(--v-text-primary); font-size: 22px; }
+
+.stat__label {
+  font-family: var(--font-primary);
+  font-size: 10px;
+  color: var(--v-text-muted);
+  letter-spacing: 0.5px;
+  display: block;
+  margin-top: 6px;
+}
+
+.stat__sub {
+  font-family: var(--font-secondary);
+  font-size: 10px;
+  color: var(--v-text-muted);
+  display: block;
+  margin-top: 2px;
+}
+
+/* ROLES */
+.role {
+  background-color: var(--v-bg-elevated);
+  border: 1px solid var(--v-border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+}
+
+.role__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.role__title {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--v-text-primary);
+}
+
+.role__company {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--v-green-primary);
+}
+
+.role__period {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  color: var(--v-text-muted);
+  letter-spacing: 0.3px;
+}
+
+.role__stack {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  color: var(--v-text-muted);
+  letter-spacing: 0.3px;
+  margin-bottom: 8px;
+}
+
+.role__bullets {
+  list-style: none;
+  padding: 0;
+}
+
+.role__bullets li {
+  font-size: 13px;
+  color: var(--v-text-secondary);
+  line-height: 1.6;
+  padding-left: 14px;
+  position: relative;
+  margin-bottom: 4px;
+}
+
+.role__bullets li::before {
+  content: '·';
+  color: var(--v-green-primary);
+  position: absolute;
+  left: 4px;
+  font-weight: 700;
+}
+
+/* SKILLS GRID */
+.skills {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.skill {
+  background-color: var(--v-bg-elevated);
+  border: 1px solid var(--v-border);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+
+.skill__cat {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--v-orange);
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.skill__list {
+  font-family: var(--font-secondary);
+  font-size: 12px;
+  color: var(--v-text-secondary);
+  line-height: 1.5;
+}
+
+/* SIMPLE LIST */
+.simple-list {
+  list-style: none;
+  padding: 0;
+}
+.simple-list li {
+  font-size: 13px;
+  color: var(--v-text-secondary);
+  line-height: 1.7;
+  padding-left: 14px;
+  position: relative;
+}
+.simple-list li::before {
+  content: '·';
+  color: var(--v-purple);
+  position: absolute;
+  left: 4px;
+  font-weight: 700;
+}
+
+/* FOOTER MARK */
+.footer-mark {
+  margin-top: 48px;
+  text-align: center;
+  font-family: var(--font-primary);
+  font-size: 10px;
+  color: var(--v-text-muted);
+  letter-spacing: 1px;
+}
+
+/* PRINT — invert to light theme, A4 */
+@media print {
+  body { background: white !important; color: black !important; }
+  body::before, body::after { display: none !important; }
+  .page {
+    padding: 28px 36px;
+    max-width: 100%;
+  }
+  .header { border-bottom: 1px solid #1e22aa; }
+  .header__name { color: #101820 !important; }
+  .header__title { color: #00C853 !important; }
+  .header__contact { color: #666 !important; }
+  .header__contact a { color: #1e22aa !important; }
+  .availability { border-color: #00C853 !important; background: #00E67611 !important; color: #00C853 !important; }
+  .section-label { color: #B388FF !important; }
+  .section-label--green { color: #00C853 !important; }
+  .section-label--orange { color: #FF9100 !important; }
+  .role, .skill, .stats { background: #f8f8f8 !important; border-color: #ddd !important; }
+  .role__title, .stat__num--primary { color: #101820 !important; }
+  .role__company { color: #00C853 !important; }
+  .role__period, .role__stack, .stat__label, .stat__sub { color: #666 !important; }
+  .role__bullets li, .simple-list li, .skill__list, .section__body p { color: #333 !important; }
+  .skill__cat { color: #FF9100 !important; }
+  .stat__num--green { color: #00C853 !important; }
+  .stat__num--orange { color: #FF9100 !important; }
+  .stat__num--purple { color: #7C4DFF !important; }
+  .role__bullets li::before, .simple-list li::before { color: #00C853 !important; }
+  section { page-break-inside: avoid; }
+  .role { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<header class="header">
+  <div>
+    <h1 class="header__name">VINCENT VAN DEN BRAKEN</h1>
+    <div class="header__title">Technical Consultant · Future-check operator · .NET / Azure / AI-agent workflows</div>
+    <div class="availability">
+      <span class="availability__dot"></span>
+      Beschikbaar 1 augustus 2026, eerder mogelijk
+    </div>
+  </div>
+  <div class="header__contact">
+    Urmond · 18-02-1980<br>
+    <a href="mailto:vincent@vandenbraken.com">vincent@vandenbraken.com</a><br>
+    +31 (0)6 129 604 36<br>
+    <a href="https://linkedin.com/in/vincent-van-den-braken">LinkedIn</a> ·
+    <a href="https://github.com/vavdb">GitHub</a> ·
+    <a href="https://vincability.com">vincability.com</a>
+  </div>
+</header>
+
+<!-- PROFIEL -->
+<section>
+  <div class="section-label section-label--green">// PROFIEL</div>
+  <div class="section__body">
+    <p>30 jaar softwareontwikkeling, laatste 10 jaar in lead-rol. Sectoren: life sciences SaaS (SkinConsult, DCU, Allergie Centra Nederland — zusterorganisaties onder één holding, maar elk met eigen management, domein en stakeholders: B2B regulatoire compliance, patient data, en zorgverleners-workflow), enterprise finance (Rabobank), overheid (Belastingdienst), mid-market B2B. Specialisatie .NET, Azure, DevOps. Sinds 2024 AI-agent workflows in development.</p>
+    <p><strong style="color: var(--v-text-primary);">Privacy-first = security-first.</strong> In gereguleerde domeinen (medisch, financieel, overheid) is de juiste autorisatie-, audit- en data-grens-discipline een ontwerpbeslissing op dag één, geen post-merge fix. AI-output mist dit standaard — tenant-filters, ownership-checks, audit-velden en data-minimalisatie zijn precies de laag waar gegenereerde code stilzwijgend faalt. De operator-discipline achter elke feature is om dit als eerste te lezen, niet als laatste.</p>
+    <p>Detacheringservaring 2016–2019 via Quintor (Belastingdienst, Rabobank, Evidos).</p>
+    <p>Twee case studies online op <a href="https://vincability.com" style="color: var(--v-green-primary);">vincability.com</a> documenteren de operator-discipline achter de cijfers hieronder; volledige reviewdocumenten op aanvraag.</p>
+  </div>
+</section>
+
+<!-- AI-NATIVE -->
+<section>
+  <div class="section-label section-label--orange">// AI-NATIVE DELIVERY · Q1 2026</div>
+  <div class="section__body">
+    <p>AI-agent workflows ingezet. 11× YoY commits bij gelijke teamomvang. Reviews + machine-readable styleguides als kader.</p>
+  </div>
+  <div class="stats">
+    <div class="stat">
+      <span class="stat__num stat__num--green">11×</span>
+      <span class="stat__label">Output multiplier</span>
+      <span class="stat__sub">YoY commits, zelfde team</span>
+    </div>
+    <div class="stat">
+      <span class="stat__num stat__num--orange">4</span>
+      <span class="stat__label">Parallel tracks</span>
+      <span class="stat__sub">Van 1 naar 4</span>
+    </div>
+    <div class="stat">
+      <span class="stat__num stat__num--purple">319k</span>
+      <span class="stat__label">LOC tech debt</span>
+      <span class="stat__sub">Verwijderd in 20 wk</span>
+    </div>
+    <div class="stat">
+      <span class="stat__num stat__num--primary">8 dagen</span>
+      <span class="stat__label">Eigen delivery</span>
+      <span class="stat__sub">vs 6–8 wk team-estimate</span>
+    </div>
+  </div>
+</section>
+
+<!-- WERKERVARING -->
+<section>
+  <div class="section-label section-label--green">// WERKERVARING</div>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Technical Lead</span> ·
+        <span class="role__company">SkinConsult</span>
+      </div>
+      <span class="role__period">dec 2021 – aug 2026</span>
+    </div>
+    <div class="role__stack">Stack: .NET · Azure · Blazor · AI-agent workflows · Team leadership</div>
+    <ul class="role__bullets">
+      <li>Technische eindverantwoordelijke voor cosmetovigilance SaaS-platform (EU-regulatoire compliance).</li>
+      <li>Modernisering legacy tool naar modulair AI-enabled platform; phased modernization zonder productie-onderbreking.</li>
+      <li>Remote team leadership; code reviews, pair programming, async-first workflow.</li>
+      <li>Uitvoerige post-merge code review extern team (offshore handover) over security, UI-compliance, raw SQL en migraties; gestructureerde severity-classificatie en remediation-plan.</li>
+    </ul>
+  </article>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Technical Consultant</span> ·
+        <span class="role__company">Allergie Centra Nederland</span>
+      </div>
+      <span class="role__period">jun 2023 – aug 2026</span>
+    </div>
+    <div class="role__stack">Stack: Azure · .NET · Integration Services · Cloudflare · GitHub Actions · Azure DevOps</div>
+    <ul class="role__bullets">
+      <li>Technische consultancy op Azure-systemen, parallel aan SkinConsult.</li>
+      <li>Custom integraties en automatisering: API's, datapijplijnen, document-workflows, externe-data scrapers.</li>
+      <li>Edge + DevOps end-to-end: Cloudflare, GitHub Actions, Azure DevOps pipelines, infrastructure-as-code.</li>
+      <li>Security- en privacy-vraagstukken: data-grenzen, autorisatie, audit-trail in patient-data-context.</li>
+    </ul>
+  </article>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Technical Lead</span> ·
+        <span class="role__company">Dermatologisch Centrum Utrecht</span>
+      </div>
+      <span class="role__period">dec 2021 – mei 2023</span>
+    </div>
+    <div class="role__stack">Stack: .NET · Azure · Blazor · Cloudflare · GitHub Actions · Azure DevOps · Cloud-native (remote)</div>
+    <ul class="role__bullets">
+      <li>Cloud-native back-office en domeinspecifieke workflow-API's (background workers, async event-pipelines).</li>
+      <li>DevOps end-to-end: Cloudflare-edge, Azure infra, GitHub-based releases, Azure DevOps build/deploy pipelines.</li>
+      <li>Parallelle rol met SkinConsult.</li>
+    </ul>
+  </article>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Consultant — Azure Integration Services</span> ·
+        <span class="role__company">Rensa Family Company</span>
+      </div>
+      <span class="role__period">mei 2021 – nov 2021</span>
+    </div>
+    <div class="role__stack">Stack: Azure Functions · Service Bus · DevOps</div>
+    <ul class="role__bullets">
+      <li>Integratie via Azure Functions, Service Bus, Integration Services.</li>
+      <li>DevOps-pipelines en deploymentstrategie.</li>
+    </ul>
+  </article>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Project Development Manager</span> ·
+        <span class="role__company">True People BV, Amersfoort</span>
+      </div>
+      <span class="role__period">apr 2019 – nov 2021</span>
+    </div>
+    <div class="role__stack">Stack: Umbraco · .NET · Scrum</div>
+    <ul class="role__bullets">
+      <li>Management op Umbraco-projecten (SidK, ICOON, ADAPT).</li>
+      <li>Operational management, scrum, team leadership.</li>
+    </ul>
+  </article>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Technical Team Lead</span> ·
+        <span class="role__company">Belastingdienst (via Quintor)</span>
+      </div>
+      <span class="role__period">mei 2018 – mrt 2019</span>
+    </div>
+    <div class="role__stack">Stack: .NET Core · CI/CD · Test Automation</div>
+    <ul class="role__bullets">
+      <li>Lead technical architect na initiële dashboard-opdracht.</li>
+      <li>ORM, structured logging, automated testing, automated deployment.</li>
+      <li>Testautomatisering opgezet ter vervanging handmatige regressie.</li>
+    </ul>
+  </article>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Full Stack .NET Developer</span> ·
+        <span class="role__company">Rabobank (via Quintor)</span>
+      </div>
+      <span class="role__period">sep 2017 – apr 2018</span>
+    </div>
+    <div class="role__stack">Stack: .NET MVC · Analysis Services · CI/CD</div>
+    <ul class="role__bullets">
+      <li>Project Stuurset Financieel herbouwd; database vervangen door cube.</li>
+      <li>Pull request peer review ingevoerd als procesverbetering.</li>
+    </ul>
+  </article>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Frontend Developer</span> ·
+        <span class="role__company">Evidos (via Quintor)</span>
+      </div>
+      <span class="role__period">jun 2017 – aug 2017</span>
+    </div>
+    <div class="role__stack">Stack: ASP.NET Core MVC · TypeScript · OAuth/OIDC</div>
+    <ul class="role__bullets">
+      <li>HTML5 canvas handtekening-positionering, integratie bestaande API.</li>
+      <li>Authenticatie via OpenID Connect en OAuth.</li>
+    </ul>
+  </article>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Senior Developer & Team Leader</span> ·
+        <span class="role__company">Deltec Software BV, Amersfoort</span>
+      </div>
+      <span class="role__period">jan 2010 – mei 2017</span>
+    </div>
+    <div class="role__stack">Stack: C# · CMS (Umbraco, Orchard, Novulo) · CI/CD</div>
+    <ul class="role__bullets">
+      <li>B2B-platformen voor GroupAuto Nederland, Quinton Hazell, Motor-Parts.</li>
+      <li>Continuous Integration opgezet (Git, Jenkins, MSBuild).</li>
+      <li>Business consultancy 2015–2016 (Novulo): PIN-apparaat-integratie cloud kassa, migratie Windows → cloud.</li>
+    </ul>
+  </article>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Developer → Senior Developer</span> ·
+        <span class="role__company">Deltec Software & RoutIT (contract)</span>
+      </div>
+      <span class="role__period">sep 1996 – jan 2010</span>
+    </div>
+    <div class="role__stack">Foundation in enterprise software delivery</div>
+    <ul class="role__bullets">
+      <li>13 jaar groei van trainee tot senior. Transitie legacy → vroege B2B web-platforms.</li>
+      <li>Oprichting RoutIT-klantportaal (1999–2001, contract). Eerste klantsupport-, ticketing- en monitoring-systemen.</li>
+    </ul>
+  </article>
+</section>
+
+<!-- VAARDIGHEDEN -->
+<section>
+  <div class="section-label section-label--orange">// VAARDIGHEDEN</div>
+  <div class="skills">
+    <div class="skill">
+      <div class="skill__cat">Microsoft Stack</div>
+      <div class="skill__list">.NET / ASP.NET Core, Blazor (Server + WASM), Entity Framework Core, MAUI, MudBlazor, SignalR</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Andere frameworks</div>
+      <div class="skill__list">Vue, React, Angular, Umbraco</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Azure</div>
+      <div class="skill__list">App Services, Functions, Service Bus, Integration Services, Application Insights, Key Vault, Blob Storage, Aspire, OpenTelemetry</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">DevOps &amp; Edge</div>
+      <div class="skill__list">Azure DevOps, GitHub Actions, Docker, Cloudflare (edge / DNS / Workers), infrastructure-as-code</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Talen</div>
+      <div class="skill__list">C#, TypeScript, JavaScript, Python, SQL, HTML/CSS</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Data</div>
+      <div class="skill__list">PowerBI, R, QlikView, Analysis Services</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Architectuur</div>
+      <div class="skill__list">AI-agent workflows, multi-agent systemen, SaaS-platformen, integratielagen, datapijplijnen</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Overig</div>
+      <div class="skill__list">Linux, Raspberry Pi</div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICERINGEN -->
+<section>
+  <div class="section-label section-label--purple">// CERTIFICERINGEN</div>
+  <ul class="simple-list">
+    <li>AWS Fundamentals: Going Cloud-Native — Coursera (2020)</li>
+    <li>Umbraco Certified Professional (2019)</li>
+    <li>Python for Everybody Specialization — University of Michigan via Coursera (2018)</li>
+    <li>Certified ScrumMaster (CSM) — Scrum Alliance (2018)</li>
+  </ul>
+</section>
+
+<!-- TALEN -->
+<section>
+  <div class="section-label section-label--green">// TALEN</div>
+  <ul class="simple-list">
+    <li>Nederlands (moedertaal)</li>
+    <li>Engels (C2)</li>
+    <li>Spaans (A1)</li>
+  </ul>
+</section>
+
+<!-- VRIJWILLIGERSWERK -->
+<section>
+  <div class="section-label section-label--orange">// VRIJWILLIGERSWERK</div>
+  <ul class="simple-list">
+    <li>VVN Praktisch Verkeersexamen — basisschool Stein (sinds 2024)</li>
+    <li>HartslagNu — Burgerhulpverlener reanimatie (sinds 2015)</li>
+    <li>Scouting Hiawatha — Leider (2012–2020)</li>
+    <li>Medische en EHBO Stam Scouting Nederland — Vrijwilliger (2015–2019)</li>
+  </ul>
+</section>
+
+<div class="footer-mark">
+  // CV · Mei 2026 · vincability.com
+</div>
+
+</div>
+</body>
+</html>
