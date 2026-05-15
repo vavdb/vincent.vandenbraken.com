@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>CV — Vincent van den Braken · Mobile XL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --v-bg-deep:       #060A0E;
+  --v-bg-surface:    #0B1117;
+  --v-bg-elevated:   #111C26;
+  --v-border:        #1A2D3D;
+  --v-border-glow:   #0288D120;
+  --v-blue-primary:  #0288D1;
+  --v-blue-dim:      #0277BD;
+  --v-blue-glow:     #0288D133;
+  --v-accent:        #4FC3F7;
+  --v-purple:        #B388FF;
+  --v-text-primary:  #F0F7FF;
+  --v-text-secondary:#AAB8C2;
+  --v-text-muted:    #5A6872;
+  --font-primary:    'JetBrains Mono', monospace;
+  --font-secondary:  'Geist', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--v-bg-deep);
+  background-image:
+    linear-gradient(rgba(2, 136, 209, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(2, 136, 209, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-attachment: fixed;
+  color: var(--v-text-primary);
+  font-family: var(--font-secondary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  zoom: 1.3;
+}
+.page { max-width: 880px; margin: 0 auto; padding: 56px 64px; }
+.header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 32px; padding-bottom: 28px;
+  border-bottom: 2px solid;
+  border-image: linear-gradient(90deg, var(--v-blue-primary), var(--v-accent) 50%, var(--v-purple)) 1;
+}
+h1 {
+  font-family: var(--font-primary); font-size: 32px; font-weight: 700;
+  letter-spacing: 4px; text-transform: uppercase; color: var(--v-text-primary); white-space: nowrap;
+}
+h2 {
+  font-family: var(--font-primary); font-size: 13px; font-weight: 600;
+  letter-spacing: 1px; text-transform: uppercase; color: var(--v-accent);
+  margin-bottom: 12px; padding-bottom: 8px;
+  border-bottom: 1px solid var(--v-border);
+}
+h3 {
+  font-family: var(--font-primary); font-size: 15px; font-weight: 600; color: var(--v-text-primary);
+}
+.subtitle {
+  font-family: var(--font-secondary); font-size: 14px; font-weight: 500; line-height: 1.4;
+  color: var(--v-text-secondary); margin-top: 8px;
+}
+.meta { font-family: var(--font-primary); font-size: 12px; color: var(--v-text-muted); margin-top: 16px; }
+.meta a { color: var(--v-blue-primary); text-decoration: none; }
+.meta a:hover { text-decoration: underline; }
+.section { margin-top: 36px; }
+.section p, .section li { font-size: 14px; color: var(--v-text-secondary); margin-top: 8px; line-height: 1.6; }
+.section strong { color: var(--v-text-primary); }
+.article {
+  background: var(--v-bg-elevated); border: 1px solid var(--v-border); border-radius: 8px;
+  padding: 20px; margin-top: 16px;
+}
+.article-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 12px; margin-bottom: 10px; flex-wrap: wrap;
+}
+.article-title { font-family: var(--font-primary); font-size: 15px; font-weight: 600; }
+.article-meta { font-size: 12px; color: var(--v-text-muted); white-space: nowrap; }
+.article-stack { font-size: 12px; color: var(--v-blue-dim); margin-top: 4px; font-family: var(--font-primary); }
+.article ul { margin: 10px 0 0 20px; }
+.article li { font-size: 13px; margin-top: 4px; }
+.skill-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px;
+}
+.skill-item {
+  background: var(--v-bg-elevated); border: 1px solid var(--v-border);
+  border-radius: 6px; padding: 14px;
+}
+.skill-label { font-family: var(--font-primary); font-size: 12px; color: var(--v-accent); text-transform: uppercase; }
+.skill-text { font-size: 13px; color: var(--v-text-secondary); margin-top: 4px; }
+.back-link { font-size: 12px; color: var(--v-text-muted); margin-bottom: 20px; }
+.back-link a { color: var(--v-blue-dim); text-decoration: none; }
+.badge {
+  display: inline-block; background: var(--v-blue-primary); color: var(--v-bg-deep);
+  font-family: var(--font-primary); font-size: 10px; padding: 2px 8px; border-radius: 4px;
+  margin-left: 8px; vertical-align: middle;
+}
+.highlight-box {
+  background: var(--v-bg-elevated); border-left: 3px solid var(--v-accent);
+  border-radius: 4px; padding: 14px 18px; margin-top: 16px; font-size: 13px; color: var(--v-text-secondary);
+}
+.highlight-box strong { color: var(--v-accent); }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="back-link">← <a href="/">algemene CV</a> · getailord voor Mobile XL B.V.</div>
+
+<div class="header">
+  <div>
+    <h1>Vincent van den Braken</h1>
+    <div class="subtitle">
+      Senior Developer · Technisch Adviseur · API-integraties<br>
+      CRM/ERP-koppelingen · AI-orkestratie · Regio Sittard-Geleen
+    </div>
+    <div class="meta">
+      Urmond · 18-02-1980 · Beschikbaar 1 augustus 2026<br>
+      <a href="mailto:vincent@vandenbraken.com">vincent@vandenbraken.com</a> · +31 6 129 604 36<br>
+      <a href="https://linkedin.com/in/vavdb">LinkedIn</a> · <a href="https://github.com/vavdb">GitHub</a> · <a href="https://vincability.com">vincability.com</a>
+    </div>
+  </div>
+</div>
+
+<!-- PROFIEL -->
+<section class="section">
+  <h2>Profiel</h2>
+  <p>
+    <strong>Senior Developer met 30 jaar ervaring</strong> in softwareontwikkeling, integraties en technisch advies.
+    Ik bouw robuuste koppelingen tussen systemen — API's, webhooks, event-driven workflows — en vertaal complexe techniek naar begrijpelijke oplossingen voor collega's en klanten.
+  </p>
+  <p>
+    Mijn kracht ligt in het <strong>volledige plaatje</strong>: van database tot front-end, van requirement tot documentatie.
+    Ik werk het liefst in kleine teams waar ik zowel bouw als adviseer — waar technische diepgang en klantcontact geen gescheiden functies zijn maar twee kanten van dezelfde medaille.
+  </p>
+
+  <div class="highlight-box">
+    <strong>Directe match met Mobile XL:</strong> ervaring met CRM-implementaties (Umbraco/Zoho-parallel bij True People),
+    ticketing-systemen (Redmine bij Deltec), API-integraties tussen heterogene backoffice-systemen,
+    én de adviserende rol naar klanten die jullie expliciet vragen. Regio Geleen — ik woon in Urmond, op 10 minuten fietsen.
+  </div>
+</section>
+
+<!-- WERKERVARING -->
+<section class="section">
+  <h2>Relevante Werkervaring</h2>
+
+  <!-- True People — CRM/advies -->
+  <article class="article">
+    <div class="article-header">
+      <span class="article-title">Project Development Manager <span class="badge">meest relevant</span></span>
+      <span class="article-meta">apr 2019 – mei 2021</span>
+    </div>
+    <div class="article-stack">Umbraco CMS · CRM · Scrum · Team leadership · Klantadvies</div>
+    <div style="font-size:12px;color:var(--v-text-muted);margin-top:2px;">True People BV — CRM- en marketingplatformen voor recruitment en HR</div>
+    <ul>
+      <li><strong>Technisch adviseur naar klanten</strong>: vertaling van business requirements naar technische oplossingen, rechtstreeks klantcontact</li>
+      <li>Ontwikkeling en beheer van <strong>Umbraco-gebaseerde CRM/marketing-platformen</strong> — functioneel parallel aan Zoho-implementaties</li>
+      <li>Integraties met externe systemen via API's en webhooks — koppeling recruitment-software, e-mailmarketing, analytics</li>
+      <li>Aansturing development team met Scrum, code reviews, en technische kwaliteitsborging</li>
+      <li>Documentatie en communicatie van oplossingen naar niet-technische stakeholders</li>
+    </ul>
+  </article>
+
+  <!-- Deltec — ticketing/B2B -->
+  <article class="article">
+    <div class="article-header">
+      <span class="article-title">Senior Developer & Team Leader</span>
+      <span class="article-meta">2010 – 2017</span>
+    </div>
+    <div class="article-stack">C# · .NET · MS SQL · Redmine (ticketing) · B2B-platformen · CI/CD</div>
+    <div style="font-size:12px;color:var(--v-text-muted);margin-top:2px;">Deltec Software — B2B-software voor industriële reiniging en facility management</div>
+    <ul>
+      <li>7 jaar <strong>.NET/C# ontwikkeling</strong> op Microsoft-stack: MS SQL Server, Windows Forms, ASP.NET — diepe ervaring met het .NET-ecosysteem dat ook .NET 4.8 omvat</li>
+      <li>Beheer en configuratie van <strong>Redmine ticketing-systeem</strong> voor projectmanagement en klantensupport — directe parallel met Zoho Desk/ticketing</li>
+      <li><strong>Integraties</strong>: koppelingen tussen ERP, planning, en mobiele werkordersystemen via API's</li>
+      <li>Technisch aanspreekpunt voor klanten bij maatwerktrajecten — <strong>adviserende rol</strong> over haalbaarheid, architectuur en implementation</li>
+      <li>Introductie van CI/CD en geautomatiseerde builds — modernisering van legacy development-proces</li>
+    </ul>
+  </article>
+
+  <!-- Rensa — Azure integraties -->
+  <article class="article">
+    <div class="article-header">
+      <span class="article-title">Consultant — Azure Integration Services</span>
+      <span class="article-meta">mei 2021 – nov 2021</span>
+    </div>
+    <div class="article-stack">Azure Functions · Service Bus · API-integraties · .NET · DevOps</div>
+    <div style="font-size:12px;color:var(--v-text-muted);margin-top:2px;">Rensa Family Company — groothandel in verwarming, ventilatie en airconditioning</div>
+    <ul>
+      <li>Ontwerp en implementatie van <strong>Azure-integratiearchitectuur</strong> voor koppeling van heterogene backoffice-systemen</li>
+      <li>Azure Functions als compute-laag, Service Bus voor message-queueing en event-driven workflows</li>
+      <li>Rechtstreekse samenwerking met stakeholders — vertaling van business requirements naar technische architectuur</li>
+    </ul>
+  </article>
+
+  <!-- SkinConsult — SaaS -->
+  <article class="article">
+    <div class="article-header">
+      <span class="article-title">Technical Lead</span>
+      <span class="article-meta">dec 2021 – aug 2026</span>
+    </div>
+    <div class="article-stack">.NET · Azure · Blazor · AI-agent workflows · SaaS</div>
+    <div style="font-size:12px;color:var(--v-text-muted);margin-top:2px;">SkinConsult — SaaS-platform voor cosmetovigilance (EU-regulatoire compliance)</div>
+    <ul>
+      <li>Technische eindverantwoordelijke voor cloud-native SaaS-platform — volledige stack van database tot front-end</li>
+      <li><strong>API-design en integraties</strong>: modulaire platformopbouw, externe systeemkoppelingen, datapijplijnen</li>
+      <li>AI-agent workflows als force-multiplier voor development — parallel aan Mobile XL's AI-integraties (ChatGPT, Claude, Zia)</li>
+    </ul>
+  </article>
+</section>
+
+<!-- AANVULLENDE ERVARING -->
+<section class="section">
+  <h2>Aanvullende Ervaring</h2>
+  <div style="display:flex; gap:16px; flex-wrap:wrap; font-size:13px; color:var(--v-text-muted);">
+    <span>Technical Consultant · Allergie Centra Nederland (2023–2026) — Azure, API-integraties</span>
+    <span>·</span>
+    <span>Technical Lead · Dermatologisch Centrum Utrecht (2021–2023) — Cloud-native, Blazor, Azure DevOps</span>
+    <span>·</span>
+    <span>Technical Team Lead · Belastingdienst (2018–2019) — .NET Core, CI/CD, testautomatisering</span>
+    <span>·</span>
+    <span>Full Stack .NET Developer · Rabobank (2017–2018) — .NET MVC, Analysis Services, Azure</span>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="section">
+  <h2>Technische Skills</h2>
+  <div class="skill-grid">
+    <div class="skill-item">
+      <div class="skill-label">Backend & .NET</div>
+      <div class="skill-text">C#, .NET (Framework 4.x t/m .NET 9), ASP.NET, REST API-design, Windows Forms — 30 jaar .NET-ervaring, van legacy tot modern</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-label">Integraties & API's</div>
+      <div class="skill-text">Azure Service Bus, Functions, Logic Apps, REST API's, webhooks, event-driven architecture — heterogene systeemkoppelingen</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-label">Databases</div>
+      <div class="skill-text">MS SQL Server (15+ jaar), PostgreSQL, Azure SQL, Cosmos DB — database-design, migraties, stored procedures, performance-tuning</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-label">CRM & Bedrijfssoftware</div>
+      <div class="skill-text">Umbraco CMS/CRM-platformen, Redmine ticketing, Zoho-ecosysteem (kennis van), ERP-koppelingen, B2B-platformen</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-label">Proces & Methodologie</div>
+      <div class="skill-text">Scrum, Agile, technisch advies naar klanten, documentatie, requirements-analyse, team leadership</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-label">AI & Automatisering</div>
+      <div class="skill-text">AI-agent workflows, ChatGPT/Claude API-integraties, procesautomatisering — ervaring met hetzelfde type AI-koppelingen dat Mobile XL aanbiedt</div>
+    </div>
+  </div>
+</section>
+
+<!-- TALEN -->
+<section class="section">
+  <h2>Talen</h2>
+  <ul style="list-style:none;margin-top:8px;">
+    <li style="font-size:14px;color:var(--v-text-secondary);">🇳🇱 <strong>Nederlands</strong> — moedertaal</li>
+    <li style="font-size:14px;color:var(--v-text-secondary);">🇬🇧 <strong>Engels</strong> — volledig professioneel (B2/C1)</li>
+  </ul>
+</section>
+
+<div style="margin-top:48px;padding-top:20px;border-top:1px solid var(--v-border);font-size:11px;color:var(--v-text-muted);">
+  Getailorde CV voor Mobile XL B.V. — Senior Developer & Technisch Adviseur · <a href="/" style="color:var(--v-blue-dim);">algemene CV</a>
+</div>
+
+</div>
+</body>
+</html>
