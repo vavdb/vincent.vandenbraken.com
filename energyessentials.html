@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>CV — Vincent van den Braken · Energy Essentials</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --v-bg-deep:       #060A08;
+  --v-bg-surface:    #0B1210;
+  --v-bg-elevated:   #111C18;
+  --v-border:        #1A2D25;
+  --v-energy-primary:#FFC107;
+  --v-energy-dim:    #FFB300;
+  --v-energy-glow:   #FFC10722;
+  --v-teal:          #26A69A;
+  --v-teal-dim:      #00897B;
+  --v-purple:        #B388FF;
+  --v-text-primary:  #F0FFF4;
+  --v-text-secondary:#A8B5AD;
+  --v-text-muted:    #5A6B60;
+  --font-primary:    'JetBrains Mono', monospace;
+  --font-secondary:  'Geist', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background-color: var(--v-bg-deep);
+  background-image:
+    linear-gradient(rgba(255, 193, 7, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 193, 7, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-attachment: fixed;
+  color: var(--v-text-primary);
+  font-family: var(--font-secondary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  zoom: 1.3;
+}
+
+.page {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 56px 64px;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+  padding-bottom: 28px;
+  border-bottom: 2px solid;
+  border-image: linear-gradient(90deg, var(--v-energy-primary), var(--v-teal) 50%, var(--v-purple)) 1;
+}
+
+.header__name {
+  font-family: var(--font-primary);
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--v-text-primary);
+}
+
+.header__title {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--v-energy-primary);
+  margin-top: 6px;
+  letter-spacing: 0.5px;
+}
+
+.header__contact {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  color: var(--v-text-muted);
+  text-align: right;
+  line-height: 1.8;
+  letter-spacing: 0.3px;
+}
+
+.header__contact a { color: var(--v-text-secondary); text-decoration: none; }
+.header__contact a:hover { color: var(--v-energy-primary); }
+
+.availability {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--v-energy-primary);
+  background-color: var(--v-energy-glow);
+  border: 1px solid var(--v-energy-glow);
+  border-radius: 999px;
+  padding: 4px 12px;
+  margin-top: 14px;
+}
+
+.availability__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--v-energy-primary);
+  box-shadow: 0 0 4px var(--v-energy-primary);
+}
+
+/* SECTIONS */
+section { margin-top: 36px; }
+
+.section-label {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--v-purple);
+  margin-bottom: 10px;
+}
+
+.section-label--energy { color: var(--v-energy-primary); }
+.section-label--teal { color: var(--v-teal); }
+.section-label--purple { color: var(--v-purple); }
+
+.section__body p {
+  font-size: 14px;
+  color: var(--v-text-secondary);
+  line-height: 1.7;
+  margin-bottom: 8px;
+}
+
+/* ROLE */
+.role {
+  background-color: var(--v-bg-elevated);
+  border: 1px solid var(--v-border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+}
+
+.role__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.role__title {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--v-text-primary);
+}
+
+.role__company {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--v-energy-primary);
+}
+
+.role__period {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  color: var(--v-text-muted);
+  letter-spacing: 0.3px;
+}
+
+.role__stack {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  color: var(--v-text-muted);
+  letter-spacing: 0.3px;
+  margin-bottom: 8px;
+}
+
+.role__bullets {
+  list-style: none;
+  padding: 0;
+}
+
+.role__bullets li {
+  font-size: 13px;
+  color: var(--v-text-secondary);
+  line-height: 1.6;
+  padding-left: 14px;
+  position: relative;
+  margin-bottom: 4px;
+}
+
+.role__bullets li::before {
+  content: '·';
+  color: var(--v-energy-primary);
+  position: absolute;
+  left: 4px;
+  font-weight: 700;
+}
+
+/* CLUSTER */
+.cluster {
+  border-left: 2px solid var(--v-teal);
+  padding: 14px 0 4px 16px;
+  margin-bottom: 12px;
+  background: linear-gradient(90deg, rgba(38, 166, 154, 0.06), transparent 70%);
+  border-radius: 0 8px 8px 0;
+}
+
+.cluster .role:last-child { margin-bottom: 0; }
+
+.cluster-note {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--v-teal);
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+/* SKILLS */
+.skills {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.skill {
+  background-color: var(--v-bg-elevated);
+  border: 1px solid var(--v-border);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+
+.skill__cat {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--v-energy-primary);
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.skill__list {
+  font-family: var(--font-secondary);
+  font-size: 12px;
+  color: var(--v-text-secondary);
+  line-height: 1.5;
+}
+
+/* SIMPLE LIST */
+.simple-list {
+  list-style: none;
+  padding: 0;
+}
+.simple-list li {
+  font-size: 13px;
+  color: var(--v-text-secondary);
+  line-height: 1.7;
+  padding-left: 14px;
+  position: relative;
+}
+.simple-list li::before {
+  content: '·';
+  color: var(--v-teal);
+  position: absolute;
+  left: 4px;
+  font-weight: 700;
+}
+
+.footer-mark {
+  margin-top: 48px;
+  text-align: center;
+  font-family: var(--font-primary);
+  font-size: 10px;
+  color: var(--v-text-muted);
+  letter-spacing: 1px;
+}
+
+.back-link {
+  font-size: 12px; color: var(--v-text-muted); margin-bottom: 20px;
+}
+.back-link a { color: var(--v-teal); text-decoration: none; }
+
+/* PRINT */
+@media print {
+  body { background: white !important; color: black !important; zoom: 1 !important; }
+  .page { padding: 28px 36px; max-width: 100%; }
+  .header { border-bottom: 1px solid #FFB300; }
+  .header__name { color: #101820 !important; }
+  .header__title { color: #FFB300 !important; }
+  .header__contact { color: #666 !important; }
+  .header__contact a { color: #1e22aa !important; }
+  .availability { border-color: #FFB300 !important; background: #FFF8E1 !important; color: #F57F17 !important; }
+  .section-label { color: #B388FF !important; }
+  .section-label--energy { color: #FFB300 !important; }
+  .section-label--teal { color: #00897B !important; }
+  .role, .skill { background: #f8f8f8 !important; border-color: #ddd !important; }
+  .role__title { color: #101820 !important; }
+  .role__company { color: #FFB300 !important; }
+  .role__period, .role__stack { color: #666 !important; }
+  .role__bullets li, .simple-list li, .skill__list, .section__body p { color: #333 !important; }
+  .skill__cat { color: #FFB300 !important; }
+  .role__bullets li::before { color: #FFB300 !important; }
+  .simple-list li::before { color: #00897B !important; }
+  .cluster { border-color: #00897B !important; background: #f0fffa !important; }
+  .cluster-note { color: #00897B !important; }
+  section { page-break-inside: avoid; }
+  .role { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="back-link">← <a href="/">algemene CV</a> · getailord voor Energy Essentials — Lead / Senior Software Developer</div>
+
+<header class="header">
+  <div>
+    <h1 class="header__name">VINCENT VAN DEN BRAKEN</h1>
+    <div class="header__title">Lead Software Developer · .NET / Azure · Data-Intensive Platforms · CQRS & Event-Driven Architecture</div>
+    <div class="availability">
+      <span class="availability__dot"></span>
+      Beschikbaar 1 augustus 2026, eerder mogelijk
+    </div>
+  </div>
+  <div class="header__contact">
+    Urmond · 18-02-1980<br>
+    <a href="mailto:vincent@vandenbraken.com">vincent@vandenbraken.com</a><br>
+    <a href="tel:+31612960436">+31 (0)6 129 604 36</a><br>
+    <a href="https://linkedin.com/in/vincent-van-den-braken">LinkedIn</a> ·
+    <a href="https://github.com/vavdb">GitHub</a> ·
+    <a href="https://vincability.com">vincability.com</a>
+  </div>
+</header>
+
+<!-- PROFIEL -->
+<section>
+  <div class="section-label section-label--energy">// PROFIEL</div>
+  <div class="section__body">
+    <p>30 jaar softwareontwikkeling, laatste 10 jaar in lead- en architectuurrollen. Full-stack .NET developer met diepe ervaring in <strong style="color: var(--v-text-primary);">data-intensieve enterprise platforms</strong> — van event-driven microservices tot real-time streaming en CQRS-architecturen. Sectoren: life sciences SaaS, enterprise finance, overheid, B2B-platformen.</p>
+    <p><strong style="color: var(--v-text-primary);">Mijn aanpak:</strong> software als een 'fabriek' waar CI/CD, testautomatisering, code reviews en heldere architectuurpatronen geen overhead zijn maar productiekwaliteit garanderen. Ik schakel tussen architectuur, development, en klantgesprekken — dezelfde breedte die jullie vragen.</p>
+  </div>
+</section>
+
+<!-- WERKERVARING -->
+<section>
+  <div class="section-label section-label--energy">// WERKERVARING</div>
+
+  <div class="cluster">
+    <p class="cluster-note">// CLUSTER · DATA-INTENSIEVE SAAS — multi-tenant platforms met complexe datapijplijnen en event-driven workflows.</p>
+
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Technical Lead</span> ·
+          <span class="role__company">SkinConsult</span>
+        </div>
+        <span class="role__period">dec 2021 – aug 2026</span>
+      </div>
+      <div class="role__stack">.NET · Azure · Blazor · CQRS · Event-driven architecture · AI-agent workflows</div>
+      <ul class="role__bullets">
+        <li>Eindverantwoordelijk voor cloud-native SaaS-platform met <strong>multi-tenant data-isolatie</strong>, event-driven workflows en real-time documentverwerking.</li>
+        <li><strong>CQRS-patroon</strong> toegepast voor scheiding lees/schrijf-modellen bij complexe regulatoire datapijplijnen.</li>
+        <li>Phased modernization van legacy naar modulair platform — <strong>geen productieonderbreking</strong> tijdens transitie.</li>
+        <li>Remote team leadership: code reviews, pair programming, CI/CD pipelines (Azure DevOps, GitHub Actions).</li>
+      </ul>
+    </article>
+
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Technical Consultant</span> ·
+          <span class="role__company">Allergie Centra Nederland</span>
+        </div>
+        <span class="role__period">jun 2023 – aug 2026</span>
+      </div>
+      <div class="role__stack">Azure · .NET · Integration Services · Data pipelines · API's</div>
+      <ul class="role__bullets">
+        <li><strong>Custom integraties en datapijplijnen</strong>: API's, document-workflows, externe-data scrapers — vergelijkbaar met ETL/streaming patronen.</li>
+        <li>Security-first architectuur met data-grenzen, autorisatie, audit-trail — essentieel in gereguleerde omgevingen.</li>
+      </ul>
+    </article>
+  </div>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Consultant — Azure Integration Services</span> ·
+        <span class="role__company">Rensa Family Company</span>
+      </div>
+      <span class="role__period">mei 2021 – nov 2021</span>
+    </div>
+    <div class="role__stack">Azure Functions · Service Bus · Event-driven messaging · DevOps</div>
+    <ul class="role__bullets">
+      <li>Ontwerp en implementatie van <strong>Azure-integratiearchitectuur</strong>: Azure Functions als compute-laag, Service Bus voor message-queueing — patroon direct toepasbaar op Kafka/SignalR streaming.</li>
+      <li>Integratie van heterogene backoffice-systemen via API-lagen en event-pipelines.</li>
+    </ul>
+  </article>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Senior Developer & Team Leader</span> ·
+        <span class="role__company">Deltec Software BV</span>
+      </div>
+      <span class="role__period">jan 2010 – mei 2017</span>
+    </div>
+    <div class="role__stack">C# · .NET · MS SQL · CI/CD · B2B-platformen</div>
+    <ul class="role__bullets">
+      <li>7 jaar <strong>C#/.NET en MS SQL Server</strong> — dezelfde kernstack als Energy Essentials.</li>
+      <li>B2B-platformen voor automotive-sector: hoge transactievolumes, real-time voorraadkoppelingen, multi-tenant.</li>
+      <li>Continuous Integration opgezet (Git, Jenkins, MSBuild) — <strong>de 'softwarefabriek' waar jullie naar vragen</strong>.</li>
+    </ul>
+  </article>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Technical Team Lead</span> ·
+        <span class="role__company">Belastingdienst</span>
+      </div>
+      <span class="role__period">mei 2018 – mrt 2019</span>
+    </div>
+    <div class="role__stack">.NET Core · CI/CD · Test Automation · Azure</div>
+    <ul class="role__bullets">
+      <li>Lead technical architect voor dashboard- en rapportageplatform — <strong>data-visualisatie en analytics</strong>.</li>
+      <li>CI/CD-pipelines, structured logging en testautomatisering opgezet ter vervanging handmatige regressie.</li>
+    </ul>
+  </article>
+</section>
+
+<!-- VAARDIGHEDEN -->
+<section>
+  <div class="section-label section-label--teal">// VAARDIGHEDEN — MATCH MET ENERGY ESSENTIALS STACK</div>
+  <div class="skills">
+    <div class="skill">
+      <div class="skill__cat">.NET & Backend</div>
+      <div class="skill__list">C#, .NET (Framework 4.x t/m .NET 9), ASP.NET Core, Entity Framework, SignalR — 15+ jaar full-stack .NET</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Architectuurpatronen</div>
+      <div class="skill__list">CQRS, Event-driven architecture, Microservices, Event sourcing — productie-ervaring met exact de patronen in jullie stack</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Messaging & Streaming</div>
+      <div class="skill__list">Azure Service Bus, Event Grid, SignalR — messaging patterns direct toepasbaar op Kafka</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Data & Storage</div>
+      <div class="skill__list">MS SQL Server (15+ jaar), PostgreSQL, Azure SQL, TimescaleDB (tijdreeks-concepten via PowerBI/Analysis Services)</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Frontend</div>
+      <div class="skill__list">Blazor (Server + WASM), Angular, Vue, React, TypeScript — full-stack bereik</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">DevOps & CI/CD</div>
+      <div class="skill__list">Azure DevOps, GitHub Actions, Docker, containers, Kubernetes (kennis), infrastructure-as-code — de complete 'softwarefabriek'</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Data Pipelines & Analytics</div>
+      <div class="skill__list">PowerBI, R, Analysis Services, Jupyter notebooks — data-exploratie en analytics pipelines</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Cloud</div>
+      <div class="skill__list">Azure (Functions, Service Bus, Key Vault, App Services), Cloudflare Edge, multi-tenant SaaS</div>
+    </div>
+  </div>
+</section>
+
+<!-- TALEN -->
+<section>
+  <div class="section-label section-label--purple">// TALEN</div>
+  <ul class="simple-list">
+    <li>Nederlands (moedertaal)</li>
+    <li>Engels (C2)</li>
+    <li>Spaans (basis)</li>
+  </ul>
+</section>
+
+<div class="footer-mark">
+  // CV · 2026 · vincability.com · getailord voor Energy Essentials
+</div>
+
+</div>
+</body>
+</html>
