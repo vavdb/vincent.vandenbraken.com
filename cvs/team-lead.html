@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>CV — Vincent van den Braken · Lead Software Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --v-bg-deep:       #080B0E;
+  --v-bg-surface:    #0D1217;
+  --v-bg-elevated:   #141C23;
+  --v-border:        #1E2A35;
+  --v-border-glow:   #0088FF20;
+  --v-blue-primary:  #0088FF;
+  --v-blue-dim:      #0066CC;
+  --v-blue-glow:     #0088FF33;
+  --v-red:           #E53935;
+  --v-red-dim:       #C62828;
+  --v-teal:          #26A69A;
+  --v-text-primary:  #F0F4F8;
+  --v-text-secondary:#A8B5C0;
+  --v-text-muted:    #5A6B78;
+  --font-primary:    'JetBrains Mono', monospace;
+  --font-secondary:  'Geist', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--v-bg-deep);
+  background-image:
+    linear-gradient(rgba(0, 136, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 136, 255, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-attachment: fixed;
+  color: var(--v-text-primary);
+  font-family: var(--font-secondary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  zoom: 1.3;
+}
+.page { max-width: 880px; margin: 0 auto; padding: 56px 64px; }
+.header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 32px; padding-bottom: 28px;
+  border-bottom: 2px solid;
+  border-image: linear-gradient(90deg, var(--v-blue-primary), var(--v-red) 50%, var(--v-teal)) 1;
+}
+h1 {
+  font-family: var(--font-primary); font-size: 32px; font-weight: 700;
+  letter-spacing: 4px; text-transform: uppercase; color: var(--v-text-primary); white-space: nowrap;
+}
+h2 {
+  font-family: var(--font-primary); font-size: 13px; font-weight: 600;
+  letter-spacing: 1px; text-transform: uppercase; color: var(--v-red-dim);
+  margin-bottom: 12px; padding-bottom: 8px;
+  border-bottom: 1px solid var(--v-border);
+}
+h3 {
+  font-family: var(--font-primary); font-size: 15px; font-weight: 600; color: var(--v-text-primary);
+}
+.subtitle {
+  font-family: var(--font-secondary); font-size: 14px; font-weight: 500; line-height: 1.4;
+  color: var(--v-text-secondary); margin-top: 8px;
+}
+.meta { font-family: var(--font-primary); font-size: 12px; color: var(--v-text-muted); margin-top: 16px; }
+.meta a { color: var(--v-blue-primary); text-decoration: none; }
+.meta a:hover { text-decoration: underline; }
+.section { margin-top: 36px; }
+.section p, .section li { font-size: 14px; color: var(--v-text-secondary); margin-top: 8px; line-height: 1.6; }
+.section strong { color: var(--v-text-primary); }
+.article {
+  background: var(--v-bg-elevated); border: 1px solid var(--v-border); border-radius: 8px;
+  padding: 20px; margin-top: 16px;
+}
+.article-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 12px; margin-bottom: 10px; flex-wrap: wrap;
+}
+.article-title { font-family: var(--font-primary); font-size: 15px; font-weight: 600; }
+.article-meta { font-size: 12px; color: var(--v-text-muted); white-space: nowrap; }
+.article-stack { font-size: 12px; color: var(--v-blue-dim); margin-top: 4px; font-family: var(--font-primary); }
+.article ul { margin: 10px 0 0 20px; }
+.article li { font-size: 13px; margin-top: 4px; }
+.skill-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px;
+}
+.skill-item {
+  background: var(--v-bg-elevated); border: 1px solid var(--v-border);
+  border-radius: 6px; padding: 14px;
+}
+.skill-label { font-family: var(--font-primary); font-size: 12px; color: var(--v-blue-primary); text-transform: uppercase; }
+.skill-text { font-size: 13px; color: var(--v-text-secondary); margin-top: 4px; }
+.back-link { font-size: 12px; color: var(--v-text-muted); margin-bottom: 20px; }
+.back-link a { color: var(--v-blue-dim); text-decoration: none; }
+.badge {
+  display: inline-block; background: var(--v-red); color: var(--v-bg-deep);
+  font-family: var(--font-primary); font-size: 10px; padding: 2px 8px; border-radius: 4px;
+  margin-left: 8px; vertical-align: middle;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="back-link">← <a href="/">algemene CV</a></div>
+
+<div class="header">
+  <div>
+    <h1>Vincent van den Braken</h1>
+    <div class="subtitle">
+      Lead Software Engineer · .NET / C# · Cloud-native · Angular<br>
+      AI-agent workflows · CI/CD · Regio Sittard
+    </div>
+    <div class="meta">
+      Urmond · 18-02-1980 · Beschikbaar 1 augustus 2026<br>
+      <a href="mailto:vincent@vandenbraken.com">vincent@vandenbraken.com</a> · +31 6 129 604 36<br>
+      <a href="https://linkedin.com/in/vavdb">LinkedIn</a> · <a href="https://github.com/vavdb">GitHub</a> · <a href="https://vincability.com">vincability.com</a>
+    </div>
+  </div>
+</div>
+
+<!-- PROFIEL -->
+<section class="section">
+  <h2>Profiel</h2>
+  <p>
+    <strong>Lead Software Engineer</strong> met 30 jaar softwareontwikkeling, waarvan 10 in lead- en architectuurrollen.
+    Gespecialiseerd in <strong>C#/.NET, cloud-native platformen en full-stack delivery</strong> — van back-end API's tot front-end in Angular.
+    Bewezen ervaring met het ontwerpen, bouwen en deployen van schaalbare (micro)service-architecturen, CI/CD-pipelines en container-gebaseerde deployments.
+  </p>
+  <p>
+    Wat mij drijft: <strong>software die iets fysieks maakt.</strong> Code die niet op een scherm blijft maar machines aanstuurt, productielijnen laat lopen, echte dingen in beweging zet. Daar ligt mijn passie — software die iets fysieks maakt, die machines aanstuurt en productielijnen laat lopen.
+    Mijn aanpak: architectuur vanuit <strong>security-first en heldere data-grenzen</strong>. AI-agent workflows sinds 2024 als force-multiplier voor development — niet als hype, maar als bewezen delivery-versneller.
+  </p>
+</section>
+
+<!-- WERKERVARING -->
+<section class="section">
+  <h2>Relevante Werkervaring</h2>
+
+  <!-- SkinConsult — Technical Lead -->
+  <article class="article">
+    <div class="article-header">
+      <span class="article-title">Technical Lead <span class="badge">meest relevant</span></span>
+      <span class="article-meta">dec 2021 – aug 2026</span>
+    </div>
+    <div class="article-stack">.NET · Azure · Blazor · AI-agent workflows · Team leadership · CI/CD</div>
+    <div style="font-size:12px;color:var(--v-text-muted);margin-top:2px;">SkinConsult — SaaS-platform voor cosmetovigilance (EU-regulatoire compliance)</div>
+    <ul>
+      <li>Technische eindverantwoordelijke voor <strong>cloud-native SaaS-platform</strong> op Azure — volledige stack van database tot front-end</li>
+      <li><strong>Architectuur & team-lead</strong>: modulaire platformopbouw, API-design, microservice-achtige decompositie, begeleiding developers</li>
+      <li>Phased modernization van legacy naar AI-enabled platform — <strong>geen productie-onderbreking</strong></li>
+      <li><strong>CI/CD end-to-end</strong>: Azure DevOps pipelines, GitHub Actions, geautomatiseerde deployments, infrastructure-as-code</li>
+      <li>Remote team leadership: code reviews, pair programming, technische koers uitzetten</li>
+    </ul>
+  </article>
+
+  <!-- Belastingdienst -->
+  <article class="article">
+    <div class="article-header">
+      <span class="article-title">Technical Team Lead</span>
+      <span class="article-meta">mei 2018 – mrt 2019</span>
+    </div>
+    <div class="article-stack">.NET Core · CI/CD · Test Automation · Cloud</div>
+    <div style="font-size:12px;color:var(--v-text-muted);margin-top:2px;">Belastingdienst — detachering via Quintor</div>
+    <ul>
+      <li>Lead technical architect voor dashboard- en rapportageplatform</li>
+      <li>Opzetten van <strong>CI/CD-pipelines, structured logging en testautomatisering</strong> ter vervanging van handmatige regressie</li>
+      <li>Technische aansturing van development team in enterprise-omgeving</li>
+    </ul>
+  </article>
+
+  <!-- Rensa — Azure Integration Services -->
+  <article class="article">
+    <div class="article-header">
+      <span class="article-title">Consultant — Cloud Integration Services</span>
+      <span class="article-meta">mei 2021 – nov 2021</span>
+    </div>
+    <div class="article-stack">Azure Functions · Service Bus · DevOps · .NET</div>
+    <div style="font-size:12px;color:var(--v-text-muted);margin-top:2px;">Rensa Family Company — groothandel in verwarming, ventilatie en airconditioning</div>
+    <ul>
+      <li>Ontwerp en implementatie van <strong>cloud-integratiearchitectuur</strong>: serverless compute, message-queueing, event-driven workflows</li>
+      <li>Integratie van heterogene backoffice-systemen via API-lagen en event-pipelines</li>
+      <li>End-to-end DevOps: CI/CD-pipelines, infrastructure-as-code, deployment-automatisering</li>
+    </ul>
+  </article>
+
+  <!-- Deltec — Senior Developer & Team Leader -->
+  <article class="article">
+    <div class="article-header">
+      <span class="article-title">Senior Developer & Team Leader</span>
+      <span class="article-meta">jan 2010 – mei 2017</span>
+    </div>
+    <div class="article-stack">C# · CI/CD · B2B-platformen · Team leadership</div>
+    <div style="font-size:12px;color:var(--v-text-muted);margin-top:2px;">Deltec Software BV, Amersfoort</div>
+    <ul>
+      <li>B2B-platformen voor GroupAuto Nederland, Quinton Hazell, Motor-Parts — <strong>software die de fysieke auto-onderdelenketen aanstuurde</strong></li>
+      <li>Continuous Integration opgezet (Git, Jenkins, MSBuild)</li>
+      <li>7 jaar teamleiding: developers begeleiden, code reviews, technische richting bepalen</li>
+    </ul>
+  </article>
+</section>
+
+<!-- AANVULLENDE ERVARING -->
+<section class="section">
+  <h2>Aanvullende Ervaring</h2>
+  <div style="display:flex; gap:16px; flex-wrap:wrap; font-size:13px; color:var(--v-text-muted);">
+    <span>Technical Consultant · Allergie Centra Nederland (2023–2026) — Cloud, integraties, API's</span>
+    <span>·</span>
+    <span>Technical Lead · Dermatologisch Centrum Utrecht (2021–2023) — Cloud-native, CI/CD, DevOps</span>
+    <span>·</span>
+    <span>Full Stack .NET Developer · Rabobank (2017–2018) — .NET MVC, Analysis Services, CI/CD</span>
+    <span>·</span>
+    <span>Project Development Manager · True People BV (2019–2021) — Umbraco, Scrum, team leadership</span>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="section">
+  <h2>Technische Skills</h2>
+  <div class="skill-grid">
+    <div class="skill-item">
+      <div class="skill-label">Backend & Architectuur</div>
+      <div class="skill-text">.NET (Core/5–9), C#, ASP.NET, REST API-design, microservices, event-driven architecture</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-label">Front-end</div>
+      <div class="skill-text">Angular (TypeScript), Blazor (Server + WASM), Vue, React, MudBlazor, SignalR</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-label">Cloud & DevOps</div>
+      <div class="skill-text">Azure (App Services, Functions, Service Bus) in productie · AWS &amp; Google Cloud op fundamentals-niveau (homelab) — cloud-principes provider-agnostisch · Docker, Kubernetes-bewust, CI/CD pipelines</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-label">CI/CD & Infrastructuur</div>
+      <div class="skill-text">Azure DevOps, GitHub Actions, infrastructure-as-code, geautomatiseerde deployments, Docker-containers</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-label">Architectuur & Leadership</div>
+      <div class="skill-text">Service-architectuur, multi-tenant SaaS, security-first, team-lead, code reviews, technische koers</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-label">AI & Delivery</div>
+      <div class="skill-text">AI-agent workflows (daily driver sinds 2024), multi-agent orkestratie, code review op AI-output</div>
+    </div>
+  </div>
+</section>
+
+<!-- TALEN -->
+<section class="section">
+  <h2>Talen</h2>
+  <ul style="list-style:none;margin-top:8px;">
+    <li style="font-size:14px;color:var(--v-text-secondary);">🇳🇱 <strong>Nederlands</strong> — moedertaal</li>
+    <li style="font-size:14px;color:var(--v-text-secondary);">🇬🇧 <strong>Engels</strong> — volledig professioneel (C2)</li>
+  </ul>
+</section>
+
+<div style="margin-top:48px;padding-top:20px;border-top:1px solid var(--v-border);font-size:11px;color:var(--v-text-muted);">
+  CV · 2026 · Lead Software Engineer · vincability.com · <a href="/" style="color:var(--v-blue-dim);">algemene CV</a>
+</div>
+
+</div>
+</body>
+</html>

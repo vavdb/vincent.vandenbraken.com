@@ -1,0 +1,8 @@
+# Netlify redirects — clean URLs voor geanonimiseerde CV's
+/cvs/devops              /cvs/devops.html              200
+/cvs/team-lead           /cvs/team-lead.html           200
+/cvs/lead-developer      /cvs/lead-developer.html      200
+/cvs/technical-consultant /cvs/technical-consultant.html 200
+/cvs/integrations        /cvs/integrations.html        200
+/cvs/architect           /cvs/architect.html           200
+/cvs/senior-developer    /cvs/senior-developer.html    200
