@@ -13,11 +13,11 @@
   --v-bg-elevated:   #141C18;
   --v-border:        #1E2D25;
   --v-border-glow:   #F56E2820;
-  --v-sendent-orange:   #F56E28;
-  --v-sendent-orange-dim: #D45A1E;
-  --v-sendent-orange-glow: #F56E2833;
-  --v-sendent-blue:   #5B8FCC;
-  --v-sendent-blue-dim: #3D6A99;
+  --v-accent-orange:   #F56E28;
+  --v-accent-orange-dim: #D45A1E;
+  --v-accent-orange-glow: #F56E2833;
+  --v-accent-blue:   #5B8FCC;
+  --v-accent-blue-dim: #3D6A99;
   --v-purple:        #C084FC;
   --v-text-primary:  #F0FFF4;
   --v-text-secondary:#A8B5AD;
@@ -56,7 +56,7 @@ body {
   gap: 32px;
   padding-bottom: 28px;
   border-bottom: 2px solid;
-  border-image: linear-gradient(90deg, var(--v-sendent-orange), var(--v-sendent-blue) 50%, var(--v-purple)) 1;
+  border-image: linear-gradient(90deg, var(--v-accent-orange), var(--v-accent-blue) 50%, var(--v-purple)) 1;
 }
 
 .header__name {
@@ -71,7 +71,7 @@ body {
   font-family: var(--font-primary);
   font-size: 14px;
   font-weight: 500;
-  color: var(--v-sendent-orange);
+  color: var(--v-accent-orange);
   margin-top: 6px;
   letter-spacing: 0.5px;
 }
@@ -86,7 +86,7 @@ body {
 }
 
 .header__contact a { color: var(--v-text-secondary); text-decoration: none; }
-.header__contact a:hover { color: var(--v-sendent-orange); }
+.header__contact a:hover { color: var(--v-accent-orange); }
 
 .availability {
   display: inline-flex;
@@ -95,8 +95,8 @@ body {
   font-family: var(--font-primary);
   font-size: 11px;
   font-weight: 500;
-  color: var(--v-sendent-orange);
-  background-color: var(--v-sendent-orange-glow);
+  color: var(--v-accent-orange);
+  background-color: var(--v-accent-orange-glow);
   border: 1px solid var(--v-border-glow);
   border-radius: 999px;
   padding: 4px 12px;
@@ -107,8 +107,8 @@ body {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background-color: var(--v-sendent-orange);
-  box-shadow: 0 0 4px var(--v-sendent-orange);
+  background-color: var(--v-accent-orange);
+  box-shadow: 0 0 4px var(--v-accent-orange);
 }
 
 /* SECTIONS */
@@ -124,8 +124,8 @@ section { margin-top: 36px; }
   margin-bottom: 10px;
 }
 
-.section-label--sendent { color: var(--v-sendent-orange); }
-.section-label--blue { color: var(--v-sendent-blue); }
+.section-label--accent { color: var(--v-accent-orange); }
+.section-label--blue { color: var(--v-accent-blue); }
 .section-label--purple { color: var(--v-purple); }
 
 .section__body p {
@@ -164,7 +164,7 @@ section { margin-top: 36px; }
   font-family: var(--font-primary);
   font-size: 13px;
   font-weight: 500;
-  color: var(--v-sendent-orange);
+  color: var(--v-accent-orange);
 }
 
 .role__period {
@@ -198,7 +198,7 @@ section { margin-top: 36px; }
 
 .role__bullets li::before {
   content: '·';
-  color: var(--v-sendent-orange);
+  color: var(--v-accent-orange);
   position: absolute;
   left: 4px;
   font-weight: 700;
@@ -223,7 +223,7 @@ section { margin-top: 36px; }
   font-family: var(--font-primary);
   font-size: 11px;
   font-weight: 600;
-  color: var(--v-sendent-blue);
+  color: var(--v-accent-blue);
   letter-spacing: 0.5px;
   margin-bottom: 4px;
 }
@@ -258,11 +258,11 @@ section { margin-top: 36px; }
 }
 
 .cluster--blue {
-  border-left-color: var(--v-sendent-blue);
+  border-left-color: var(--v-accent-blue);
   background: linear-gradient(90deg, rgba(91, 143, 204, 0.06), transparent 70%);
 }
 
-.cluster--blue .cluster-note { color: var(--v-sendent-blue); }
+.cluster--blue .cluster-note { color: var(--v-accent-blue); }
 
 /* SIMPLE LIST */
 .simple-list {
@@ -309,7 +309,7 @@ section { margin-top: 36px; }
   .header__contact a { color: #274364 !important; }
   .availability { border-color: #D45A1E !important; background: #F56E2811 !important; color: #D45A1E !important; }
   .section-label { color: #C084FC !important; }
-  .section-label--sendent { color: #D45A1E !important; }
+  .section-label--accent { color: #D45A1E !important; }
   .section-label--blue { color: #5B8FCC !important; }
   .role, .skill { background: #f8f8f8 !important; border-color: #ddd !important; }
   .role__title { color: #101820 !important; }
@@ -352,7 +352,7 @@ section { margin-top: 36px; }
 
 <!-- PROFIEL -->
 <section>
-  <div class="section-label section-label--sendent">// PROFIEL</div>
+  <div class="section-label section-label--accent">// PROFIEL</div>
   <div class="section__body">
     <p>30 jaar softwareontwikkeling, laatste 10 jaar in lead- en architectuurrol. Sectoren: overheid (Belastingdienst), enterprise finance (Rabobank), life sciences SaaS (regulatoire compliance). Specialisatie .NET, systeemintegraties, security-by-design. Sinds 2024 AI-agent workflows ingezet als delivery-multiplier.</p>
     <p><strong style="color: var(--v-text-primary);">Privacy-first is geen feature — voor organisaties in gereguleerde sectoren is het de bestaansreden van het product.</strong> In domeinen als overheid, bancair en medisch is autorisatie-, audit- en data-grens-discipline een ontwerpbeslissing op dag één. Mijn ervaring met Belastingdienst en Rabobank geeft me dezelfde reflex: compliance is geen post-merge fix, het is hoe je bouwt.</p>
@@ -371,7 +371,7 @@ section { margin-top: 36px; }
 
 <!-- WERKERVARING -->
 <section>
-  <div class="section-label section-label--sendent">// WERKERVARING</div>
+  <div class="section-label section-label--accent">// WERKERVARING</div>
 
   <div class="cluster cluster--blue">
     <p class="cluster-note">// CLUSTER · OVERHEID & FINANCE — compliance, security, governance bij twee van de strengst gereguleerde organisaties van Nederland.</p>
