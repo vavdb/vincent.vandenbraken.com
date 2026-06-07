@@ -102,12 +102,66 @@ h3 {
   border-radius: 4px; padding: 14px 18px; margin-top: 16px; font-size: 13px; color: var(--v-text-secondary);
 }
 .highlight-box strong { color: var(--v-accent); }
+
+/* PRINT — invert to light theme, A4 */
+@media print {
+  body {
+    background: white !important;
+    background-image: none !important;
+    color: black !important;
+    zoom: 1 !important;
+  }
+  .page { max-width: 100% !important; padding: 28px 36px !important; }
+  .header {
+    border-image: none !important;
+    border-bottom: 2px solid #1e22aa !important;
+  }
+  h1 { color: #101820 !important; }
+  h2 {
+    color: #1e22aa !important;
+    border-bottom: 1px solid #ccc !important;
+  }
+  h3 { color: #101820 !important; }
+  .subtitle { color: #333 !important; }
+  .meta, .meta a { color: #555 !important; }
+  .back-link, .back-link a { color: #888 !important; }
+  .section p, .section li { color: #333 !important; }
+  .section strong { color: #101820 !important; }
+  .article {
+    background: #f8f8f8 !important;
+    border: 1px solid #ddd !important;
+    page-break-inside: avoid;
+  }
+  .article-title { color: #101820 !important; }
+  .article-meta { color: #666 !important; }
+  .article-stack { color: #1e22aa !important; }
+  .article li { color: #444 !important; }
+  .skill-grid { gap: 8px !important; }
+  .skill-item {
+    background: #f8f8f8 !important;
+    border: 1px solid #ddd !important;
+  }
+  .skill-label { color: #1e22aa !important; }
+  .skill-text { color: #444 !important; }
+  .badge {
+    background: #1e22aa !important;
+    color: white !important;
+  }
+  .highlight-box {
+    background: #fafafa !important;
+    border-left-color: #1e22aa !important;
+    color: #333 !important;
+  }
+  .highlight-box strong { color: #1e22aa !important; }
+  .no-print { display: none !important; }
+  section { page-break-inside: avoid; }
+}
 </style>
 </head>
 <body>
 <div class="page">
 
-<div class="back-link">← <a href="/">algemene CV</a> · getailord voor Mobile XL B.V.</div>
+<div class="back-link">← <a href="https://vincent.vandenbraken.com">algemene CV</a> · getailord voor Mobile XL B.V.</div>
 
 <div class="header">
   <div>
@@ -258,7 +312,7 @@ h3 {
 </section>
 
 <!-- TALEN -->
-<section class="section">
+<section class="section no-print">
   <h2>Talen</h2>
   <ul style="list-style:none;margin-top:8px;">
     <li style="font-size:14px;color:var(--v-text-secondary);">🇳🇱 <strong>Nederlands</strong> — moedertaal</li>
@@ -266,7 +320,7 @@ h3 {
   </ul>
 </section>
 
-<div style="margin-top:48px;padding-top:20px;border-top:1px solid var(--v-border);font-size:11px;color:var(--v-text-muted);">
+<div class="no-print" style="margin-top:48px;padding-top:20px;border-top:1px solid var(--v-border);font-size:11px;color:var(--v-text-muted);">
   Getailorde CV voor Mobile XL B.V. — Senior Developer & Technisch Adviseur · <a href="/" style="color:var(--v-blue-dim);">algemene CV</a>
 </div>
 
