@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>CV — Vincent van den Braken · Senior Web Developer</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --v-bg-deep:       #080B0A;
+  --v-bg-surface:    #0D1210;
+  --v-bg-elevated:   #141C18;
+  --v-border:        #1E2D25;
+  --v-border-glow:   #00E67620;
+  --v-sky:           #00BCD4;
+  --v-sky-dim:       #0097A7;
+  --v-sky-glow:      #00BCD433;
+  --v-green-primary: #00E676;
+  --v-green-dim:     #00C853;
+  --v-green-glow:    #00E67633;
+  --v-orange:        #FF9100;
+  --v-purple:        #B388FF;
+  --v-rose:          #FF80AB;
+  --v-text-primary:  #F0FFF4;
+  --v-text-secondary:#A8B5AD;
+  --v-text-muted:    #5A6B60;
+  --font-primary:    'JetBrains Mono', monospace;
+  --font-secondary:  'Geist', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background-color: var(--v-bg-deep);
+  background-image:
+    linear-gradient(rgba(0, 188, 212, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 188, 212, 0.04) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-attachment: fixed;
+  color: var(--v-text-primary);
+  font-family: var(--font-secondary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  zoom: 1.3;
+}
+
+.page {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 56px 64px;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+  padding-bottom: 28px;
+  border-bottom: 2px solid;
+  border-image: linear-gradient(90deg, var(--v-sky), var(--v-green-primary) 50%, var(--v-rose)) 1;
+}
+
+.header__name {
+  font-family: var(--font-primary);
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--v-text-primary);
+}
+
+.header__title {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--v-sky);
+  margin-top: 6px;
+  letter-spacing: 0.5px;
+  line-height: 1.5;
+}
+
+.header__contact {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  color: var(--v-text-muted);
+  text-align: right;
+  line-height: 1.8;
+  letter-spacing: 0.3px;
+}
+
+.header__contact a { color: var(--v-text-secondary); text-decoration: none; }
+.header__contact a:hover { color: var(--v-sky); }
+
+.availability {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--v-sky);
+  background-color: var(--v-sky-glow);
+  border: 1px solid var(--v-sky-glow);
+  border-radius: 999px;
+  padding: 4px 12px;
+  margin-top: 14px;
+}
+
+.availability__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--v-sky);
+  box-shadow: 0 0 4px var(--v-sky);
+}
+
+/* SECTIONS */
+section { margin-top: 36px; }
+
+.section-label {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--v-purple);
+  margin-bottom: 10px;
+}
+
+.section-label--sky { color: var(--v-sky); }
+.section-label--green { color: var(--v-green-primary); }
+.section-label--orange { color: var(--v-orange); }
+.section-label--purple { color: var(--v-purple); }
+
+.section__body p {
+  font-size: 14px;
+  color: var(--v-text-secondary);
+  line-height: 1.7;
+  margin-bottom: 8px;
+}
+
+/* STATS */
+.stats {
+  display: flex;
+  border: 1px solid var(--v-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--v-bg-surface);
+  margin-top: 12px;
+}
+
+.stat {
+  flex: 1;
+  padding: 18px 12px;
+  text-align: center;
+  border-right: 1px solid var(--v-border);
+}
+.stat:last-child { border-right: none; }
+
+.stat__num {
+  font-family: var(--font-primary);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.stat__num--sky { color: var(--v-sky); }
+.stat__num--green { color: var(--v-green-primary); }
+.stat__num--orange { color: var(--v-orange); }
+.stat__num--rose { color: var(--v-rose); }
+
+.stat__label {
+  font-family: var(--font-primary);
+  font-size: 10px;
+  color: var(--v-text-muted);
+  letter-spacing: 0.5px;
+  display: block;
+  margin-top: 6px;
+}
+
+.stat__sub {
+  font-family: var(--font-secondary);
+  font-size: 10px;
+  color: var(--v-text-muted);
+  display: block;
+  margin-top: 2px;
+}
+
+/* EXPERTISE TABLE */
+.expertise {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 13px;
+}
+
+.expertise th {
+  font-family: var(--font-primary);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--v-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--v-border);
+}
+
+.expertise td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--v-border);
+  color: var(--v-text-secondary);
+  vertical-align: top;
+  line-height: 1.6;
+}
+
+.expertise td:first-child {
+  font-family: var(--font-primary);
+  font-weight: 600;
+  color: var(--v-text-primary);
+  white-space: nowrap;
+  width: 160px;
+}
+
+.expertise tr:last-child td { border-bottom: none; }
+
+/* ROLES */
+.role {
+  background-color: var(--v-bg-elevated);
+  border: 1px solid var(--v-border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+}
+
+.role__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.role__title {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--v-text-primary);
+}
+
+.role__company {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--v-sky);
+}
+
+.role__period {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  color: var(--v-text-muted);
+  letter-spacing: 0.3px;
+}
+
+.role__stack {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  color: var(--v-text-muted);
+  letter-spacing: 0.3px;
+  margin-bottom: 8px;
+}
+
+.role__bullets {
+  list-style: none;
+  padding: 0;
+}
+
+.role__bullets li {
+  font-size: 13px;
+  color: var(--v-text-secondary);
+  line-height: 1.6;
+  padding-left: 14px;
+  position: relative;
+  margin-bottom: 4px;
+}
+
+.role__bullets li::before {
+  content: '·';
+  color: var(--v-sky);
+  position: absolute;
+  left: 4px;
+  font-weight: 700;
+}
+
+/* CLUSTER */
+.cluster {
+  border-left: 2px solid var(--v-green-primary);
+  padding: 14px 0 4px 16px;
+  margin-bottom: 12px;
+  background: linear-gradient(90deg, rgba(0, 230, 118, 0.06), transparent 70%);
+  border-radius: 0 8px 8px 0;
+}
+
+.cluster .role:last-child { margin-bottom: 0; }
+
+.cluster-note {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--v-green-primary);
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.cluster--orange {
+  border-left-color: var(--v-orange);
+  background: linear-gradient(90deg, rgba(255, 145, 0, 0.06), transparent 70%);
+}
+
+.cluster--orange .cluster-note { color: var(--v-orange); }
+
+/* SKILLS */
+.skills {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.skill {
+  background-color: var(--v-bg-elevated);
+  border: 1px solid var(--v-border);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+
+.skill__cat {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--v-orange);
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.skill__list {
+  font-family: var(--font-secondary);
+  font-size: 12px;
+  color: var(--v-text-secondary);
+  line-height: 1.5;
+}
+
+/* SIMPLE LIST */
+.simple-list {
+  list-style: none;
+  padding: 0;
+}
+.simple-list li {
+  font-size: 13px;
+  color: var(--v-text-secondary);
+  line-height: 1.7;
+  padding-left: 14px;
+  position: relative;
+}
+.simple-list li::before {
+  content: '·';
+  color: var(--v-purple);
+  position: absolute;
+  left: 4px;
+  font-weight: 700;
+}
+
+/* HIGHLIGHT */
+.highlight {
+  background-color: var(--v-bg-elevated);
+  border-left: 3px solid var(--v-sky);
+  padding: 16px 20px;
+  margin-top: 16px;
+  border-radius: 0 8px 8px 0;
+  font-size: 13px;
+  color: var(--v-text-primary);
+  line-height: 1.6;
+}
+
+.highlight em {
+  color: var(--v-sky);
+  font-style: normal;
+  font-weight: 600;
+}
+
+.back-link {
+  font-size: 12px;
+  color: var(--v-text-muted);
+  margin-bottom: 20px;
+}
+.back-link a { color: var(--v-sky); text-decoration: none; }
+.back-link a:hover { text-decoration: underline; }
+
+.footer-mark {
+  margin-top: 48px;
+  text-align: center;
+  font-family: var(--font-primary);
+  font-size: 10px;
+  color: var(--v-text-muted);
+  letter-spacing: 1px;
+}
+
+/* PRINT */
+@media print {
+  body { background: white !important; color: black !important; zoom: 1 !important; }
+  body::before, body::after { display: none !important; }
+  .page { padding: 28px 36px; max-width: 100%; }
+  .header { border-bottom: 1px solid #0097A7; }
+  .header__name { color: #101820 !important; }
+  .header__title { color: #0097A7 !important; }
+  .header__contact { color: #666 !important; }
+  .header__contact a { color: #1e22aa !important; }
+  .availability { border-color: #0097A7 !important; background: #E0F7FA !important; color: #006064 !important; }
+  .section-label { color: #B388FF !important; }
+  .section-label--sky { color: #0097A7 !important; }
+  .section-label--green { color: #00C853 !important; }
+  .section-label--orange { color: #FF9100 !important; }
+  .role, .skill, .stats, .highlight { background: #f8f8f8 !important; border-color: #ddd !important; }
+  .role__title, .stat__num--primary { color: #101820 !important; }
+  .role__company { color: #0097A7 !important; }
+  .role__period, .role__stack, .stat__label, .stat__sub { color: #666 !important; }
+  .role__bullets li, .simple-list li, .skill__list, .section__body p, .highlight { color: #333 !important; }
+  .skill__cat { color: #FF9100 !important; }
+  .stat__num--sky { color: #0097A7 !important; }
+  .stat__num--green { color: #00C853 !important; }
+  .stat__num--orange { color: #FF9100 !important; }
+  .stat__num--rose { color: #FF80AB !important; }
+  .role__bullets li::before { color: #0097A7 !important; }
+  .simple-list li::before, .cluster-note { color: #00C853 !important; }
+  .cluster { border-color: #00C853 !important; background: #f0fff4 !important; }
+  .cluster--orange { border-color: #FF9100 !important; background: #fff8eb !important; }
+  .cluster--orange .cluster-note { color: #FF9100 !important; }
+  .highlight { border-left-color: #0097A7 !important; }
+  .highlight em { color: #0097A7 !important; }
+  section { page-break-inside: avoid; }
+  .role { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="back-link">← <a href="/cvs">CV overzicht</a></div>
+
+<!-- HEADER -->
+<header class="header">
+  <div>
+    <h1 class="header__name">VINCENT VAN DEN BRAKEN</h1>
+    <div class="header__title">Senior Web Developer · Web &amp; CMS · Security &amp; Kwaliteit · Team Leadership</div>
+    <div class="availability">
+      <span class="availability__dot"></span>
+      Beschikbaar 1 augustus 2026
+    </div>
+  </div>
+  <div class="header__contact">
+    Urmond · 18-02-1980<br>
+    <a href="mailto:vincent@vandenbraken.com">vincent@vandenbraken.com</a><br>
+    <a href="tel:+31612960436">+31 (0)6 129 604 36</a><br>
+    <a href="https://linkedin.com/in/vincent-van-den-braken">LinkedIn</a> ·
+    <a href="https://github.com/vavdb">GitHub</a> ·
+    <a href="https://vincability.com">vincability.com</a>
+  </div>
+</header>
+
+<!-- PROFIEL -->
+<section>
+  <div class="section-label section-label--sky">// PROFIEL</div>
+  <div class="section__body">
+    <p>30 jaar softwareontwikkeling, laatste 10 in lead-rol. Sectoren: life sciences SaaS (EU-regulatoire compliance), enterprise finance (Rabobank), overheid (Belastingdienst), B2B mid-market.</p>
+    <p>Mijn kracht zit in de combinatie van <strong style="color: var(--v-text-primary);">hands-on development</strong> en <strong style="color: var(--v-text-primary);">technisch leiderschap</strong>: ik lever zelf code, maar waak ook over de kwaliteit van het team. Ik denk in patronen — security, toegankelijkheid en onderhoudbaarheid zijn ontwerpkeuzes, geen checkboxen.</p>
+    <p><strong style="color: var(--v-text-primary);">Security &amp; privacy zijn vakmanschap.</strong> In gereguleerde domeinen (medisch, financieel, overheid) is AVG-compliance, OWASP-discipline en data-grens-bewaking een ontwerpbeslissing op dag één — geen post-merge fix.</p>
+  </div>
+</section>
+
+<!-- KERNCIJFERS -->
+<section>
+  <div class="section-label section-label--green">// KERNCIJFERS</div>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat__num stat__num--sky">30</div>
+      <span class="stat__label">JAAR ERVARING</span>
+      <span class="stat__sub">softwareontwikkeling</span>
+    </div>
+    <div class="stat">
+      <div class="stat__num stat__num--green">10</div>
+      <span class="stat__label">JAAR LEAD</span>
+      <span class="stat__sub">team- &amp; technisch leiderschap</span>
+    </div>
+    <div class="stat">
+      <div class="stat__num stat__num--orange">7+</div>
+      <span class="stat__label">JAAR CMS</span>
+      <span class="stat__sub">webplatformen &amp; portals</span>
+    </div>
+    <div class="stat">
+      <div class="stat__num stat__num--rose">50+</div>
+      <span class="stat__label">PROJECTEN</span>
+      <span class="stat__sub">van corporate site tot SaaS</span>
+    </div>
+  </div>
+</section>
+
+<!-- RELEVANTE EXPERTISE -->
+<section>
+  <div class="section-label section-label--orange">// RELEVANTE EXPERTISE</div>
+  <table class="expertise">
+    <thead>
+      <tr><th>Gebied</th><th>Ervaring</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Web &amp; CMS</td>
+        <td>7+ jaar CMS-ontwikkeling (Umbraco, Orchard, Novulo); corporate sites, webapplicaties, portal-oplossingen, webshops</td>
+      </tr>
+      <tr>
+        <td>Frontend</td>
+        <td>Blazor, Vue, JavaScript, TypeScript, responsive design, WCAG-toegankelijkheid</td>
+      </tr>
+      <tr>
+        <td>Backend &amp; API</td>
+        <td>C#, PHP (via CMS-platformen), REST/GraphQL API's, microservices, background workers</td>
+      </tr>
+      <tr>
+        <td>Security &amp; Compliance</td>
+        <td>OWASP top 10, AVG-compliance in medische/financiële context, autorisatiemodellen, audit trails, data-grenzen — ISO27001/NEN7510-discipline</td>
+      </tr>
+      <tr>
+        <td>Team Leadership</td>
+        <td>Code reviews, CI/CD-discipline, testautomatisering, mentorship, remote team-aansturing (ook offshore)</td>
+      </tr>
+      <tr>
+        <td>DevOps &amp; CI/CD</td>
+        <td>GitHub Actions, Azure DevOps, staging/productie-omgevingen, infrastructure-as-code, Docker</td>
+      </tr>
+      <tr>
+        <td>Agile / Scrum</td>
+        <td>Scrum-master, sprint planning, retrospectives, stakeholder-afstemming</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- WERKERVARING -->
+<section>
+  <div class="section-label section-label--sky">// WERKERVARING</div>
+
+  <div class="cluster">
+    <p class="cluster-note">// CLUSTER · LIFE-SCIENCES HOLDING — drie zusterorganisaties onder één holding, elk eigen domein en stakeholders.</p>
+
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Technical Lead</span> ·
+          <span class="role__company">SkinConsult</span>
+        </div>
+        <span class="role__period">dec 2021 – aug 2026</span>
+      </div>
+      <div class="role__stack">Stack: .NET · Azure · Blazor · PHP · AI-workflows · Team leadership</div>
+      <ul class="role__bullets">
+        <li>Technisch eindverantwoordelijke voor SaaS-platform in gereguleerde (EU) zorgmarkt.</li>
+        <li>Teamlead: code reviews, pair programming, remote team-aansturing (ook offshore).</li>
+        <li><strong>Security &amp; compliance:</strong> AVG-proof data-architectuur, autorisatiemodel, audit trail — vereisten die direct aansluiten op ISO27001/NEN7510-discipline.</li>
+        <li>Modernisering legacy webplatform naar modulair framework zonder productie-onderbreking.</li>
+      </ul>
+    </article>
+
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Technical Consultant</span> ·
+          <span class="role__company">Allergie Centra Nederland</span>
+        </div>
+        <span class="role__period">jun 2023 – aug 2026</span>
+      </div>
+      <div class="role__stack">Stack: Azure · .NET · API's · Cloudflare · GitHub Actions</div>
+      <ul class="role__bullets">
+        <li>Technische consultancy op Azure-systemen parallel aan SkinConsult-rol.</li>
+        <li>Custom API's, datapijplijnen en webintegraties — direct toepasbaar op API-koppelingen in agency-context.</li>
+        <li>Security-by-design in patient-data-context.</li>
+      </ul>
+    </article>
+
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Technical Lead</span> ·
+          <span class="role__company">Dermatologisch Centrum Utrecht</span>
+        </div>
+        <span class="role__period">dec 2021 – mei 2023</span>
+      </div>
+      <div class="role__stack">Stack: .NET · Cloud-native · DevOps</div>
+      <ul class="role__bullets">
+        <li>Cloud-native backoffice en domeinspecifieke web-API's.</li>
+        <li>End-to-end DevOps: edge tot infra.</li>
+      </ul>
+    </article>
+  </div>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Technical Team Lead</span> ·
+        <span class="role__company">Belastingdienst</span>
+      </div>
+      <span class="role__period">mei 2018 – mrt 2019</span>
+    </div>
+    <div class="role__stack">Stack: .NET Core · CI/CD · Test Automatisering</div>
+    <ul class="role__bullets">
+      <li>Lead technical architect: dashboard-ontwikkeling, testautomatisering ter vervanging handmatige regressie, CI/CD.</li>
+      <li>Kwaliteitscultuur geïntroduceerd: code reviews, automated testing, structured logging.</li>
+    </ul>
+  </article>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Full Stack .NET Developer</span> ·
+        <span class="role__company">Rabobank</span>
+      </div>
+      <span class="role__period">sep 2017 – apr 2018</span>
+    </div>
+    <div class="role__stack">Stack: .NET MVC · Analysis Services · CI/CD</div>
+    <ul class="role__bullets">
+      <li>Financieel dashboard herbouwd; pull request peer review ingevoerd als procesverbetering.</li>
+    </ul>
+  </article>
+
+  <div class="cluster cluster--orange">
+    <p class="cluster-note">// CLUSTER · CMS &amp; WEB — de meest relevante periode voor een Drupal/Symfony/Vue-agency.</p>
+
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Senior Developer &amp; Team Leader</span> ·
+          <span class="role__company">Deltec Software BV</span>
+        </div>
+        <span class="role__period">jan 2010 – mei 2017</span>
+      </div>
+      <div class="role__stack">Stack: C# · CMS (Umbraco, Orchard, Novulo) · CI/CD · Webapplicaties</div>
+      <ul class="role__bullets">
+        <li><strong>7,5 jaar.</strong> Lead developer en teamleider op webshops, corporate sites en CMS-applicaties.</li>
+        <li>Sturing van interne en externe ontwikkelteams — direct toepasbaar op Betawerk's team-aansturingsvraag.</li>
+        <li>CI/CD, automated testing en review-cultuur geïntroduceerd.</li>
+        <li><strong>Relevant:</strong> uitgebreide ervaring met CMS-platformen, webapplicaties en team-aansturing.</li>
+      </ul>
+    </article>
+
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Project Development Manager</span> ·
+          <span class="role__company">True People BV</span>
+        </div>
+        <span class="role__period">2019 – 2021</span>
+      </div>
+      <div class="role__stack">Stack: Umbraco CMS · Projectmanagement · Teamlead</div>
+      <ul class="role__bullets">
+        <li>Webplatform-ontwikkeling en team-aansturing voor B2B-dienstverlening.</li>
+        <li>Umbraco CMS-implementaties: corporate sites, portals, API-koppelingen.</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<!-- WAAROM BETAWERK -->
+<section>
+  <div class="section-label section-label--green">// WAAROM DEZE MATCH</div>
+  <div class="highlight">
+    <em>Senior web developer</em> die <em>codekwaliteit bewaakt</em>, <em>teams aanstuurt</em> en <em>meebouwt</em> aan maatschappelijk relevante projecten — dat ben ik. Mijn portfolio omvat corporate sites, webapplicaties, API-koppelingen en complexe CMS-oplossingen voor overheid, zorg en bedrijfsleven.
+    <br><br>
+    Hoewel mijn primaire stack .NET is, is webdevelopment mijn vak — talen en frameworks zijn gereedschap. Mijn waarde zit in <em>architectuur</em>, <em>kwaliteitsdiscipline</em> en <em>team leadership</em> — dat is stack-onafhankelijk.
+  </div>
+</section>
+
+<!-- VAARDIGHEDEN -->
+<section>
+  <div class="section-label section-label--purple">// VAARDIGHEDEN</div>
+  <div class="skills">
+    <div class="skill">
+      <div class="skill__cat">CMS &amp; Webplatformen</div>
+      <div class="skill__list">Umbraco, Orchard, Novulo — 7+ jaar CMS-ontwikkeling. Architectuur, thema's, modules, API-koppelingen. Direct toepasbaar op Drupal-ecosysteem.</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Frontend</div>
+      <div class="skill__list">Vue, JavaScript, TypeScript, Blazor, HTML/CSS, responsive design, WCAG-toegankelijkheid</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Backend</div>
+      <div class="skill__list">C#/.NET, PHP (CMS-context), REST/GraphQL API's, background services, microservices-architectuur</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Security</div>
+      <div class="skill__list">OWASP, AVG, NEN 7510, autorisatiemodellen, audit trails, tenant-isolatie, data-minimalisatie</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">DevOps</div>
+      <div class="skill__list">GitHub Actions, Azure DevOps, CI/CD-pipelines, staging/productie, Docker</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Team &amp; Proces</div>
+      <div class="skill__list">Code reviews, Scrum, sprint planning, remote team-aansturing, offshore handover, mentorship</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Cloud</div>
+      <div class="skill__list">Azure (App Services, Functions, Service Bus), Cloudflare Edge, Proxmox (homelab)</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Data &amp; Opslag</div>
+      <div class="skill__list">MS SQL Server, PostgreSQL, Azure SQL, Redis-caching, blob storage, search-indexering</div>
+    </div>
+  </div>
+</section>
+
+<!-- TALEN -->
+<section>
+  <div class="section-label section-label--orange">// TALEN</div>
+  <ul class="simple-list">
+    <li>Nederlands (moedertaal)</li>
+    <li>Engels (volledige professionele vaardigheid)</li>
+    <li>Spaans (basis)</li>
+  </ul>
+</section>
+
+<div class="footer-mark">
+  // CV · 2026 · Senior Web Developer · vincability.com
+</div>
+
+</div>
+</body>
+</html>
