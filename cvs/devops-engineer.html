@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>CV — Vincent van den Braken · DevOps Engineer</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --v-bg-deep:       #080B0A;
+  --v-bg-surface:    #0D1210;
+  --v-bg-elevated:   #141C18;
+  --v-border:        #1E2D25;
+  --v-energy-primary:#FFC107;
+  --v-energy-dim:    #FFB300;
+  --v-energy-glow:   #FFC10722;
+  --v-teal:          #26A69A;
+  --v-teal-dim:      #00897B;
+  --v-purple:        #B388FF;
+  --v-text-primary:  #F0FFF4;
+  --v-text-secondary:#A8B5AD;
+  --v-text-muted:    #5A6B60;
+  --font-primary:    'JetBrains Mono', monospace;
+  --font-secondary:  'Geist', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background-color: var(--v-bg-deep);
+  background-image:
+    linear-gradient(rgba(255, 193, 7, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 193, 7, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-attachment: fixed;
+  color: var(--v-text-primary);
+  font-family: var(--font-secondary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  zoom: 1.3;
+}
+
+.page {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 56px 64px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+  padding-bottom: 28px;
+  border-bottom: 2px solid;
+  border-image: linear-gradient(90deg, var(--v-energy-primary), var(--v-teal) 50%, var(--v-purple)) 1;
+}
+
+.header__name {
+  font-family: var(--font-primary);
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--v-text-primary);
+}
+
+.header__title {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--v-energy-primary);
+  margin-top: 6px;
+  letter-spacing: 0.5px;
+  line-height: 1.5;
+}
+
+.header__contact {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  color: var(--v-text-muted);
+  text-align: right;
+  line-height: 1.8;
+  letter-spacing: 0.3px;
+}
+.header__contact a { color: var(--v-text-secondary); text-decoration: none; }
+.header__contact a:hover { color: var(--v-energy-primary); }
+
+.availability {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--v-energy-primary);
+  background-color: var(--v-energy-glow);
+  border: 1px solid var(--v-energy-glow);
+  border-radius: 999px;
+  padding: 4px 12px;
+  margin-top: 14px;
+}
+
+.availability__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--v-energy-primary);
+  box-shadow: 0 0 4px var(--v-energy-primary);
+}
+
+section { margin-top: 36px; }
+
+.section-label {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--v-purple);
+  margin-bottom: 10px;
+}
+
+.section-label--energy { color: var(--v-energy-primary); }
+.section-label--teal { color: var(--v-teal); }
+.section-label--purple { color: var(--v-purple); }
+
+.section__body p {
+  font-size: 14px;
+  color: var(--v-text-secondary);
+  line-height: 1.7;
+  margin-bottom: 8px;
+}
+
+/* MATCH TABLE */
+.match-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 13px;
+}
+
+.match-table th {
+  font-family: var(--font-primary);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--v-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--v-border);
+}
+
+.match-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--v-border);
+  vertical-align: top;
+  line-height: 1.6;
+}
+
+.match-table td:first-child {
+  font-family: var(--font-primary);
+  font-weight: 600;
+  color: var(--v-text-primary);
+  white-space: nowrap;
+  width: 180px;
+}
+
+.match-table td:nth-child(2) {
+  color: var(--v-energy-primary);
+  font-weight: 600;
+  white-space: nowrap;
+  width: 100px;
+}
+
+.match-table td:nth-child(3) {
+  color: var(--v-text-secondary);
+}
+
+.match-table tr:last-child td { border-bottom: none; }
+
+.tag--expert {
+  color: var(--v-energy-primary);
+}
+.tag--senior {
+  color: var(--v-teal);
+}
+.tag--medior {
+  color: var(--v-purple);
+}
+
+/* STATS */
+.stats {
+  display: flex;
+  border: 1px solid var(--v-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--v-bg-surface);
+  margin-top: 12px;
+}
+
+.stat {
+  flex: 1;
+  padding: 18px 12px;
+  text-align: center;
+  border-right: 1px solid var(--v-border);
+}
+.stat:last-child { border-right: none; }
+
+.stat__num {
+  font-family: var(--font-primary);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.stat__num--energy { color: var(--v-energy-primary); }
+.stat__num--teal { color: var(--v-teal); }
+.stat__num--purple { color: var(--v-purple); }
+
+.stat__label {
+  font-family: var(--font-primary);
+  font-size: 10px;
+  color: var(--v-text-muted);
+  letter-spacing: 0.5px;
+  display: block;
+  margin-top: 6px;
+}
+
+.stat__sub {
+  font-family: var(--font-secondary);
+  font-size: 10px;
+  color: var(--v-text-muted);
+  display: block;
+  margin-top: 2px;
+}
+
+/* ROLES */
+.role {
+  background-color: var(--v-bg-elevated);
+  border: 1px solid var(--v-border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+}
+
+.role__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.role__title {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--v-text-primary);
+}
+
+.role__company {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--v-energy-primary);
+}
+
+.role__period {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  color: var(--v-text-muted);
+  letter-spacing: 0.3px;
+}
+
+.role__stack {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  color: var(--v-text-muted);
+  letter-spacing: 0.3px;
+  margin-bottom: 8px;
+}
+
+.role__bullets {
+  list-style: none;
+  padding: 0;
+}
+
+.role__bullets li {
+  font-size: 13px;
+  color: var(--v-text-secondary);
+  line-height: 1.6;
+  padding-left: 14px;
+  position: relative;
+  margin-bottom: 4px;
+}
+
+.role__bullets li::before {
+  content: '·';
+  color: var(--v-energy-primary);
+  position: absolute;
+  left: 4px;
+  font-weight: 700;
+}
+
+/* CLUSTER */
+.cluster {
+  border-left: 2px solid var(--v-teal);
+  padding: 14px 0 4px 16px;
+  margin-bottom: 12px;
+  background: linear-gradient(90deg, rgba(38, 166, 154, 0.06), transparent 70%);
+  border-radius: 0 8px 8px 0;
+}
+
+.cluster .role:last-child { margin-bottom: 0; }
+
+.cluster-note {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--v-teal);
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.cluster--energy {
+  border-left-color: var(--v-energy-primary);
+  background: linear-gradient(90deg, rgba(255, 193, 7, 0.06), transparent 70%);
+}
+
+.cluster--energy .cluster-note { color: var(--v-energy-primary); }
+
+/* SKILLS */
+.skills {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.skill {
+  background-color: var(--v-bg-elevated);
+  border: 1px solid var(--v-border);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+
+.skill__cat {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--v-energy-primary);
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.skill__list {
+  font-family: var(--font-secondary);
+  font-size: 12px;
+  color: var(--v-text-secondary);
+  line-height: 1.5;
+}
+
+/* SIMPLE LIST */
+.simple-list {
+  list-style: none;
+  padding: 0;
+}
+.simple-list li {
+  font-size: 13px;
+  color: var(--v-text-secondary);
+  line-height: 1.7;
+  padding-left: 14px;
+  position: relative;
+}
+.simple-list li::before {
+  content: '·';
+  color: var(--v-teal);
+  position: absolute;
+  left: 4px;
+  font-weight: 700;
+}
+
+.back-link {
+  font-size: 12px;
+  color: var(--v-text-muted);
+  margin-bottom: 20px;
+}
+.back-link a { color: var(--v-teal); text-decoration: none; }
+.back-link a:hover { text-decoration: underline; }
+
+.footer-mark {
+  margin-top: 48px;
+  text-align: center;
+  font-family: var(--font-primary);
+  font-size: 10px;
+  color: var(--v-text-muted);
+  letter-spacing: 1px;
+}
+
+@media print {
+  body { background: white !important; color: black !important; zoom: 1 !important; }
+  .page { padding: 28px 36px; max-width: 100%; }
+  .header { border-bottom: 1px solid #FFB300; }
+  .header__name { color: #101820 !important; }
+  .header__title { color: #FFB300 !important; }
+  .header__contact { color: #666 !important; }
+  .header__contact a { color: #1e22aa !important; }
+  .availability { border-color: #FFB300 !important; background: #FFF8E1 !important; color: #F57F17 !important; }
+  .section-label { color: #B388FF !important; }
+  .section-label--energy { color: #FFB300 !important; }
+  .section-label--teal { color: #00897B !important; }
+  .role, .skill, .stats { background: #f8f8f8 !important; border-color: #ddd !important; }
+  .role__title { color: #101820 !important; }
+  .role__company { color: #FFB300 !important; }
+  .role__period, .role__stack { color: #666 !important; }
+  .role__bullets li, .simple-list li, .skill__list, .section__body p { color: #333 !important; }
+  .skill__cat { color: #FFB300 !important; }
+  .role__bullets li::before { color: #FFB300 !important; }
+  .simple-list li::before { color: #00897B !important; }
+  .cluster { border-color: #00897B !important; background: #f0fffa !important; }
+  .cluster-note { color: #00897B !important; }
+  .cluster--energy { border-color: #FFB300 !important; background: #fff8eb !important; }
+  .match-table td, .match-table th { color: #333 !important; border-color: #ddd !important; }
+  .match-table td:first-child { color: #101820 !important; }
+  .match-table td:nth-child(2) { color: #FFB300 !important; }
+  section { page-break-inside: avoid; }
+  .role { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="back-link">← <a href="/cvs">CV overzicht</a></div>
+
+<!-- HEADER -->
+<header class="header">
+  <div>
+    <h1 class="header__name">VINCENT VAN DEN BRAKEN</h1>
+    <div class="header__title">DevOps Engineer · Cloud &amp; Infrastructuur · CI/CD · Security &amp; Compliance</div>
+    <div class="availability">
+      <span class="availability__dot"></span>
+      Beschikbaar 1 augustus 2026
+    </div>
+  </div>
+  <div class="header__contact">
+    Urmond · 18-02-1980<br>
+    <a href="mailto:vincent@vandenbraken.com">vincent@vandenbraken.com</a><br>
+    <a href="tel:+316****0436">+31 (0)6 129 604 36</a><br>
+    <a href="https://linkedin.com/in/vincent-van-den-braken">LinkedIn</a> ·
+    <a href="https://github.com/vavdb">GitHub</a> ·
+    <a href="https://vincability.com">vincability.com</a>
+  </div>
+</header>
+
+<!-- PROFIEL -->
+<section>
+  <div class="section-label section-label--energy">// PROFIEL</div>
+  <div class="section__body">
+    <p>30 jaar softwareontwikkeling en infrastructuurbeheer, laatste 10 in lead-rol. Sectoren: life sciences SaaS (EU-regulatoire compliance), enterprise finance (Rabobank), overheid (Belastingdienst), B2B mid-market.</p>
+    <p>DevOps is geen functietitel voor mij — het is hoe ik werk. Ik heb CI/CD-culturen geïntroduceerd bij organisaties die nog handmatig deployeden. Ik beheer zelf al 20+ jaar een eigen infrastructuur (Proxmox, Linux, networking) en breng die hands-on mentaliteit mee naar enterprise-omgevingen. <strong style="color: var(--v-text-primary);">Security, compliance en lifecycle management</strong> zijn in mijn gereguleerde domeinen (medisch: NEN 7510, financieel, overheid) geen bijzaak maar ontwerpvoorwaarde.</p>
+  </div>
+</section>
+
+<!-- FIT ANALYSE -->
+<section>
+  <div class="section-label section-label--teal">// FIT ANALYSE — APG DEVOPS ENGINEER</div>
+  <table class="match-table">
+    <thead>
+      <tr><th>Technologie</th><th>Niveau</th><th>Bewijs / Context</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Qlik Sense</td>
+        <td><span class="tag--medior">Basis</span></td>
+        <td>PowerBI, Analysis Services, R — zelfde BI/analytics-domein. Qlik pak ik binnen weken op.</td>
+      </tr>
+      <tr>
+        <td>Alteryx</td>
+        <td><span class="tag--medior">Nieuw</span></td>
+        <td>Parallelle ervaring met ETL, datapijplijnen, Python/R-gebaseerde data pipelines.</td>
+      </tr>
+      <tr>
+        <td>Posit / Python / R</td>
+        <td><span class="tag--medior">Medior</span></td>
+        <td>Python: dagelijks gebruik, scripts, data processing, automatisering. R: cursussen, data-analyse, PowerBI-koppelingen.</td>
+      </tr>
+      <tr>
+        <td>Databricks</td>
+        <td><span class="tag--medior">Nieuw</span></td>
+        <td>Azure-ecosysteem-ervaring (Functions, Service Bus, Event Grid) — Databricks past in dat landschap.</td>
+      </tr>
+      <tr>
+        <td>SQL Server / Databases</td>
+        <td><span class="tag--expert">Expert</span></td>
+        <td>15+ jaar MS SQL Server. PostgreSQL, Azure SQL, Redis. Ontwerp, optimalisatie, migraties.</td>
+      </tr>
+      <tr>
+        <td>Linux &amp; Windows Server</td>
+        <td><span class="tag--senior">Senior</span></td>
+        <td>Linux: eigen infra (Ubuntu, Proxmox), bash, systemd, hardening. Windows Server: 20+ jaar, enterprise-omgevingen.</td>
+      </tr>
+      <tr>
+        <td>Azure / Azure DevOps / Git</td>
+        <td><span class="tag--expert">Expert</span></td>
+        <td>Azure (App Services, Functions, Service Bus, Key Vault, Bicep). Azure DevOps + GitHub Actions. Git: dagelijks sinds introductie.</td>
+      </tr>
+      <tr>
+        <td>IAM / AD / Entra ID</td>
+        <td><span class="tag--medior">Bekend</span></td>
+        <td>Autorisatiemodellen, tenant-isolatie, Azure AD B2C. Bewust van IAM-discipline uit gereguleerde context.</td>
+      </tr>
+      <tr>
+        <td>Monitoring &amp; Logging</td>
+        <td><span class="tag--senior">Senior</span></td>
+        <td>Gestructureerde logging, Application Insights, eigen monitoring (Grafana, HA, Uptime Kuma). Incidentmanagement bij Belastingdienst.</td>
+      </tr>
+      <tr>
+        <td>Jira / ServiceNow</td>
+        <td><span class="tag--medior">Bekend</span></td>
+        <td>Jira (Scrum/agile), Azure Boards. ServiceNow-concepten bekend via ITIL-context.</td>
+      </tr>
+      <tr>
+        <td>CI/CD / Scripting / Automation</td>
+        <td><span class="tag--expert">Expert</span></td>
+        <td>GitHub Actions, Azure DevOps, Jenkins. Bash, Python, PowerShell. Full pipeline-automatisering.</td>
+      </tr>
+      <tr>
+        <td>Security / Compliance / Lifecycle</td>
+        <td><span class="tag--senior">Senior</span></td>
+        <td>NEN 7510, AVG, OWASP. Lifecycle management in medische SaaS. Security-by-design.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- KERNCIJFERS -->
+<section>
+  <div class="section-label section-label--energy">// KERNCIJFERS</div>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat__num stat__num--energy">30</div>
+      <span class="stat__label">JAAR IT</span>
+      <span class="stat__sub">ontwikkeling &amp; infra</span>
+    </div>
+    <div class="stat">
+      <div class="stat__num stat__num--teal">10</div>
+      <span class="stat__label">JAAR LEAD</span>
+      <span class="stat__sub">technisch leiderschap</span>
+    </div>
+    <div class="stat">
+      <div class="stat__num stat__num--purple">8</div>
+      <span class="stat__label">PLATFORMEN</span>
+      <span class="stat__sub">in APG-stack overlap</span>
+    </div>
+  </div>
+</section>
+
+<!-- INFRASTRUCTUUR & HOMELAB -->
+<section>
+  <div class="section-label section-label--purple">// INFRASTRUCTUUR &amp; HOMELAB</div>
+  <div class="section__body">
+    <p>Naast enterprise-ervaring beheer ik al 20+ jaar een eigen infrastructuur — begonnen als hobby met FreeBSD routers en traffic shaping, uitgegroeid tot een volwaardige private cloud. Deze ervaring overbrugt de kloof tussen enterprise-cloud en on-premise/Linux-werelden die APG vraagt.</p>
+  </div>
+  <div class="skills">
+    <div class="skill">
+      <div class="skill__cat">Virtualisatie &amp; Hosting</div>
+      <div class="skill__list">Proxmox VE (KVM/LXC, ZFS storage, VLAN), Ubuntu VPS (Nginx, SSL, firewall), Docker, LXC</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Infrastructure as Code</div>
+      <div class="skill__list">Bicep (Azure — professioneel), YAML-based configuratie, CI/CD pipelines (GitHub Actions, Azure DevOps, Jenkins)</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Self-hosted Stack</div>
+      <div class="skill__list">Home Assistant (200+ devices), Nextcloud, monitoring (Grafana, Uptime Kuma), Telegram alerts</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Linux &amp; Networking</div>
+      <div class="skill__list">Ubuntu Server (systemd, cron, ssh, hardening), *BSD networking (FreeBSD router — traffic shaping, NAT), bash scripting</div>
+    </div>
+  </div>
+</section>
+
+<!-- WERKERVARING -->
+<section>
+  <div class="section-label section-label--energy">// WERKERVARING</div>
+
+  <div class="cluster">
+    <p class="cluster-note">// CLUSTER · LIFE-SCIENCES HOLDING — Azure, security, compliance, platformbeheer</p>
+
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Technical Lead</span> ·
+          <span class="role__company">SkinConsult</span>
+        </div>
+        <span class="role__period">dec 2021 – aug 2026</span>
+      </div>
+      <div class="role__stack">Stack: Azure · .NET · Blazor · AI-workflows · CI/CD · Team leadership</div>
+      <ul class="role__bullets">
+        <li>Eindverantwoordelijk voor cloud-native SaaS-platform in gereguleerde zorgmarkt.</li>
+        <li>Azure DevOps + GitHub Actions: CI/CD pipelines, staging/productie-deployments, infrastructure-as-code.</li>
+        <li>Lifecycle management: phased modernization van legacy naar modulair platform, 319k regels tech debt verwijderd.</li>
+        <li>Security &amp; compliance: AVG, NEN 7510-discipline, autorisatiemodel, audit trails, tenant-isolatie.</li>
+        <li>Incidentmanagement en monitoring: Application Insights, structured logging, severity-classificatie.</li>
+      </ul>
+    </article>
+
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Technical Consultant</span> ·
+          <span class="role__company">Allergie Centra Nederland</span>
+        </div>
+        <span class="role__period">jun 2023 – aug 2026</span>
+      </div>
+      <div class="role__stack">Stack: Azure · Cloudflare · GitHub Actions · API's · Datapijplijnen</div>
+      <ul class="role__bullets">
+        <li>Azure-systeembeheer en -consultancy, parallel aan SkinConsult.</li>
+        <li>Custom integraties, datapijplijnen, document-workflows — operationele ondersteuning en doorontwikkeling.</li>
+        <li>Edge + DevOps end-to-end: Cloudflare, Azure infra, CI/CD, infrastructure-as-code.</li>
+        <li>Security-by-design in patient-data-context: data-grenzen, autorisatie, audit trail.</li>
+      </ul>
+    </article>
+  </div>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Technical Team Lead</span> ·
+        <span class="role__company">Belastingdienst</span>
+      </div>
+      <span class="role__period">mei 2018 – mrt 2019</span>
+    </div>
+    <div class="role__stack">Stack: .NET Core · CI/CD · Test Automatisering · Azure</div>
+    <ul class="role__bullets">
+      <li>Lead technical architect: dashboard-ontwikkeling voor enterprise-omgeving.</li>
+      <li>CI/CD-pipelines, structured logging en testautomatisering opgezet — verving handmatige regressie.</li>
+      <li>Incidentmanagement en deployment-automatisering geïntroduceerd.</li>
+    </ul>
+  </article>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Full Stack .NET Developer</span> ·
+        <span class="role__company">Rabobank</span>
+      </div>
+      <span class="role__period">sep 2017 – apr 2018</span>
+    </div>
+    <div class="role__stack">Stack: .NET MVC · Analysis Services · CI/CD · Enterprise</div>
+    <ul class="role__bullets">
+      <li>Enterprise finance-omgeving: Stuurset Financieel herbouwd met Analysis Services.</li>
+      <li>Pull request peer review ingevoerd als procesverbetering — CI/CD-cultuur gestart.</li>
+    </ul>
+  </article>
+
+  <div class="cluster cluster--energy">
+    <p class="cluster-note">// CLUSTER · INFRASTRUCTUUR &amp; PLATFORMBEHEER — de basis in operations</p>
+
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Senior Developer &amp; Team Leader</span> ·
+          <span class="role__company">Deltec Software BV</span>
+        </div>
+        <span class="role__period">jan 2010 – mei 2017</span>
+      </div>
+      <div class="role__stack">Stack: C# · CI/CD · Jenkins · SQL Server · B2B-platformen</div>
+      <ul class="role__bullets">
+        <li>7,5 jaar. Lead developer en teamleider op web- en CMS-applicaties.</li>
+        <li>CI/CD, automated testing en pull-request review-cultuur geïntroduceerd — van handmatige deploys naar geautomatiseerde pipelines.</li>
+        <li>SQL Server: ontwerp, optimalisatie, stored procedures, ETL-processen.</li>
+        <li>Serverbeheer: Windows Server, IIS, DNS, netwerk.</li>
+      </ul>
+    </article>
+
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Senior Software Developer</span> ·
+          <span class="role__company">RoutIT (contract)</span>
+        </div>
+        <span class="role__period">1999 – 2001</span>
+      </div>
+      <div class="role__stack">Stack: Klantsupport · Monitoring · Ticketingsystemen</div>
+      <ul class="role__bullets">
+        <li>Eerste klantsupport/ticketingsysteem — basis in incidentmanagement en monitoring.</li>
+        <li>Netwerkbeheer en traffic shaping (FreeBSD) — de fundamenten van operations.</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<!-- SKILLS OVERZICHT -->
+<section>
+  <div class="section-label section-label--teal">// VAARDIGHEDEN</div>
+  <div class="skills">
+    <div class="skill">
+      <div class="skill__cat">Cloud &amp; Azure</div>
+      <div class="skill__list">Azure (App Services, Functions, Service Bus, Key Vault, Bicep), Cloudflare Edge, multi-tenant SaaS</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">CI/CD &amp; DevOps</div>
+      <div class="skill__list">GitHub Actions, Azure DevOps, Jenkins, Git, automated testing, release management</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Scripting &amp; Automation</div>
+      <div class="skill__list">Bash, Python, PowerShell — automatisering van infra-tot deployment-taken</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Databases</div>
+      <div class="skill__list">MS SQL Server (15+ jaar), PostgreSQL, Azure SQL, Redis, MongoDB (basis)</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Besturingssystemen</div>
+      <div class="skill__list">Linux (Ubuntu, Proxmox, bash, hardening), Windows Server (20+ jaar, IIS, AD)</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Security &amp; Compliance</div>
+      <div class="skill__list">AVG, NEN 7510, OWASP, autorisatiemodellen, audit trails, tenant-isolatie, IAM-basis</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Monitoring &amp; Logging</div>
+      <div class="skill__list">Application Insights, structured logging, Grafana, Uptime Kuma, incidentmanagement</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Data &amp; Analytics</div>
+      <div class="skill__list">Python (medior), R (basis), PowerBI, Analysis Services, ETL-pipelines, data processing</div>
+    </div>
+  </div>
+</section>
+
+<!-- TALEN -->
+<section>
+  <div class="section-label section-label--purple">// TALEN</div>
+  <ul class="simple-list">
+    <li>Nederlands (moedertaal)</li>
+    <li>Engels (full professional proficiency)</li>
+  </ul>
+</section>
+
+<!-- WAAROM APG -->
+<section>
+  <div class="section-label section-label--energy">// WAAROM APG</div>
+  <div class="section__body">
+    <p>Urmond → Heerlen is 15 minuten. APG's beweging naar Azure en AI sluit naadloos aan op waar ik de afgelopen 5 jaar aan heb gewerkt: cloud-native platformen, CI/CD-discipline, en security-by-design in gereguleerde omgevingen. Jullie stack is breed — Azure/Git/CI/CD is waar ik expert in ben, Linux/Windows/SQL Server is waar ik in woon, en Python/datapijplijnen is waar ik me in blijf verdiepen. De combinatie van <strong style="color: var(--v-text-primary);">operationeel beheer en technische doorontwikkeling</strong> die jullie vragen is precies hoe ik de afgelopen 30 jaar heb gewerkt.</p>
+  </div>
+</section>
+
+<div class="footer-mark">
+  // CV · 2026 · DevOps Engineer Self Service &amp; Data Science · vincability.com
+</div>
+
+</div>
+</body>
+</html>
