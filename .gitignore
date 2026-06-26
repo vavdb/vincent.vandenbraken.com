@@ -6,3 +6,6 @@
 .netlify
 cvs/index.html
 .playwright-mcp/
+
+# Lokaal agent-context bestand (stemprofiel + privé pad), niet publiceren
+AGENTS.md
