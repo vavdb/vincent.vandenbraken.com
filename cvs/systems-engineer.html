@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV — Vincent van den Braken · Systems Engineer</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --v-bg-deep:       #0B0C0E;
+  --v-bg-surface:    #121418;
+  --v-bg-elevated:   #1A1D24;
+  --v-border:        #2A2E38;
+  --v-border-glow:   rgba(0, 173, 239, 0.2);
+  --v-blue-primary:  #00ADEF;
+  --v-blue-dim:      #0095CC;
+  --v-blue-glow:     rgba(0, 173, 239, 0.1);
+  --v-pink:          #E7435C;
+  --v-pink-dim:      #C9324A;
+  --v-green:         #7BDE7B;
+  --v-text-primary:  #F0F2F5;
+  --v-text-secondary:#A8B0C0;
+  --v-text-muted:    #5A6375;
+  --font-primary:    'JetBrains Mono', monospace;
+  --font-secondary:  'Geist', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background-color: var(--v-bg-deep);
+  background-image:
+    radial-gradient(circle at 25% 0%, rgba(0,173,239,0.04) 0%, transparent 50%),
+    radial-gradient(circle at 75% 100%, rgba(231,67,92,0.03) 0%, transparent 50%);
+  color: var(--v-text-primary);
+  font-family: var(--font-secondary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  zoom: 1.3;
+}
+
+.page {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 40px 48px;
+}
+
+/* BACK LINK */
+.back-link {
+  font-family: var(--font-primary);
+  font-size: 10px;
+  margin-bottom: 18px;
+}
+.back-link a { color: var(--v-text-muted); text-decoration: none; }
+.back-link a:hover { color: var(--v-blue-primary); }
+
+/* HEADER */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--v-border);
+}
+
+.header__name {
+  font-family: var(--font-primary);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--v-text-primary);
+}
+
+.header__title {
+  font-family: var(--font-primary);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--v-blue-primary);
+  margin-top: 4px;
+  letter-spacing: 0.5px;
+}
+
+.header__contact {
+  font-family: var(--font-primary);
+  font-size: 10px;
+  color: var(--v-text-muted);
+  text-align: right;
+  line-height: 1.8;
+  letter-spacing: 0.3px;
+}
+
+.header__contact a { color: var(--v-text-secondary); text-decoration: none; }
+.header__contact a:hover { color: var(--v-blue-primary); }
+
+/* SECTIONS */
+section { margin-top: 28px; }
+
+.section-label {
+  font-family: var(--font-primary);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--v-pink);
+  margin-bottom: 8px;
+}
+.section-label--blue { color: var(--v-blue-primary); }
+.section-label--green { color: var(--v-green); }
+
+.section__body p {
+  font-size: 12px;
+  color: var(--v-text-secondary);
+  line-height: 1.7;
+  margin-bottom: 6px;
+}
+.section__body p strong { color: var(--v-text-primary); }
+
+/* STATS */
+.stats {
+  display: flex;
+  border: 1px solid var(--v-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--v-bg-surface);
+  margin-top: 10px;
+}
+
+.stat {
+  flex: 1;
+  padding: 14px 10px;
+  text-align: center;
+  border-right: 1px solid var(--v-border);
+}
+.stat:last-child { border-right: none; }
+
+.stat__num {
+  font-family: var(--font-primary);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+}
+.stat__num--blue { color: var(--v-blue-primary); }
+.stat__num--pink { color: var(--v-pink); }
+.stat__num--primary { color: var(--v-text-primary); font-size: 20px; }
+
+.stat__label {
+  font-family: var(--font-primary);
+  font-size: 9px;
+  color: var(--v-text-muted);
+  letter-spacing: 0.5px;
+  display: block;
+  margin-top: 4px;
+}
+
+/* ROLE */
+.role {
+  background-color: var(--v-bg-elevated);
+  border: 1px solid var(--v-border);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 10px;
+}
+
+.role__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 3px;
+}
+
+.role__title {
+  font-family: var(--font-primary);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--v-text-primary);
+}
+
+.role__company {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--v-blue-primary);
+}
+
+.role__period {
+  font-family: var(--font-primary);
+  font-size: 10px;
+  color: var(--v-text-muted);
+  letter-spacing: 0.3px;
+}
+
+.role__stack {
+  font-family: var(--font-primary);
+  font-size: 10px;
+  color: var(--v-text-muted);
+  letter-spacing: 0.3px;
+  margin-bottom: 6px;
+}
+
+.role__bullets {
+  list-style: none;
+  padding: 0;
+}
+
+.role__bullets li {
+  font-size: 12px;
+  color: var(--v-text-secondary);
+  line-height: 1.6;
+  padding-left: 12px;
+  position: relative;
+  margin-bottom: 3px;
+}
+
+.role__bullets li::before {
+  content: '→';
+  color: var(--v-pink);
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+  font-size: 10px;
+}
+
+/* CLUSTER */
+.cluster {
+  border-left: 2px solid var(--v-blue-primary);
+  padding: 10px 0 3px 14px;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, rgba(0,173,239,0.06), transparent 70%);
+  border-radius: 0 8px 8px 0;
+}
+.cluster .role:last-child { margin-bottom: 0; }
+
+.cluster-note {
+  font-family: var(--font-primary);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--v-blue-primary);
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.cluster--pink {
+  border-left-color: var(--v-pink);
+  background: linear-gradient(90deg, rgba(231,67,92,0.06), transparent 70%);
+}
+.cluster--pink .cluster-note { color: var(--v-pink); }
+
+/* SKILLS */
+.skills {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.skill {
+  background-color: var(--v-bg-elevated);
+  border: 1px solid var(--v-border);
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+.skill__cat {
+  font-family: var(--font-primary);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--v-blue-primary);
+  letter-spacing: 0.5px;
+  margin-bottom: 3px;
+}
+
+.skill__list {
+  font-family: var(--font-secondary);
+  font-size: 11px;
+  color: var(--v-text-secondary);
+  line-height: 1.5;
+}
+
+/* HIGHLIGHT BOX */
+.highlight-box {
+  background: linear-gradient(135deg, rgba(0,173,239,0.08), transparent 80%);
+  border: 1px solid var(--v-border);
+  border-left: 3px solid var(--v-blue-primary);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 12px 0;
+}
+
+.highlight-box__title {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--v-blue-primary);
+  margin-bottom: 4px;
+}
+
+.highlight-box p {
+  font-size: 12px;
+  color: var(--v-text-secondary);
+  line-height: 1.6;
+}
+
+/* SIMPLE LIST */
+.simple-list {
+  list-style: none;
+  padding: 0;
+}
+.simple-list li {
+  font-size: 12px;
+  color: var(--v-text-secondary);
+  line-height: 1.7;
+  padding-left: 12px;
+  position: relative;
+}
+.simple-list li::before {
+  content: '→';
+  color: var(--v-pink);
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+  font-size: 10px;
+}
+
+/* FOOTER */
+.footer-mark {
+  margin-top: 36px;
+  text-align: center;
+  font-family: var(--font-primary);
+  font-size: 9px;
+  color: var(--v-text-muted);
+  letter-spacing: 1px;
+}
+
+/* PRINT */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    zoom: 1 !important;
+  }
+  body::before, body::after { display: none !important; }
+  .page { padding: 24px 32px; max-width: 100%; }
+  .header { border-bottom: 1px solid #ccc; }
+  .header__name { color: #101820 !important; }
+  .header__title { color: #0095CC !important; }
+  .header__contact { color: #666 !important; }
+  .header__contact a { color: #0095CC !important; }
+  .section-label { color: #C9324A !important; }
+  .section-label--blue { color: #0095CC !important; }
+  .section-label--green { color: #2E7D32 !important; }
+  .role, .skill, .stats, .highlight-box { background: #f8f8f8 !important; border-color: #ddd !important; }
+  .role__title, .stat__num--primary { color: #101820 !important; }
+  .role__company { color: #0095CC !important; }
+  .role__period, .role__stack, .stat__label { color: #666 !important; }
+  .role__bullets li, .section__body p, .skill__list,
+  .simple-list li, .highlight-box p { color: #333 !important; }
+  .role__bullets li::before, .simple-list li::before { color: #C9324A !important; }
+  .cluster { border-color: #0095CC !important; background: #f4faff !important; }
+  .cluster-note { color: #0095CC !important; }
+  .cluster--pink { border-color: #C9324A !important; background: #fff8f9 !important; }
+  .cluster--pink .cluster-note { color: #C9324A !important; }
+  .highlight-box { border-left-color: #0095CC !important; background: #f4faff !important; }
+  .highlight-box__title { color: #0095CC !important; }
+  .back-link { display: none !important; }
+  section { page-break-inside: avoid; }
+  .role { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- BACK LINK -->
+<div class="back-link">← <a href="/cvs/">CV overzicht</a></div>
+
+<!-- HEADER -->
+<header class="header">
+  <div>
+    <h1 class="header__name">VINCENT VAN DEN BRAKEN</h1>
+    <div class="header__title">Engineer · 30 years · .NET, C#, Python, JS · Systems, Scale, Craft</div>
+  </div>
+  <div class="header__contact">
+    Urmond, Netherlands · CET/CEST<br>
+    <a href="mailto:vincent@vincability.com">vincent@vincability.com</a><br>
+    <a href="https://vincability.com">vincability.com</a><br>
+    <a href="https://github.com/vavdb">github.com/vavdb</a> · <a href="https://linkedin.com/in/vincentvdb">LinkedIn</a>
+  </div>
+</header>
+
+<!-- PROFILE -->
+<section>
+  <div class="section-label section-label--blue">// ABOUT</div>
+  <div class="section__body">
+    <p>Engineer with <strong>30 years of production experience</strong> spanning full-stack development, cloud infrastructure, systems architecture, and security. Self-taught since 1996 — started building B2B web platforms before "full-stack" was a term, ran my own ISP, and have been shipping code continuously ever since.</p>
+    <p>Deeply <strong>remote-native</strong> since 2021, <strong>async-first</strong> communicator, and equally comfortable debating architecture in a GitHub issue or debugging a race condition at 2 AM. I care deeply about <strong>code quality, security discipline, and the user experience of the systems I build</strong> — whether that's a SaaS platform serving regulated life-science data or an internal tool that makes my team measurably more productive.</p>
+    <p>I don't just write code — I <strong>design systems, automate workflows, and obsess over the details</strong> that separate working software from software you can trust with people's data, time, and attention.</p>
+  </div>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat__num stat__num--blue">30</div>
+      <span class="stat__label">YEARS SHIPPING</span>
+    </div>
+    <div class="stat">
+      <div class="stat__num stat__num--pink">8+</div>
+      <span class="stat__label">LANGUAGES</span>
+    </div>
+    <div class="stat">
+      <div class="stat__num stat__num--primary">100%</div>
+      <span class="stat__label">REMOTE (5+ yrs)</span>
+    </div>
+    <div class="stat">
+      <div class="stat__num stat__num--blue">AI</div>
+      <span class="stat__label">NATIVE WORKFLOW</span>
+    </div>
+  </div>
+</section>
+
+<!-- HOW I THINK -->
+<section>
+  <div class="section-label section-label--green">// CRAFT & PHILOSOPHY</div>
+  <div class="highlight-box">
+    <div class="highlight-box__title">► On quality and debugging</div>
+    <p>I treat debugging as the purest form of engineering — you're building a mental model of a system, forming hypotheses, and testing them against reality. Every bug is a gap in your understanding, and closing that gap makes you a better engineer. My approach is systematic: reproduce, isolate, understand the mechanism, fix the root cause, add the regression test, and ask "why wasn't this caught earlier?" The last question is where systemic improvements come from.</p>
+  </div>
+  <div class="highlight-box" style="border-left-color: var(--v-pink);">
+    <div class="highlight-box__title" style="color: var(--v-pink);">► On abstraction</div>
+    <p>Abstraction is leverage — but every layer of indirection is also a leak surface, a debugging tax, and a cognitive load. I've seen too many codebases where "clean architecture" meant six layers of indirection that made a simple data fetch require opening 14 files. I reach for abstraction when it removes duplication or enables testing, not because it's the fashionable pattern. The right abstraction saves time; the wrong one costs more than it saves, forever.</p>
+  </div>
+  <div class="highlight-box" style="border-left-color: var(--v-green);">
+    <div class="highlight-box__title" style="color: var(--v-green);">► On working at scale</div>
+    <p>Scale isn't just about requests per second — it's about complexity management. At the Belastingdienst (Dutch tax authority), "scale" meant millions of citizens depending on correct data processing with zero tolerance for error. At Rabobank, it meant financial transactions where a bug costs real money. In life sciences (SkinConsult), it meant regulatory compliance where a data leak costs your license. Every one of these environments taught me that scale is a <em>systemic</em> property: you can't bolt it on after shipping.</p>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section>
+  <div class="section-label section-label--blue">// EXPERIENCE</div>
+
+  <div class="cluster">
+    <p class="cluster-note">// CURRENT · Life Sciences Holding — three organizations, one platform vision</p>
+
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Technical Lead</span> ·
+          <span class="role__company">SkinConsult</span>
+        </div>
+        <span class="role__period">Dec 2021 – present</span>
+      </div>
+      <div class="role__stack">C# · .NET · Azure · Blazor · AI workflows · Team lead · Remote</div>
+      <ul class="role__bullets">
+        <li>Solo technical lead for EU-regulatory SaaS platform (cosmetovigilance). Full modernization legacy → AI-native architecture with zero-downtime deploys.</li>
+        <li>Built AI-agent workflows as primary delivery method; structural tech-debt reduction alongside feature development.</li>
+        <li>Azure infrastructure: App Services, Functions, Service Bus, Key Vault, Aspire, OpenTelemetry.</li>
+        <li>Operator discipline: every AI-generated diff validated for tenant isolation, ownership checks, audit trails, and data minimization — the layer generated code silently gets wrong.</li>
+      </ul>
+    </article>
+
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Technical Consultant</span> ·
+          <span class="role__company">Allergie Centra Nederland</span>
+        </div>
+        <span class="role__period">Jun 2023 – present</span>
+      </div>
+      <div class="role__stack">Azure · .NET · Cloudflare · GitHub Actions · Azure DevOps</div>
+      <ul class="role__bullets">
+        <li>Technical consultancy on Azure systems: custom integrations, APIs, data pipelines, document workflows.</li>
+        <li>Edge + DevOps end-to-end: Cloudflare Workers, DNS, GitHub Actions, Azure DevOps YAML pipelines.</li>
+        <li>Security-by-design in patient-data context: data boundaries, authorization, audit trails.</li>
+      </ul>
+    </article>
+  </div>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Consultant — Azure Integration Services</span> ·
+        <span class="role__company">Rensa Family Company</span>
+      </div>
+      <span class="role__period">May 2021 – Nov 2021</span>
+    </div>
+    <div class="role__stack">Azure Functions · Service Bus · Azure DevOps</div>
+    <ul class="role__bullets">
+      <li>Integrations via Azure Functions and Service Bus; CI/CD pipeline design.</li>
+    </ul>
+  </article>
+
+  <div class="cluster cluster--pink">
+    <p class="cluster-note">// GOVERNMENT & FINANCE — via Quintor</p>
+
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Technical Team Lead</span> ·
+          <span class="role__company">Belastingdienst (Dutch Tax Authority)</span>
+        </div>
+        <span class="role__period">May 2018 – Mar 2019</span>
+      </div>
+      <div class="role__stack">.NET Core · CI/CD · Test Automation · Team lead</div>
+      <ul class="role__bullets">
+        <li>Lead technical architect for CI/CD and test automation initiative within a government environment serving millions of citizens.</li>
+        <li>Built automated testing to replace manual regression — covering ORM behavior, structured logging, and deployment integrity.</li>
+      </ul>
+    </article>
+
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Full Stack .NET Developer</span> ·
+          <span class="role__company">Rabobank</span>
+        </div>
+        <span class="role__period">Sep 2017 – Apr 2018</span>
+      </div>
+      <div class="role__stack">.NET MVC · Analysis Services · CI/CD · Peer review</div>
+      <ul class="role__bullets">
+        <li>Rebuilt financial application; introduced pull request peer review as a process improvement.</li>
+      </ul>
+    </article>
+  </div>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Senior Developer → Project Development Manager</span> ·
+        <span class="role__company">Deltec Software · True People</span>
+      </div>
+      <span class="role__period">1996 – 2021</span>
+    </div>
+    <div class="role__stack">C# · .NET · Umbraco · CI/CD (Jenkins, Git) · Team leadership</div>
+    <ul class="role__bullets">
+      <li>21-year arc at Deltec: from trainee to senior developer. Built early B2B web platforms, implemented CI/CD before it was called DevOps.</li>
+      <li>Founded RoutIT (1999): customer portal, ticketing, and monitoring systems — first taste of owning infrastructure end-to-end.</li>
+      <li>Project Development Manager at True People: Umbraco projects, Scrum, team lead.</li>
+    </ul>
+  </article>
+</section>
+
+<!-- SKILLS & LANGUAGES -->
+<section>
+  <div class="section-label section-label--blue">// TOOLS & CRAFT</div>
+  <div class="skills">
+    <div class="skill">
+      <div class="skill__cat">Languages</div>
+      <div class="skill__list">C# (primary, 25+ yrs) · JavaScript/TypeScript · Python · SQL · HTML/CSS · PHP (some) · Bash</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Systems & Scale</div>
+      <div class="skill__list">Azure (App Svcs, Functions, Service Bus, Key Vault, Aspire) · Docker · K8s · Linux · Microservices · DDD · CQRS</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">DevOps & CI/CD</div>
+      <div class="skill__list">Azure DevOps · GitHub Actions · Jenkins · GitOps · Ansible · Bicep · Terraform · OpenTelemetry</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Quality & Security</div>
+      <div class="skill__list">Code review (structured, severity-classified) · NEN 7510 · AVG/GDPR · tenant-isolation · audit trails · automated testing</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">AI & Automation</div>
+      <div class="skill__list">AI-agent workflows (since 2024) · LLM orchestration · Machine-readable styleguides · Code generation validation</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Infrastructure</div>
+      <div class="skill__list">Proxmox VE (KVM/LXC, ZFS) · Cloudflare (Workers, DNS) · FreeBSD routing · Home Assistant (200+ devices) · Self-hosting</div>
+    </div>
+  </div>
+</section>
+
+<!-- OPEN SOURCE / AUTONOMY -->
+<section>
+  <div class="section-label section-label--green">// HOW I WORK</div>
+  <div class="section__body">
+    <p><strong>Async-first, remote-native.</strong> 100% remote since 2021. I communicate in writing by default — GitHub issues, PR descriptions, Slack threads, documentation. I believe the best engineering communication is the kind that leaves a permanent record someone can find six months later.</p>
+    <p><strong>Open source ethos.</strong> I've been building on and contributing to open-source ecosystems my entire career — from early PHP CMS platforms to .NET's open-source transformation. I believe in transparent, collaborative development and have structured my teams the same way.</p>
+    <p><strong>Shipping discipline.</strong> Deploy often, review thoroughly, measure everything. I've built CI/CD pipelines that turn a commit-to-production cycle into minutes, not days — but every deploy is peer-reviewed and monitored.</p>
+    <p><strong>Autonomous, not isolated.</strong> I thrive with clear outcomes and the freedom to figure out the path. I check in when there's something to learn, share, or unblock — not because a calendar says so.</p>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS & LANGUAGES -->
+<section>
+  <div class="section-label section-label--blue">// CERTIFICATIONS</div>
+  <div class="skills" style="grid-template-columns: 1fr 1fr;">
+    <div class="skill"><div class="skill__cat">Certified ScrumMaster</div><div class="skill__list">Scrum Alliance (2018)</div></div>
+    <div class="skill"><div class="skill__cat">AWS Fundamentals</div><div class="skill__list">Going Cloud-Native (2020)</div></div>
+    <div class="skill"><div class="skill__cat">Python for Everybody</div><div class="skill__list">Univ. of Michigan (2018)</div></div>
+    <div class="skill"><div class="skill__cat">Umbraco Certified</div><div class="skill__list">Professional (2019)</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label section-label--green">// LANGUAGES</div>
+  <ul class="simple-list">
+    <li>Dutch (native — C2)</li>
+    <li>English (C2 — primary written language)</li>
+    <li>Spanish (basic)</li>
+  </ul>
+</section>
+
+<section>
+  <div class="section-label section-label--green">// AVAILABILITY</div>
+  <ul class="simple-list">
+    <li>Available August 1, 2026; earlier negotiable</li>
+    <li>Open to travel 3–4 weeks/year for team meetups</li>
+    <li>CET/CEST timezone, flexible schedule</li>
+  </ul>
+</section>
+
+<div class="footer-mark">
+  // CV · Systems Engineer · 2026 · vincability.com
+</div>
+
+</div>
+</body>
+</html>
