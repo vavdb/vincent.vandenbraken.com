@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CV — Vincent van den Braken · Cloud & DevOps (Capgemini)</title>
+<title>CV — Vincent van den Braken · Cloud & DevOps</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,7 +33,7 @@
 }
 
 /* ============================================================
-   THEME: CORPORATE (light — voor Capgemini-print)
+   THEME: CORPORATE (light — voor corporate print)
    ============================================================ */
 body.corporate {
   --v-bg-deep:       #F8F9FA;
@@ -591,7 +591,7 @@ section { margin-top: 28px; }
   </div>
 </section>
 
-<!-- MATCH MET CAPGEMINI-VACATURES -->
+<!-- MATCH MET VACATURES -->
 <section>
   <div class="section-label section-label--teal">// MATCH MET DEZE VACATURES</div>
   <div class="match-grid">
@@ -600,7 +600,7 @@ section { margin-top: 28px; }
       <div>
         <div class="match-card__role">Cloud Engineer (Azure/AWS/GCP)</div>
         <span class="match-card__match match-card__match--strong">✅ Sterke match</span>
-        <div class="match-card__detail">Azure-architectuur, CI/CD, IaC (Terraform/Bicep), K8s, Docker — exact jouw dagelijkse stack</div>
+        <div class="match-card__detail">Azure-architectuur, CI/CD, IaC (Terraform/Bicep), K8s, Docker — dagelijkse stack in meerdere productieomgevingen</div>
       </div>
     </div>
     <div class="match-card">
@@ -773,11 +773,11 @@ section { margin-top: 28px; }
   <div class="section-label section-label--orange">// WAT ANDERS IS</div>
   <div class="diff-box">
     <div class="diff-box__title">► AI-native delivery — bewezen, niet experimenteel</div>
-    <p>Waar de meeste engineers AI gebruiken als copilot, gebruikt Vincent het als delivery engine. Het resultaat: meerdere parallelle development tracks zonder teamuitbreiding, tech debt die wordt weggewerkt terwijl features worden gebouwd, en een operator-discipline die garandeert dat security en compliance niet worden overgeslagen. In een cloud-native omgeving waar snelheid en veiligheid samen moeten gaan, is dit geen nice-to-have maar een proof-point voor versnelde modernisering van klantplatformen.</p>
+    <p>AI als delivery engine, niet als copilot. Het resultaat: meerdere parallelle development tracks zonder teamuitbreiding, tech debt die wordt weggewerkt terwijl features worden gebouwd, en een operator-discipline die garandeert dat security en compliance niet worden overgeslagen. In een cloud-native omgeving waar snelheid en veiligheid samen moeten gaan, is dit geen nice-to-have maar een proof-point voor versnelde modernisering van klantplatformen.</p>
   </div>
   <div class="diff-box" style="border-left-color: var(--v-teal);">
     <div class="diff-box__title" style="color: var(--v-teal);">► End-to-end: van Azure Bicep tot applicatie-architectuur</div>
-    <p>Vincent ontwerpt niet alleen de cloud-infrastructuur (Bicep, Kubernetes, CI/CD) maar ook de applicatie-architectuur erboven (DDD, CQRS, Event-Driven) én de security-laag eromheen (tenant-isolatie, audit trails, data-minimalisatie). Dit betekent één aanspreekpunt voor het hele platform — geen overdrachtsproblemen tussen infra- en dev-teams.</p>
+    <p>End-to-end ontwerp: van cloud-infrastructuur (Bicep, Kubernetes, CI/CD) tot applicatie-architectuur (DDD, CQRS, Event-Driven) en de security-laag eromheen (tenant-isolatie, audit trails, data-minimalisatie). Dit betekent één aanspreekpunt voor het hele platform — geen overdrachtsproblemen tussen infra- en dev-teams.</p>
   </div>
 </section>
 
@@ -814,7 +814,7 @@ section { margin-top: 28px; }
 </section>
 
 <div class="footer-mark">
-  // CV · Capgemini profiel · 2026 · vincability.com
+  // CV · Cloud & DevOps profiel · 2026 · vincability.com
 </div>
 
 </div>
@@ -823,11 +823,11 @@ section { margin-top: 28px; }
 function setTheme(theme) {
   document.body.className = theme === 'corporate' ? 'corporate' : '';
   document.querySelectorAll('.theme-toggle button').forEach(b => b.classList.toggle('active', b.dataset.theme === theme));
-  localStorage.setItem('capgemini-cv-theme', theme);
+  localStorage.setItem('corporate-cv-theme', theme);
 }
 // Restore saved theme
 (function() {
-  const saved = localStorage.getItem('capgemini-cv-theme');
+  const saved = localStorage.getItem('corporate-cv-theme');
   if (saved) setTheme(saved);
 })();
 </script>
