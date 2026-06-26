@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vincent van den Braken — Software Engineer · AI Evaluation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --v-bg-deep:       #080B0A;
+  --v-bg-surface:    #0D1210;
+  --v-bg-elevated:   #141C18;
+  --v-border:        #1E2D25;
+  --v-border-glow:   #00E67620;
+  --v-green-primary: #00E676;
+  --v-green-dim:     #00C853;
+  --v-green-glow:    #00E67633;
+  --v-orange:        #FF9100;
+  --v-orange-dim:    #FF6D00;
+  --v-purple:        #B388FF;
+  --v-text-primary:  #F0FFF4;
+  --v-text-secondary:#A8B5AD;
+  --v-text-muted:    #5A6B60;
+  --font-primary:    'JetBrains Mono', monospace;
+  --font-secondary:  'Geist', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--v-bg-deep);
+  background-image:
+    linear-gradient(rgba(0, 230, 118, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 230, 118, 0.04) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-attachment: fixed;
+  color: var(--v-text-primary);
+  font-family: var(--font-secondary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  zoom: 1.3;
+}
+.page { max-width: 880px; margin: 0 auto; padding: 56px 64px; }
+
+.header {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 32px;
+  padding-bottom: 28px; border-bottom: 2px solid;
+  border-image: linear-gradient(90deg, var(--v-green-primary), var(--v-orange) 50%, var(--v-purple)) 1;
+}
+.header__name { font-family: var(--font-primary); font-size: 32px; font-weight: 700; letter-spacing: 1px; color: var(--v-text-primary); }
+.header__title { font-family: var(--font-primary); font-size: 14px; font-weight: 500; color: var(--v-green-primary); margin-top: 6px; letter-spacing: 0.5px; }
+.header__contact { font-family: var(--font-primary); font-size: 11px; color: var(--v-text-muted); text-align: right; line-height: 1.8; letter-spacing: 0.3px; }
+.header__contact a { color: var(--v-text-secondary); text-decoration: none; }
+.header__contact a:hover { color: var(--v-green-primary); }
+.availability { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-primary); font-size: 11px; font-weight: 500; color: var(--v-green-primary); background-color: var(--v-green-glow); border: 1px solid var(--v-border-glow); border-radius: 999px; padding: 4px 12px; margin-top: 14px; }
+.availability__dot { width: 6px; height: 6px; border-radius: 50%; background-color: var(--v-green-primary); box-shadow: 0 0 4px var(--v-green-primary); }
+
+section { margin-top: 36px; }
+.section-label { font-family: var(--font-primary); font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--v-purple); margin-bottom: 10px; }
+.section-label--green { color: var(--v-green-primary); }
+.section-label--orange { color: var(--v-orange); }
+.section-label--purple { color: var(--v-purple); }
+.section__body p { font-size: 14px; color: var(--v-text-secondary); line-height: 1.7; margin-bottom: 8px; }
+
+.stats { display: flex; border: 1px solid var(--v-border); border-radius: 8px; overflow: hidden; background-color: var(--v-bg-surface); margin-top: 12px; }
+.stat { flex: 1; padding: 18px 12px; text-align: center; border-right: 1px solid var(--v-border); }
+.stat:last-child { border-right: none; }
+.stat__num { font-family: var(--font-primary); font-size: 28px; font-weight: 700; line-height: 1; }
+.stat__num--green { color: var(--v-green-primary); }
+.stat__num--orange { color: var(--v-orange); }
+.stat__num--purple { color: var(--v-purple); }
+.stat__num--primary { color: var(--v-text-primary); font-size: 22px; }
+.stat__label { font-family: var(--font-primary); font-size: 10px; color: var(--v-text-muted); letter-spacing: 0.5px; display: block; margin-top: 6px; }
+.stat__sub { font-family: var(--font-secondary); font-size: 10px; color: var(--v-text-muted); display: block; margin-top: 2px; }
+
+.role { background-color: var(--v-bg-elevated); border: 1px solid var(--v-border); border-radius: 8px; padding: 16px 20px; margin-bottom: 12px; }
+.role__header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 12px; margin-bottom: 4px; }
+.role__title { font-family: var(--font-primary); font-size: 14px; font-weight: 600; color: var(--v-text-primary); }
+.role__company { font-family: var(--font-primary); font-size: 13px; font-weight: 500; color: var(--v-green-primary); }
+.role__period { font-family: var(--font-primary); font-size: 11px; color: var(--v-text-muted); letter-spacing: 0.3px; }
+.role__stack { font-family: var(--font-primary); font-size: 11px; color: var(--v-text-muted); letter-spacing: 0.3px; margin-bottom: 8px; }
+.role__bullets { list-style: none; padding: 0; }
+.role__bullets li { font-size: 13px; color: var(--v-text-secondary); line-height: 1.6; padding-left: 14px; position: relative; margin-bottom: 4px; }
+.role__bullets li::before { content: '·'; color: var(--v-green-primary); position: absolute; left: 4px; font-weight: 700; }
+
+.skills { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 12px; }
+.skill { background-color: var(--v-bg-elevated); border: 1px solid var(--v-border); border-radius: 8px; padding: 12px 16px; }
+.skill__cat { font-family: var(--font-primary); font-size: 11px; font-weight: 600; color: var(--v-orange); letter-spacing: 0.5px; margin-bottom: 4px; }
+.skill__list { font-family: var(--font-secondary); font-size: 12px; color: var(--v-text-secondary); line-height: 1.5; }
+
+.simple-list { list-style: none; padding: 0; }
+.simple-list li { font-size: 13px; color: var(--v-text-secondary); line-height: 1.7; padding-left: 14px; position: relative; }
+.simple-list li::before { content: '·'; color: var(--v-purple); position: absolute; left: 4px; font-weight: 700; }
+
+.footer-mark { margin-top: 48px; text-align: center; font-family: var(--font-primary); font-size: 10px; color: var(--v-text-muted); letter-spacing: 1px; }
+
+@media print {
+  body { background: white !important; color: black !important; zoom: 1 !important; }
+  body::before, body::after { display: none !important; }
+  .page { padding: 28px 36px; max-width: 100%; }
+  .header { border-bottom: 1px solid #1e22aa; }
+  .header__name { color: #101820 !important; }
+  .header__title { color: #00C853 !important; }
+  .header__contact { color: #666 !important; }
+  .header__contact a { color: #1e22aa !important; }
+  .availability { border-color: #00C853 !important; background: #00E67611 !important; color: #00C853 !important; }
+  .section-label { color: #B388FF !important; }
+  .section-label--green { color: #00C853 !important; }
+  .section-label--orange { color: #FF9100 !important; }
+  .role, .skill, .stats { background: #f8f8f8 !important; border-color: #ddd !important; }
+  .role__title, .stat__num--primary { color: #101820 !important; }
+  .role__company { color: #00C853 !important; }
+  .role__period, .role__stack, .stat__label, .stat__sub { color: #666 !important; }
+  .role__bullets li, .simple-list li, .skill__list, .section__body p { color: #333 !important; }
+  .skill__cat { color: #FF9100 !important; }
+  .stat__num--green { color: #00C853 !important; }
+  .stat__num--orange { color: #FF9100 !important; }
+  .stat__num--purple { color: #7C4DFF !important; }
+  .role__bullets li::before, .simple-list li::before { color: #00C853 !important; }
+  section, .role { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="header">
+  <div>
+    <h1 class="header__name">VINCENT VAN DEN BRAKEN</h1>
+    <div class="header__title">Software Engineer · AI Code Validation & Evaluation</div>
+    <div class="availability">
+      <span class="availability__dot"></span>
+      Available immediately · Remote · EU (Urmond, Netherlands) · 15–40 hrs/week
+    </div>
+  </div>
+  <div class="header__contact">
+    Urmond, Netherlands · 18-02-1980<br>
+    <a href="mailto:vincent@vandenbraken.com">vincent@vandenbraken.com</a><br>
+    <a href="tel:+316****0436">+31 (0)6 129 604 36</a><br>
+    <a href="https://linkedin.com/in/vincent-van-den-braken">LinkedIn</a> ·
+    <a href="https://github.com/vavdb">GitHub</a>
+  </div>
+</header>
+
+<section>
+  <div class="section-label section-label--green">// PROFILE</div>
+  <div class="section__body">
+    <p>30-year software engineer with deep expertise in code review, algorithmic evaluation, and AI model validation. For the past two years I've operated AI-agent workflows as a core delivery methodology — not as a novelty but as a production practice. My daily work involves reviewing, refining, and validating AI-generated code across multiple languages and paradigms, establishing quality gates that balance speed with correctness.</p>
+    <p>I'm experienced in <strong style="color: var(--v-text-primary);">prompt engineering, structured feedback, code validation, and model benchmarking</strong> — skills that transfer directly to AI training and evaluation work. I work independently and asynchronously, deliver precise technical analysis, and treat every evaluation as a craft problem rather than a checkbox.</p>
+  </div>
+</section>
+
+<section>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat__num stat__num--green">30</div>
+      <span class="stat__label">Years <span class="stat__sub">professional engineering</span></span>
+    </div>
+    <div class="stat">
+      <div class="stat__num stat__num--orange">7</div>
+      <span class="stat__label">Languages <span class="stat__sub">C#, Python, JS/TS, SQL, more</span></span>
+    </div>
+    <div class="stat">
+      <div class="stat__num stat__num--purple">11×</div>
+      <span class="stat__label">AI Multiplier <span class="stat__sub">daily AI workflow integration</span></span>
+    </div>
+    <div class="stat">
+      <div class="stat__num stat__num--primary">319k</div>
+      <span class="stat__label">Lines Reviewed <span class="stat__sub">validated in 4 months</span></span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label section-label--orange">// AI EVALUATION EXPERIENCE</div>
+  <div class="section__body">
+    <p>My current role requires me to evaluate AI-generated code daily — validating correctness, security, audit-trail compliance, and architectural fit across .NET, Python, and TypeScript codebases. I've developed structured severity classifications, remediation plans, and feedback frameworks for AI output quality. This includes:</p>
+    <ul class="simple-list">
+      <li>Reviewing and refining AI-generated prompts and responses for production use</li>
+      <li>Validating algorithms and software concepts for technical accuracy in regulated contexts (life sciences, finance)</li>
+      <li>Providing structured, actionable feedback on code quality, security, and architecture</li>
+      <li>Benchmarking AI model performance across different models (Claude, GPT, Gemini) for specific coding tasks</li>
+      <li>Tagging and categorizing code by language, complexity, domain, and quality tier</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="section-label section-label--green">// RELEVANT EXPERIENCE</div>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Technical Lead</span> · <span class="role__company">SkinConsult (Life Sciences SaaS)</span>
+      </div>
+      <span class="role__period">dec 2021 – aug 2026</span>
+    </div>
+    <div class="role__stack">Stack: C#, Python, TypeScript · Azure · AI-agent workflows · Regulatory compliance</div>
+    <ul class="role__bullets">
+      <li>Daily AI-generated code validation across multiple languages: correctness, security, audit-trail, architectural fit.</li>
+      <li>Developed structured feedback frameworks and severity classifications for AI output quality.</li>
+      <li>Post-merge code review of offshore AI-assisted codebase: security, UI-compliance, raw SQL, migration validation.</li>
+      <li>Multi-model AI orchestration (Claude, GPT, Gemini) — prompt engineering, model selection, output benchmarking.</li>
+    </ul>
+  </article>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Technical Consultant</span> · <span class="role__company">Allergie Centra Nederland</span>
+      </div>
+      <span class="role__period">jun 2023 – aug 2026</span>
+    </div>
+    <div class="role__stack">Stack: Python (ETL, data pipelines) · Azure · .NET · Cloudflare</div>
+    <ul class="role__bullets">
+      <li>Custom data pipelines and ETL in Python: API integrations, external data scrapers, document workflows.</li>
+      <li>Code validation and audit-trail enforcement in patient-data context (NEN 7510 compliance).</li>
+    </ul>
+  </article>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Technical Team Lead</span> · <span class="role__company">Belastingdienst (Dutch Tax Authority)</span>
+      </div>
+      <span class="role__period">may 2018 – mar 2019</span>
+    </div>
+    <div class="role__stack">Stack: .NET Core · Test Automation · CI/CD · Structured Logging</div>
+    <ul class="role__bullets">
+      <li>Replaced manual regression testing with automated test suites — reduced cycle from 2 weeks to 2 hours.</li>
+      <li>Established code review standards, structured logging, and deployment automation as org-wide practices.</li>
+    </ul>
+  </article>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Full Stack Developer</span> · <span class="role__company">Rabobank</span>
+      </div>
+      <span class="role__period">sep 2017 – apr 2018</span>
+    </div>
+    <div class="role__stack">Stack: .NET MVC · TypeScript · Analysis Services · Peer Review</div>
+    <ul class="role__bullets">
+      <li>Rebuilt financial steering set; introduced pull request peer review as a departmental standard.</li>
+    </ul>
+  </article>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Senior Developer → Team Leader</span> · <span class="role__company">Deltec Software BV (1996–2017)</span>
+      </div>
+      <span class="role__period">21 years</span>
+    </div>
+    <div class="role__stack">Full stack: C#, JavaScript, SQL, CMS, CI/CD, B2B platforms</div>
+    <ul class="role__bullets">
+      <li>Full lifecycle delivery: design, implementation, testing, deployment, maintenance.</li>
+      <li>Introduced Continuous Integration, code review culture, and automated builds.</li>
+    </ul>
+  </article>
+</section>
+
+<section>
+  <div class="section-label section-label--purple">// TECHNICAL SKILLS</div>
+  <div class="skills">
+    <div class="skill">
+      <div class="skill__cat">Code Evaluation</div>
+      <div class="skill__list">AI-generated code validation, prompt refinement, algorithmic correctness, structured feedback, severity classification, benchmarking</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Languages</div>
+      <div class="skill__list">C# (expert), Python (data pipelines, ETL, AI orchestration), TypeScript/JavaScript (full-stack), SQL (complex queries), Java/C++ (reading proficiency)</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">AI & LLM Tools</div>
+      <div class="skill__list">Claude (daily driver), GPT-4, Gemini, multi-model orchestration, prompt engineering, AI agent workflows, MCP</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Testing & Quality</div>
+      <div class="skill__list">xUnit, nUnit, Moq, pytest, test-first methodology, automated regression, integration testing, CI/CD quality gates</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Cloud & DevOps</div>
+      <div class="skill__list">Azure (App Services, Functions, Service Bus), GitHub Actions, Azure DevOps, Docker, CI/CD pipelines, infrastructure-as-code</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Technical Writing</div>
+      <div class="skill__list">Documentation, code review comments, structured evaluation reports, architectural decision records, incident analysis</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label section-label--green">// LANGUAGES</div>
+  <ul class="simple-list">
+    <li>Dutch (native)</li>
+    <li>English (C2 — professional technical writing and communication)</li>
+    <li>Spanish (basic)</li>
+  </ul>
+</section>
+
+<section>
+  <div class="section-label section-label--orange">// CERTIFICATIONS</div>
+  <ul class="simple-list">
+    <li>Python for Everybody Specialization — University of Michigan (Coursera, 2018)</li>
+    <li>Certified ScrumMaster (CSM) — Scrum Alliance (2018)</li>
+  </ul>
+</section>
+
+<div class="footer-mark">
+  // CV · AI Evaluation & Code Validation · 2026
+</div>
+
+</div>
+</body>
+</html>

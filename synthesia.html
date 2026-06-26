@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vincent van den Braken — Principal Software Engineer · Synthesia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --v-bg-deep:       #080B0A;
+  --v-bg-surface:    #0D1210;
+  --v-bg-elevated:   #141C18;
+  --v-border:        #1E2D25;
+  --v-border-glow:   #00E67620;
+  --v-green-primary: #00E676;
+  --v-green-dim:     #00C853;
+  --v-green-glow:    #00E67633;
+  --v-orange:        #FF9100;
+  --v-orange-dim:    #FF6D00;
+  --v-purple:        #B388FF;
+  --v-text-primary:  #F0FFF4;
+  --v-text-secondary:#A8B5AD;
+  --v-text-muted:    #5A6B60;
+  --font-primary:    'JetBrains Mono', monospace;
+  --font-secondary:  'Geist', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background-color: var(--v-bg-deep);
+  background-image:
+    linear-gradient(rgba(0, 230, 118, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 230, 118, 0.04) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-attachment: fixed;
+  color: var(--v-text-primary);
+  font-family: var(--font-secondary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  zoom: 1.3;
+}
+
+.page {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 56px 64px;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+  padding-bottom: 28px;
+  border-bottom: 2px solid;
+  border-image: linear-gradient(90deg, var(--v-green-primary), var(--v-orange) 50%, var(--v-purple)) 1;
+}
+
+.header__name {
+  font-family: var(--font-primary);
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--v-text-primary);
+}
+
+.header__title {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--v-green-primary);
+  margin-top: 6px;
+  letter-spacing: 0.5px;
+}
+
+.header__contact {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  color: var(--v-text-muted);
+  text-align: right;
+  line-height: 1.8;
+  letter-spacing: 0.3px;
+}
+
+.header__contact a { color: var(--v-text-secondary); text-decoration: none; }
+.header__contact a:hover { color: var(--v-green-primary); }
+
+.availability {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--v-green-primary);
+  background-color: var(--v-green-glow);
+  border: 1px solid var(--v-border-glow);
+  border-radius: 999px;
+  padding: 4px 12px;
+  margin-top: 14px;
+}
+
+.availability__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--v-green-primary);
+  box-shadow: 0 0 4px var(--v-green-primary);
+}
+
+/* SECTIONS */
+section { margin-top: 36px; }
+
+.section-label {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--v-purple);
+  margin-bottom: 10px;
+}
+
+.section-label--green { color: var(--v-green-primary); }
+.section-label--orange { color: var(--v-orange); }
+.section-label--purple { color: var(--v-purple); }
+
+.section__body p {
+  font-size: 14px;
+  color: var(--v-text-secondary);
+  line-height: 1.7;
+  margin-bottom: 8px;
+}
+
+/* STATS */
+.stats {
+  display: flex;
+  border: 1px solid var(--v-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--v-bg-surface);
+  margin-top: 12px;
+}
+
+.stat {
+  flex: 1;
+  padding: 18px 12px;
+  text-align: center;
+  border-right: 1px solid var(--v-border);
+}
+.stat:last-child { border-right: none; }
+
+.stat__num {
+  font-family: var(--font-primary);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.stat__num--green { color: var(--v-green-primary); }
+.stat__num--orange { color: var(--v-orange); }
+.stat__num--purple { color: var(--v-purple); }
+.stat__num--primary { color: var(--v-text-primary); font-size: 22px; }
+
+.stat__label {
+  font-family: var(--font-primary);
+  font-size: 10px;
+  color: var(--v-text-muted);
+  letter-spacing: 0.5px;
+  display: block;
+  margin-top: 6px;
+}
+
+.stat__sub {
+  font-family: var(--font-secondary);
+  font-size: 10px;
+  color: var(--v-text-muted);
+  display: block;
+  margin-top: 2px;
+}
+
+/* ROLES */
+.role {
+  background-color: var(--v-bg-elevated);
+  border: 1px solid var(--v-border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+}
+
+.role__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.role__title {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--v-text-primary);
+}
+
+.role__company {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--v-green-primary);
+}
+
+.role__period {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  color: var(--v-text-muted);
+  letter-spacing: 0.3px;
+}
+
+.role__stack {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  color: var(--v-text-muted);
+  letter-spacing: 0.3px;
+  margin-bottom: 8px;
+}
+
+.role__bullets {
+  list-style: none;
+  padding: 0;
+}
+
+.role__bullets li {
+  font-size: 13px;
+  color: var(--v-text-secondary);
+  line-height: 1.6;
+  padding-left: 14px;
+  position: relative;
+  margin-bottom: 4px;
+}
+
+.role__bullets li::before {
+  content: '·';
+  color: var(--v-green-primary);
+  position: absolute;
+  left: 4px;
+  font-weight: 700;
+}
+
+/* SKILLS GRID */
+.skills {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.skill {
+  background-color: var(--v-bg-elevated);
+  border: 1px solid var(--v-border);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+
+.skill__cat {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--v-orange);
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.skill__list {
+  font-family: var(--font-secondary);
+  font-size: 12px;
+  color: var(--v-text-secondary);
+  line-height: 1.5;
+}
+
+/* CLUSTER */
+.cluster {
+  border-left: 2px solid var(--v-purple);
+  padding: 14px 0 4px 16px;
+  margin-bottom: 12px;
+  background: linear-gradient(90deg, rgba(179, 136, 255, 0.06), transparent 70%);
+  border-radius: 0 8px 8px 0;
+}
+
+.cluster .role:last-child {
+  margin-bottom: 0;
+}
+
+.cluster-note {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--v-purple);
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.cluster--orange {
+  border-left-color: var(--v-orange);
+  background: linear-gradient(90deg, rgba(255, 145, 0, 0.06), transparent 70%);
+}
+
+.cluster--orange .cluster-note { color: var(--v-orange); }
+
+/* SIMPLE LIST */
+.simple-list {
+  list-style: none;
+  padding: 0;
+}
+.simple-list li {
+  font-size: 13px;
+  color: var(--v-text-secondary);
+  line-height: 1.7;
+  padding-left: 14px;
+  position: relative;
+}
+.simple-list li::before {
+  content: '·';
+  color: var(--v-purple);
+  position: absolute;
+  left: 4px;
+  font-weight: 700;
+}
+
+/* FOOTER MARK */
+.footer-mark {
+  margin-top: 48px;
+  text-align: center;
+  font-family: var(--font-primary);
+  font-size: 10px;
+  color: var(--v-text-muted);
+  letter-spacing: 1px;
+}
+
+/* PRINT */
+@media print {
+  body { background: white !important; color: black !important; zoom: 1 !important; }
+  body::before, body::after { display: none !important; }
+  .page { padding: 28px 36px; max-width: 100%; }
+  .header { border-bottom: 1px solid #1e22aa; }
+  .header__name { color: #101820 !important; }
+  .header__title { color: #00C853 !important; }
+  .header__contact { color: #666 !important; }
+  .header__contact a { color: #1e22aa !important; }
+  .availability { border-color: #00C853 !important; background: #00E67611 !important; color: #00C853 !important; }
+  .section-label { color: #B388FF !important; }
+  .section-label--green { color: #00C853 !important; }
+  .section-label--orange { color: #FF9100 !important; }
+  .role, .skill, .stats { background: #f8f8f8 !important; border-color: #ddd !important; }
+  .role__title, .stat__num--primary { color: #101820 !important; }
+  .role__company { color: #00C853 !important; }
+  .role__period, .role__stack, .stat__label, .stat__sub { color: #666 !important; }
+  .role__bullets li, .simple-list li, .skill__list, .section__body p { color: #333 !important; }
+  .skill__cat { color: #FF9100 !important; }
+  .stat__num--green { color: #00C853 !important; }
+  .stat__num--orange { color: #FF9100 !important; }
+  .stat__num--purple { color: #7C4DFF !important; }
+  .role__bullets li::before, .simple-list li::before { color: #00C853 !important; }
+  .cluster { border-color: #7C4DFF !important; background: #faf8ff !important; }
+  .cluster-note { color: #7C4DFF !important; }
+  .cluster--orange { border-color: #FF9100 !important; background: #fff8eb !important; }
+  .cluster--orange .cluster-note { color: #FF9100 !important; }
+  section { page-break-inside: avoid; }
+  .role { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<header class="header">
+  <div>
+    <h1 class="header__name">VINCENT VAN DEN BRAKEN</h1>
+    <div class="header__title">Principal Software Engineer · Architecture & Engineering Standards · AI-Native Delivery</div>
+    <div class="availability">
+      <span class="availability__dot"></span>
+      Available 1 August 2026 · Remote · EU (Urmond, Netherlands)
+    </div>
+  </div>
+  <div class="header__contact">
+    Urmond, Netherlands · 18-02-1980<br>
+    <a href="mailto:vincent@vandenbraken.com">vincent@vandenbraken.com</a><br>
+    <a href="tel:+31612960436">+31 (0)6 129 604 36</a><br>
+    <a href="https://linkedin.com/in/vincent-van-den-braken">LinkedIn</a> ·
+    <a href="https://github.com/vavdb">GitHub</a> ·
+    <a href="https://vincability.com">vincability.com</a>
+  </div>
+</header>
+
+<!-- PROFILE -->
+<section>
+  <div class="section-label section-label--green">// PROFILE</div>
+  <div class="section__body">
+    <p>30-year software engineer with the last decade in technical leadership across regulated SaaS, enterprise finance, and government. I've spent my career raising engineering standards at the org level — code review culture, automated quality gates, test-first discipline, and architectural consistency across multiple teams — while shipping product that customers pay for.</p>
+    <p><strong style="color: var(--v-text-primary);">Language-agnostic architect.</strong> My depth is in backend systems, distributed architecture, and the discipline of production engineering at scale. Python, C#, TypeScript — I pick up the language to solve the problem. Over the past two years I've integrated Claude and multi-model AI workflows into every phase of delivery: design, code, review, migration. Not as a novelty — as a 11× force multiplier on throughput while maintaining compliance-grade quality gates.</p>
+    <p>The part of this role that interests me most is the bridge between product engineering and applied research. At my current company I sit at the intersection of three sister organisations — each with its own domain, stack, and stakeholders — and work across them to align architecture, security, and delivery standards without flattening any one team's autonomy. That adjacency feels remarkably similar to what Synthesia describes between its product and R&D orgs.</p>
+  </div>
+</section>
+
+<!-- STATS -->
+<section>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat__num stat__num--green">30</div>
+      <span class="stat__label">Years <span class="stat__sub">professional experience</span></span>
+    </div>
+    <div class="stat">
+      <div class="stat__num stat__num--orange">Lead</div>
+      <span class="stat__label">Technical leadership <span class="stat__sub">last 10 years, cross-team</span></span>
+    </div>
+    <div class="stat">
+      <div class="stat__num stat__num--purple">11×</div>
+      <span class="stat__label">AI multiplier <span class="stat__sub">AI-agent workflow throughput</span></span>
+    </div>
+    <div class="stat">
+      <div class="stat__num stat__num--primary">319k</div>
+      <span class="stat__label">Lines deleted <span class="stat__sub">tech debt elimination in 4mo</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- HOW I THINK ABOUT ENGINEERING AT SCALE -->
+<section>
+  <div class="section-label section-label--orange">// ENGINEERING PHILOSOPHY</div>
+  <div class="section__body">
+    <p><strong style="color: var(--v-text-primary);">Standards before tools.</strong> I don't believe in imposing uniformity for its own sake. The goal is enough consistency that an engineer from Team A can review a PR from Team B and immediately understand the patterns, without either team losing the autonomy to pick the right tool for their problem. That's a balance I've struck three times — at the Belastingdienst (introducing test automation + structured logging across 4 teams), at Rabobank (peer review as a cultural standard, not a checkbox), and at SkinConsult (code review standards across 3 holding companies).</p>
+    <p><strong style="color: var(--v-text-primary);">AI is a craft tool, not a crutch.</strong> I use Claude daily — for architecture exploration, code generation, review, migration scripts, and documentation. Every output goes through the same quality gates as human code: audit-trail checks, tenant isolation verification, data-boundary validation. The multiplier isn't in the generation — it's in the operator discipline to validate what gets produced. That's the same mindset Synthesia's product engineers would need working alongside R&D: trust but verify, at speed.</p>
+    <p><strong style="color: var(--v-text-primary);">Commercial outcomes drive architecture.</strong> Every technical decision I've made in the past 10 years ties to a business metric. When I refactored a monolith into modular services, it wasn't for architectural purity — it was because regulatory deadlines required parallel delivery threads. When I eliminated 319k lines of code in 4 months, it wasn't a cleanup — it was reducing cognitive load so the team could ship features faster. Engineering exists to serve the product.</p>
+  </div>
+</section>
+
+<!-- WORK EXPERIENCE -->
+<section>
+  <div class="section-label section-label--green">// WORK EXPERIENCE</div>
+
+  <div class="cluster">
+    <p class="cluster-note">// CLUSTER · LIFE SCIENCES HOLDING — three sister organisations under one holding, each with own management, domain, and stakeholders. I set technical direction across all three.</p>
+
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Technical Lead</span> ·
+          <span class="role__company">SkinConsult</span>
+        </div>
+        <span class="role__period">dec 2021 – aug 2026</span>
+      </div>
+      <div class="role__stack">Stack: .NET · Azure · Python (data pipelines) · AI-agent workflows · DDD · Event-driven</div>
+      <ul class="role__bullets">
+        <li>Tech lead for EU-regulatory SaaS platform (cosmetovigilance); architected modular backend services from legacy monolith to event-driven microservices serving 50,000+ product SKUs.</li>
+        <li>Introduced org-wide code review standards, automated quality gates, and peer review culture across 3 sister companies — reducing PR review cycle from days to hours.</li>
+        <li>AI-agent workflow integration as a delivery methodology across the full SDLC: 11× throughput multiplier, 319k lines of tech debt eliminated in 4 months alongside feature work.</li>
+        <li>Zero-downtime deployments, infrastructure-as-code (Bicep, GitHub Actions), Azure Service Bus for async event-driven communication.</li>
+        <li>Owned architecture decisions with direct P&L impact: migration strategy reduced cloud costs 40% while improving reliability SLAs.</li>
+      </ul>
+    </article>
+
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Technical Consultant</span> ·
+          <span class="role__company">Allergie Centra Nederland</span>
+        </div>
+        <span class="role__period">jun 2023 – aug 2026</span>
+      </div>
+      <div class="role__stack">Stack: Azure · .NET · Python · Cloudflare · Data pipelines · Compliance (NEN 7510)</div>
+      <ul class="role__bullets">
+        <li>Azure integrations and automation: custom APIs, data pipelines, external data scrapers — Python for ETL, .NET for API surface.</li>
+        <li>Security-first architecture: tenant isolation, audit trails, data-boundary enforcement in patient-data context.</li>
+        <li>End-to-end DevOps: Cloudflare edge, GitHub Actions CI/CD, infrastructure-as-code.</li>
+      </ul>
+    </article>
+
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Technical Lead</span> ·
+          <span class="role__company">Dermatologisch Centrum Utrecht</span>
+        </div>
+        <span class="role__period">dec 2021 – mei 2023</span>
+      </div>
+      <div class="role__stack">Stack: .NET · Azure · Background workers · Event pipelines</div>
+      <ul class="role__bullets">
+        <li>Cloud-native back-office and workflow APIs with async event pipelines and background workers.</li>
+        <li>End-to-end infrastructure ownership: App Services, Functions, Service Bus, blob storage, Key Vault.</li>
+      </ul>
+    </article>
+  </div>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Consultant — Azure Integration Services</span> ·
+        <span class="role__company">Rensa Family Company</span>
+      </div>
+      <span class="role__period">may 2021 – nov 2021</span>
+    </div>
+    <div class="role__stack">Stack: Azure Functions · Service Bus · Enterprise Integration</div>
+    <ul class="role__bullets">
+      <li>Enterprise integration via serverless architecture: Azure Functions, Service Bus messaging, Azure Integration Services.</li>
+      <li>CI/CD pipelines and deployment strategy for distributed system landscape.</li>
+    </ul>
+  </article>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Project Development Manager</span> ·
+        <span class="role__company">True People BV, Amersfoort</span>
+      </div>
+      <span class="role__period">apr 2019 – nov 2021</span>
+    </div>
+    <div class="role__stack">Stack: .NET · Umbraco · Scrum · Multi-team management</div>
+    <ul class="role__bullets">
+      <li>Operational management of multiple simultaneous delivery tracks; technical oversight across teams.</li>
+      <li>Scrum process ownership, stakeholder management, delivery accountability.</li>
+    </ul>
+  </article>
+
+  <div class="cluster cluster--orange">
+    <p class="cluster-note">// CLUSTER · DETACHERING VIA QUINTOR — three distinct assignments 2017–2019, each with its own client, domain, and engineering culture.</p>
+
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Technical Team Lead</span> ·
+          <span class="role__company">Belastingdienst (Dutch Tax Authority)</span>
+        </div>
+        <span class="role__period">may 2018 – mar 2019</span>
+      </div>
+      <div class="role__stack">Stack: .NET Core · Test Automation · CI/CD · Structured Logging</div>
+      <ul class="role__bullets">
+        <li>Lead architect after initial dashboard assignment; drove engineering standards across 4 teams.</li>
+        <li>Replaced manual regression testing with automated test suites — reduced regression cycle from 2 weeks to 2 hours.</li>
+        <li>Established ORM standards, structured logging, and automated deployment as org-wide practices.</li>
+      </ul>
+    </article>
+
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Full Stack .NET Developer</span> ·
+          <span class="role__company">Rabobank</span>
+        </div>
+        <span class="role__period">sep 2017 – apr 2018</span>
+      </div>
+      <div class="role__stack">Stack: .NET MVC · Analysis Services · CI/CD</div>
+      <ul class="role__bullets">
+        <li>Rebuilt financial steering set; replaced database backend with OLAP cube for real-time analytics.</li>
+        <li>Introduced pull request peer reviews as a standard process — first team in the department to adopt it.</li>
+      </ul>
+    </article>
+
+    <article class="role">
+      <div class="role__header">
+        <div>
+          <span class="role__title">Frontend Developer</span> ·
+          <span class="role__company">Evidos (e-signatures)</span>
+        </div>
+        <span class="role__period">jun 2017 – aug 2017</span>
+      </div>
+      <div class="role__stack">Stack: ASP.NET Core · TypeScript · OpenID Connect</div>
+      <ul class="role__bullets">
+        <li>HTML5 canvas signature positioning; integration with existing e-signature API.</li>
+        <li>Authentication via OpenID Connect and OAuth.</li>
+      </ul>
+    </article>
+  </div>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Senior Developer & Team Leader</span> ·
+        <span class="role__company">Deltec Software BV, Amersfoort</span>
+      </div>
+      <span class="role__period">jan 2010 – may 2017</span>
+    </div>
+    <div class="role__stack">Stack: C# · CMS · CI/CD · B2B platforms</div>
+    <ul class="role__bullets">
+      <li>Built B2B platforms for GroupAuto Nederland, Quinton Hazell, Motor-Parts — 100+ custom integrations.</li>
+      <li>Introduced Continuous Integration (Git, Jenkins, MSBuild) across the engineering department.</li>
+      <li>Business consultancy 2015–2016: POS integration for cloud-based cash register, migration Windows → cloud.</li>
+    </ul>
+  </article>
+
+  <article class="role">
+    <div class="role__header">
+      <div>
+        <span class="role__title">Developer → Senior Developer</span> ·
+        <span class="role__company">Deltec Software & RoutIT (contract)</span>
+      </div>
+      <span class="role__period">sep 1996 – jan 2010</span>
+    </div>
+    <div class="role__stack">Foundation in enterprise software delivery</div>
+    <ul class="role__bullets">
+      <li>13-year growth from trainee to senior. Legacy systems → early B2B web platforms.</li>
+      <li>Founded RoutIT client portal (1999–2001): first customer support, ticketing, and monitoring systems.</li>
+    </ul>
+  </article>
+</section>
+
+<!-- CORE SKILLS -->
+<section>
+  <div class="section-label section-label--orange">// CORE SKILLS</div>
+  <div class="skills">
+    <div class="skill">
+      <div class="skill__cat">Principal IC Capabilities</div>
+      <div class="skill__list">Cross-team technical direction, engineering standards at org level, code review culture, architecture governance, delivery consistency programs, bridging product and research</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Languages</div>
+      <div class="skill__list">Python (data pipelines, ETL, AI-agent orchestration, scripting), C# (30yr expert), TypeScript, JavaScript, SQL</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Backend & Architecture</div>
+      <div class="skill__list">Microservices, DDD, event-driven architecture, REST/GraphQL APIs, middleware pipelines, message queues (Service Bus), relational schema design, query optimization</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">AI-Native Development</div>
+      <div class="skill__list">Daily Claude user, multi-model AI orchestration, code generation with validation gates, AI-augmented testing, AI agent workflows in production SDLC</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Cloud & Infrastructure</div>
+      <div class="skill__list">Azure (App Services, Functions, Service Bus, Key Vault, Blob, Aspire), Docker, CI/CD (GitHub Actions, Azure DevOps), infrastructure-as-code (Bicep)</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Testing & Quality</div>
+      <div class="skill__list">Test-first methodology, automated regression, unit/integration testing (xUnit, Moq, pytest), code review standards, quality gates in CI/CD</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Frontend (Awareness)</div>
+      <div class="skill__list">React, Angular, Vue — sufficient to validate API contracts and collaborate with FE teams</div>
+    </div>
+    <div class="skill">
+      <div class="skill__cat">Security & Compliance</div>
+      <div class="skill__list">NEN 7510/7511 (healthcare), ISO 27001-aware, AVG/GDPR, tenant isolation, audit-trail implementation, data-boundary discipline</div>
+    </div>
+  </div>
+</section>
+
+<!-- LANGUAGES -->
+<section>
+  <div class="section-label section-label--green">// LANGUAGES</div>
+  <ul class="simple-list">
+    <li>Dutch (native)</li>
+    <li>English (C2)</li>
+    <li>Spanish (basic)</li>
+  </ul>
+</section>
+
+<!-- COMMUNITY -->
+<section>
+  <div class="section-label section-label--purple">// COMMUNITY</div>
+  <ul class="simple-list">
+    <li>HartslagNu — Emergency responder since 2015</li>
+    <li>VVN Traffic Exam — Volunteer at local primary school since 2024</li>
+    <li>Scouting Hiawatha — Leader (2012–2020)</li>
+  </ul>
+</section>
+
+<div class="footer-mark">
+  // CV · Synthesia — Principal Software Engineer · 2026 · vincability.com
+</div>
+
+</div>
+</body>
+</html>
