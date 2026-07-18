@@ -9,3 +9,5 @@ cvs/index.html
 
 # Lokaal agent-context bestand (stemprofiel + privé pad), niet publiceren
 AGENTS.md
+# sollicitatie-voorbereiding, nooit publiceren
+cvs/*-prep.md
