@@ -1,4 +1,9 @@
 # Netlify redirects — clean URLs voor geanonimiseerde CV's
+
+# /cv moet de actuele CV tonen, niet de oude cv.htm uit 2021 (pretty URLs pakken die anders)
+/cv                      /cv/index.html                200!
+/cv/                     /cv/index.html                200!
+
 /cvs/devops              /cvs/devops.html              200
 /cvs/team-lead           /cvs/team-lead.html           200
 /cvs/lead-developer      /cvs/lead-developer.html      200
