@@ -49,7 +49,7 @@ h1 em { display: block; color: var(--orange); font-weight: 500; }
 .hero-lead { margin-top: 1.7rem; color: #42443e; font: clamp(1.05rem, 1.8vw, 1.35rem)/1.35 var(--mono); }
 .text-link { display: inline-block; margin-top: 1.3rem; color: var(--blue); font: .74rem var(--mono); text-decoration-thickness: 1px; text-underline-offset: .3rem; }
 .text-link:hover { color: var(--orange); }
-.hero-art { position: relative; z-index: 0; width: min(100%, 78rem); margin: -5.5rem 0 0 auto; }
+.hero-art { position: relative; z-index: 0; width: min(100%, 78rem); margin: -5.5rem 0 0 auto; transform: translateY(clamp(-9rem, -12vw, -5.5rem)); }
 .hero-art img { width: 100%; height: auto; mix-blend-mode: multiply; filter: saturate(.9); }
 
 .software { padding-top: clamp(2rem, 4vw, 4rem); }
@@ -101,7 +101,7 @@ h1 em { display: block; color: var(--orange); font-weight: 500; }
 @media (max-width: 42rem) {
   h1 { max-width: 8ch; font-size: clamp(3.2rem, 15vw, 5.8rem); }
   .hero { padding-top: 3.5rem; }
-  .hero-art { width: 140%; max-width: none; margin-top: -1rem; margin-left: -20%; }
+  .hero-art { width: 140%; max-width: none; margin-top: -1rem; margin-left: -20%; transform: none; }
   .section-heading, .section-heading--built { grid-template-columns: 1fr; gap: .8rem; }
   .section-heading--built h2, .section-heading--built p:last-child { grid-column: auto; }
   .software-project > a { grid-template-columns: 3.2rem 1fr; gap: .8rem; }
