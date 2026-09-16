@@ -38,6 +38,11 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: .98; }
 :focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
 .eyebrow { color: var(--muted); font: .64rem/1.2 var(--mono); letter-spacing: .2em; text-transform: uppercase; }
 
+main { position: relative; }
+.pencil-layer { position: absolute; top: 0; left: 0; z-index: 0; overflow: visible; pointer-events: none; }
+.pencil-layer path { fill: none; stroke: #4a4337; stroke-linecap: round; }
+.software, .built { position: relative; z-index: 1; }
+
 /* header */
 .site-header { position: relative; z-index: 3; display: flex; justify-content: space-between; align-items: center; height: 3.2rem; padding-inline: 1.75rem; background: var(--navy); color: var(--paper); }
 .wordmark { font: 600 1.3rem/1 var(--display); letter-spacing: -.02em; text-decoration: none; }
@@ -58,7 +63,7 @@ h1 em { display: block; color: var(--orange); font-weight: 500; }
 .hero-lead { max-width: 37rem; margin-top: 1.4rem; color: #42443e; font: clamp(1.05rem, 1.55vw, 1.5rem)/1.35 var(--mono); }
 .hero-rule { display: block; width: 4.4rem; height: 3px; margin-top: 1.5rem; background: var(--blue); }
 .hero-note { color: var(--ink); font: var(--hand); }
-.hero-note--left { display: block; width: 23rem; height: auto; margin-top: 1.5rem; margin-left: .2rem; overflow: visible; }
+.hero-note--left { display: block; width: min(23rem, 100%); height: auto; margin-top: 1.5rem; margin-left: .2rem; overflow: visible; }
 .hero-note--left text { fill: var(--ink); font: 500 2rem Caveat, 'Segoe Print', cursive; }
 .hero-notes { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
 .hero-notes .hero-note { position: absolute; }
@@ -85,9 +90,6 @@ h1 em { display: block; color: var(--orange); font-weight: 500; }
 .project-link { align-self: end; justify-self: start; display: inline-block; color: var(--accent); font: 1.2rem/.6 var(--mono); transition: transform 180ms ease; }
 .software-project:hover .project-link, .software-project a:focus-visible .project-link { transform: translateX(.35rem); }
 .software-project__visual { height: var(--banner-h); margin: 0; overflow: hidden; background: var(--navy); }
-.software-project__visual::before, .software-project__visual::after { content: ''; position: absolute; z-index: 1; width: .7rem; height: .7rem; border: 0 solid var(--accent); pointer-events: none; }
-.software-project__visual::before { top: .35rem; left: .35rem; border-width: 2px 0 0 2px; }
-.software-project__visual::after { right: .35rem; bottom: .35rem; border-width: 0 2px 2px 0; }
 .software-project__visual img { width: 100%; height: 100%; object-fit: cover; }
 .software-project:hover .software-project__copy h3 { text-decoration: underline; text-decoration-thickness: 2px; text-decoration-color: var(--accent); text-underline-offset: .3rem; }
 
@@ -109,7 +111,6 @@ h1 em { display: block; color: var(--orange); font-weight: 500; }
 .software-project__visual { position: relative; }
 .software-project__visual figcaption { position: absolute; top: 50%; right: 1.4rem; transform: translateY(-50%) rotate(-3deg); max-width: 9rem; color: var(--paper); font: 500 .95rem/1.15 Caveat, 'Segoe Print', cursive; text-align: right; text-shadow: 0 1px 3px rgba(0,0,0,.8), 0 0 14px rgba(0,0,0,.9); }
 .software-project__visual figcaption { z-index: 1; }
-.software-project__visual::after { z-index: 2; }
 .software-project__visual img + figcaption::before { content: ''; position: absolute; top: -50vh; bottom: -50vh; right: -1.4rem; width: 16rem; z-index: -1; background: linear-gradient(to left, rgba(10,12,16,.88) 35%, transparent); }
 .software-project__visual img { object-position: left center; transition: filter 200ms ease; }
 .software-project:hover .software-project__visual img { filter: brightness(1.08); }
