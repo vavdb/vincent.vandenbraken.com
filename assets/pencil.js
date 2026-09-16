@@ -111,11 +111,15 @@
     if (copies[0].left < 160) return; // no left margin to grow roots in
     const gutterX = copies[0].left - 64;
 
-    // trunk: from the sketch's lower-left root tips into the gutter, then down
-    const start = [art.left + (art.right - art.left) * 0.12, art.top + (art.bottom - art.top) * 0.78];
-    const last = copies[copies.length - 1];
+    // trunk: thin strands leave real root tips in the sketch (measured from the
+    // image), braid together just below it, then thicken toward the gutter
     const heading = rel(document.querySelector('#work .section-heading'));
-    const bend = root(start, [gutterX, heading.top - 44], 3.2, [-20, 30], 10, 3);
+    const at = (fx, fy) => [art.left + (art.right - art.left) * fx, art.top + (art.bottom - art.top) * fy];
+    const merge = at(0.13, 1.12);
+    [[0.23, 0.80], [0.30, 0.84], [0.37, 0.86]].forEach(([fx, fy], i) =>
+      root(at(fx, fy), [merge[0] + i * 3, merge[1] + i * 2], 1.2 + i * 0.25, [-14 - i * 10, 26 + i * 8], 4, 2));
+    const bend = root(merge, [gutterX, heading.top - 26], 2, [0, 14], 10, 3);
+    const last = copies[copies.length - 1];
     const trunkEnd = [gutterX + 10, last.top + 16];
     root(bend[bend.length - 1], trunkEnd, 2.4, [-18, 0], 18, 2);
 
