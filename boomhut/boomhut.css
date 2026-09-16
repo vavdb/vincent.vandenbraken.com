@@ -20,7 +20,6 @@ h2 { font-size:clamp(2.2rem,5vw,5rem); }
 .journey-hero, .exploded-plate { margin:3rem 0 0; }
 .journey-hero img, .exploded-plate img { width:100%; height:auto; }
 figcaption { display:flex; gap:.7rem; padding-top:.8rem; font:.72rem var(--mono); text-transform:uppercase; }
-figcaption b { color:var(--orange); font-weight:400; }
 .design-study { padding:2rem 0 7rem; border-top:1px solid var(--rule); }
 .specs { display:grid; grid-template-columns:1fr 2fr; gap:2rem; margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--rule); }
 .specs-intro { max-width:18rem; color:var(--muted); }

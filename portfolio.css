@@ -107,7 +107,7 @@ h1 em { display: block; color: var(--orange); font-weight: 500; }
   .software-project > a { grid-template-columns: 3.2rem 1fr; gap: .8rem; }
   .software-project__meta span:last-child { font-size: 1rem; }
   .software-project__visual { grid-column: 2; height: 10rem; }
-  .build-journey img { min-height: 12rem; object-fit: cover; }
+  .build-journey img { height: auto; }
   .site-footer { align-items: flex-start; flex-direction: column; }
 }
 @media (prefers-reduced-motion: reduce) {
