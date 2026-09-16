@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="Qubit is an Electron desktop remote for qBittorrent, with multi-server control, media matching, previews, and Windows packaging.">
-  <title>Qubit — the qBittorrent desktop remote</title>
+  <title>Qubit: the qBittorrent desktop remote</title>
   <link rel="stylesheet" href="tokens.css">
   <style>
     /* Hallmark · macrostructure: Workbench · tone: technical-utilitarian · anchor hue: Dracula purple */
@@ -210,9 +210,9 @@
     <section class="hero shell" id="top" aria-labelledby="page-title">
       <div class="hero-grid">
         <div class="hero-copy">
-          <p class="eyebrow">Electron desktop remote / qBittorrent</p>
-          <h1 id="page-title">Your qBittorrent desk, in focus.</h1>
-          <p class="hero-lead">Qubit brings servers, torrents, content, and media context into one keyboard-friendly desktop workspace.</p>
+          <p class="eyebrow">Engineering case study / Electron + qBittorrent Web API</p>
+          <h1 id="page-title">A qBittorrent remote with operational context.</h1>
+          <p class="hero-lead">Qubit starts with qBittorrent's Web API and adds the server, path, content, and media context needed to operate it from one keyboard-friendly desktop workspace.</p>
           <div class="hero-actions">
             <a class="button" href="#tour">Explore the tour <span aria-hidden="true">↘</span></a>
             <a class="button button--quiet" href="#release">See the build</a>
@@ -268,15 +268,15 @@
     <section class="section" id="tour" aria-labelledby="tour-title">
       <div class="shell">
         <div class="section-head">
-          <h2 id="tour-title">The useful parts stay close.</h2>
-          <p>Qubit is shaped around the moments that usually send a download workflow across too many windows: choosing a server, inspecting a torrent, adding the next thing, and checking what it belongs to.</p>
+          <h2 id="tour-title">From API surface to working tool.</h2>
+          <p>This project sits at the other end of my consultancy spectrum: a focused desktop application built around an existing service boundary. The engineering work is making server state, transfer operations, content structure, and media context explicit in one workflow.</p>
         </div>
         <div class="tour-list">
           <article class="tour-step">
             <div class="tour-copy">
-              <span class="tour-number">01 / SWITCHBOARD</span>
-              <h3>Multiple servers, one working view.</h3>
-              <p>Keep per-server credentials, default save paths, categories, and local path mappings together. Move between a home machine, seedbox, or media box without losing the shape of the work.</p>
+              <span class="tour-number">01 / CONNECTIONS</span>
+              <h3>Make the server boundary visible.</h3>
+              <p>Keep per-server credentials, default save paths, categories, and local path mappings together. Move between a home machine, remote host, or media box while retaining the operational settings that shape each connection.</p>
             </div>
             <figure class="tour-visual server-stack">
               <div class="server-card server-card--active"><strong>home-lab</strong><span>192.168.1.20</span><em>● online</em></div>
@@ -288,9 +288,9 @@
 
           <article class="tour-step">
             <div class="tour-copy">
-              <span class="tour-number">02 / INSPECT</span>
-              <h3>A torrent is more than a row.</h3>
-              <p>Manage start, stop, force start, recheck, reannounce, and removal from the live list. Open a detail panel for general information, trackers, peers, and a navigable content tree with per-file priorities and download toggles.</p>
+              <span class="tour-number">02 / OPERATE</span>
+              <h3>Turn API records into operations.</h3>
+              <p>Manage start, stop, force start, recheck, reannounce, and removal from the live list. The detail panel adds general information, trackers, peers, and a navigable content tree with per-file priorities and download toggles.</p>
             </div>
             <figure class="tour-visual panel-visual">
               <div class="visual-pane"><h3>content tree</h3><div class="visual-tree"><span>▾ Dune.Part.Two</span><span>▾ video</span><span>scene-01.mkv</span><span>scene-02.mkv</span></div><div class="progress-line" aria-hidden="true"></div></div>
@@ -301,9 +301,9 @@
 
           <article class="tour-step">
             <div class="tour-copy">
-              <span class="tour-number">03 / ADD + MATCH</span>
-              <h3>From magnet to the right library.</h3>
-              <p>Add a torrent from a file or magnet, catch duplicates by infohash, and optionally merge trackers. When content lands in a tagged Stash or Plex folder, Qubit can match it against the library and make the result available in the preview flow.</p>
+              <span class="tour-number">03 / INTAKE + MEDIA</span>
+              <h3>Connect intake to media-aware controls.</h3>
+              <p>Add a torrent from a file or magnet, catch duplicates by infohash, and optionally merge trackers. When content lands in a tagged Stash or Plex folder, Qubit can match it against the library and expose the relevant preview or playback controls.</p>
             </div>
             <figure class="tour-visual add-visual">
               <div class="add-drop"><strong>Drop a .torrent</strong><span>or paste a magnet link</span><span>add paused · tracker merge</span></div>
@@ -322,10 +322,10 @@
           <h2 id="features-title" style="margin-top: var(--space-5);">A remote with enough context to be useful.</h2>
         </div>
         <div>
-          <p>Qubit keeps the qBittorrent Web API at the centre, then adds the small pieces that make a media-aware setup easier to operate from one place.</p>
+          <p>qBittorrent's Web API remains the centre of the system. Qubit adds the operational context around it: connection settings, transfer state, content structure, path mappings, and media-aware controls in one desktop surface.</p>
           <div class="feature-grid" style="margin-top: var(--space-8);">
-            <article class="feature"><span class="feature-mark">↳ 01</span><h3>Live torrent control</h3><p>Delta-polled torrent data, sortable and resizable columns, folder grouping, and per-row actions.</p></article>
-            <article class="feature"><span class="feature-mark">↳ 02</span><h3>Media-aware previews</h3><p>Sidecar screenshots, direct image previews, and an in-app player for matched Stash or Plex items.</p></article>
+            <article class="feature"><span class="feature-mark">↳ 01</span><h3>API-backed transfer control</h3><p>Delta-polled torrent data, sortable and resizable columns, folder grouping, and explicit per-row actions.</p></article>
+            <article class="feature"><span class="feature-mark">↳ 02</span><h3>Media-aware controls</h3><p>Sidecar screenshots, direct image previews, and in-app playback for content matched to Stash or Plex libraries.</p></article>
             <article class="feature"><span class="feature-mark">↳ 03</span><h3>Windows-native handoff</h3><p>Package Qubit for Windows with .torrent and magnet associations through the Default-Apps picker flow.</p></article>
           </div>
         </div>
@@ -338,7 +338,7 @@
           <div>
             <p class="eyebrow">Current source release</p>
             <h2 id="release-title" style="margin-top: var(--space-4);">Qubit 1.0.0</h2>
-            <p>The repository package manifest identifies the current version as 1.0.0. Its Windows build is configured for an x64 NSIS installer and an x64 ZIP archive via electron-builder.</p>
+            <p>This is a focused consultancy artefact: a small Windows desktop client that turns an existing qBittorrent service boundary into a more complete operator workflow. The repository package manifest identifies the current version as 1.0.0, with an x64 NSIS installer and an x64 ZIP archive configured through electron-builder.</p>
           </div>
           <section class="release-meta" aria-labelledby="build-targets-title">
             <h2 id="build-targets-title" class="visually-hidden">Build targets</h2>
