@@ -1,0 +1,916 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="oklch(94% 0.018 88)">
+  <meta name="description" content="Groot is a fitness app for barbell progression, interval running, weekly habit contracts, and training history.">
+  <title>Groot, a training log with a contract</title>
+  <link rel="icon" type="image/webp" href="images/groot-icon.webp">
+  <style>
+    /* Hallmark · macrostructure: Workbench · tone: tactile technical editorial · anchor hue: dark green · nav: N9 · footer: Ft1 */
+    :root {
+      --color-paper: oklch(94% 0.018 88);
+      --color-paper-2: oklch(90% 0.022 86);
+      --color-paper-3: oklch(97% 0.012 88);
+      --color-ink: oklch(22% 0.025 140);
+      --color-ink-2: oklch(39% 0.022 140);
+      --color-moss: oklch(45% 0.085 140);
+      --color-moss-deep: oklch(29% 0.045 140);
+      --color-amber: oklch(72% 0.15 72);
+      --color-amber-deep: oklch(52% 0.13 72);
+      --color-clay: oklch(77% 0.055 56);
+      --color-rule: oklch(79% 0.028 86);
+      --color-muted: oklch(52% 0.022 100);
+      --color-focus: oklch(57% 0.19 72);
+      --color-alert: oklch(55% 0.13 30);
+      --color-on-accent: var(--color-ink);
+      --font-display: "Baskerville", "Iowan Old Style", ui-serif, serif;
+      --font-body: "Aptos", "Segoe UI", ui-sans-serif, sans-serif;
+      --font-mono: "Cascadia Mono", "IBM Plex Mono", ui-monospace, monospace;
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-2xl: 3rem;
+      --space-3xl: clamp(4rem, 10vw, 8rem);
+      --text-xs: 0.75rem;
+      --text-sm: 0.875rem;
+      --text-base: 1rem;
+      --text-md: 1.25rem;
+      --text-lg: clamp(1.55rem, 3vw, 2.25rem);
+      --text-xl: clamp(2.35rem, 7vw, 5rem);
+      --text-display: clamp(3rem, 9vw, 7rem);
+      --leading-tight: 1.05;
+      --leading-copy: 1.6;
+      --rule-thin: 1px;
+      --radius-sm: 0.5rem;
+      --radius-md: 1rem;
+      --radius-lg: 1.5rem;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-fast: 150ms;
+      --dur-base: 300ms;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      overflow-x: clip;
+      scroll-behavior: smooth;
+      background: var(--color-paper);
+    }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      overflow-x: clip;
+      color: var(--color-ink);
+      background:
+        linear-gradient(var(--color-rule) var(--rule-thin), transparent var(--rule-thin)) 0 0 / 100% 3.5rem,
+        var(--color-paper);
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      line-height: var(--leading-copy);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    a:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid var(--color-focus);
+      outline-offset: 4px;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    h1,
+    h2,
+    h3,
+    p,
+    figure {
+      margin: 0;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: var(--font-display);
+      font-style: normal;
+      font-weight: 700;
+      line-height: var(--leading-tight);
+      overflow-wrap: anywhere;
+    }
+
+    h1 {
+      max-width: 9ch;
+      color: var(--color-moss-deep);
+      font-size: var(--text-display);
+      letter-spacing: -0.045em;
+    }
+
+    h2 {
+      max-width: 14ch;
+      font-size: var(--text-xl);
+      letter-spacing: -0.035em;
+    }
+
+    h3 {
+      font-size: var(--text-lg);
+      letter-spacing: -0.025em;
+    }
+
+    .site-shell {
+      width: min(100% - 2rem, 76rem);
+      margin-inline: auto;
+    }
+
+    .eyebrow,
+    .section-index,
+    .screen-meta,
+    .status-label,
+    .micro-label {
+      color: var(--color-ink-2);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: 0.08em;
+      line-height: 1.3;
+      text-transform: uppercase;
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 5rem;
+      border-bottom: var(--rule-thin) solid var(--color-rule);
+      gap: var(--space-md);
+    }
+
+    .wordmark {
+      color: var(--color-moss-deep);
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      font-weight: 700;
+      letter-spacing: -0.06em;
+      line-height: 1;
+      text-decoration: none;
+    }
+
+    .wordmark-dot {
+      color: var(--color-amber-deep);
+    }
+
+    .nav-link,
+    .text-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2.75rem;
+      color: var(--color-ink);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      text-decoration-thickness: 0.08em;
+      text-underline-offset: 0.2em;
+      white-space: nowrap;
+    }
+
+    .nav-link {
+      padding-inline: 0.8rem;
+      border: var(--rule-thin) solid var(--color-moss);
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+    }
+
+    .nav-link:hover {
+      color: var(--color-paper-3);
+      background: var(--color-moss);
+      transform: translateY(-2px);
+    }
+
+    .nav-link:active {
+      transform: translateY(0);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      align-items: end;
+      gap: clamp(2rem, 7vw, 7rem);
+      min-height: min(47rem, 78svh);
+      padding-block: clamp(4rem, 11vw, 9rem) var(--space-3xl);
+    }
+
+    .hero-copy {
+      display: grid;
+      align-content: end;
+      gap: var(--space-xl);
+      min-width: 0;
+    }
+
+    .hero-intro {
+      max-width: 33rem;
+      color: var(--color-ink-2);
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      line-height: 1.5;
+    }
+
+    .hero-intro strong {
+      color: var(--color-ink);
+    }
+
+    .hero-note {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      max-width: 33rem;
+      padding-top: var(--space-md);
+      border-top: var(--rule-thin) solid var(--color-rule);
+      color: var(--color-muted);
+      font-size: var(--text-sm);
+    }
+
+    .hero-note::before {
+      display: block;
+      flex: 0 0 auto;
+      width: 0.65rem;
+      height: 0.65rem;
+      margin-top: 0.35rem;
+      border-radius: 50%;
+      background: var(--color-amber-deep);
+      content: "";
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 3rem;
+      padding: 0.7rem 1rem;
+      border: var(--rule-thin) solid transparent;
+      border-radius: var(--radius-sm);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      line-height: 1;
+      text-decoration: none;
+      transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+      white-space: nowrap;
+    }
+
+    .button-primary {
+      color: var(--color-on-accent);
+      background: var(--color-amber);
+    }
+
+    .button-primary:hover {
+      color: var(--color-paper-3);
+      background: var(--color-amber-deep);
+      transform: translateY(-2px);
+    }
+
+    .button-primary:active {
+      transform: translateY(0);
+    }
+
+    .button-secondary {
+      border-color: var(--color-rule);
+      color: var(--color-ink);
+      background: transparent;
+    }
+
+    .button-secondary:hover {
+      border-color: var(--color-moss);
+      color: var(--color-moss-deep);
+      background: var(--color-paper-3);
+      transform: translateY(-2px);
+    }
+
+    .button-secondary:active {
+      transform: translateY(0);
+    }
+
+    .hero-proof {
+      position: relative;
+      min-width: 0;
+      padding: clamp(0.75rem, 2vw, 1.5rem);
+      border: var(--rule-thin) solid var(--color-rule);
+      border-radius: var(--radius-lg);
+      background: color-mix(in oklab, var(--color-paper-3) 76%, transparent);
+      box-shadow: 1rem 1rem 0 var(--color-clay);
+    }
+
+    .hero-proof::before {
+      position: absolute;
+      inset: 0.75rem auto auto 0.75rem;
+      width: 3rem;
+      height: 0.35rem;
+      background: var(--color-amber);
+      content: "";
+    }
+
+    .hero-proof img {
+      width: 100%;
+      height: auto;
+      border-radius: var(--radius-md);
+    }
+
+    .hero-proof figcaption {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-md);
+      padding: var(--space-md) var(--space-xs) var(--space-xs);
+      color: var(--color-muted);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+    }
+
+    .section {
+      padding-block: var(--space-3xl);
+      border-top: var(--rule-thin) solid var(--color-rule);
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+      align-items: start;
+      gap: var(--space-2xl);
+      margin-bottom: clamp(2.5rem, 7vw, 5rem);
+    }
+
+    .section-heading > * {
+      min-width: 0;
+    }
+
+    .section-heading h2 {
+      max-width: 13ch;
+    }
+
+    .section-heading p {
+      max-width: 42ch;
+      color: var(--color-ink-2);
+      font-size: var(--text-md);
+    }
+
+    .feature-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      border-top: var(--rule-thin) solid var(--color-rule);
+    }
+
+    .feature {
+      display: grid;
+      grid-template-columns: minmax(3.5rem, 0.22fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      padding: var(--space-xl) var(--space-md) var(--space-xl) 0;
+      border-bottom: var(--rule-thin) solid var(--color-rule);
+    }
+
+    .feature:nth-child(odd) {
+      padding-inline-end: clamp(1rem, 4vw, 4rem);
+      border-inline-end: var(--rule-thin) solid var(--color-rule);
+    }
+
+    .feature:nth-child(even) {
+      padding-inline-start: clamp(1rem, 4vw, 4rem);
+    }
+
+    .feature-index {
+      color: var(--color-amber-deep);
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      font-weight: 700;
+    }
+
+    .feature-copy {
+      display: grid;
+      gap: var(--space-sm);
+      min-width: 0;
+    }
+
+    .feature-copy p {
+      max-width: 42ch;
+      color: var(--color-ink-2);
+    }
+
+    .workbench {
+      background: var(--color-moss-deep);
+      color: var(--color-paper-3);
+    }
+
+    .workbench .section-heading {
+      border-color: color-mix(in oklab, var(--color-paper-3) 24%, transparent);
+    }
+
+    .workbench .section-index,
+    .workbench .section-heading p,
+    .workbench .screen-meta,
+    .workbench .screen-caption p {
+      color: color-mix(in oklab, var(--color-paper-3) 70%, transparent);
+    }
+
+    .workbench h2,
+    .workbench h3 {
+      color: var(--color-paper-3);
+    }
+
+    .screen-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: start;
+      gap: clamp(2rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4.5rem);
+    }
+
+    .screen-card {
+      display: grid;
+      gap: var(--space-lg);
+      min-width: 0;
+    }
+
+    .screen-card:first-child {
+      grid-row: span 2;
+    }
+
+    .screen-frame {
+      min-width: 0;
+      padding: clamp(0.5rem, 1.5vw, 1rem);
+      border: var(--rule-thin) solid color-mix(in oklab, var(--color-paper-3) 38%, transparent);
+      border-radius: var(--radius-md);
+      background: var(--color-paper);
+    }
+
+    .screen-frame img {
+      width: 100%;
+      height: auto;
+      border-radius: var(--radius-sm);
+    }
+
+    .screen-caption {
+      display: grid;
+      gap: var(--space-sm);
+      max-width: 36ch;
+    }
+
+    .screen-caption h3 {
+      font-size: var(--text-lg);
+    }
+
+    .screen-caption p {
+      line-height: 1.5;
+    }
+
+    .recap {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: clamp(1.5rem, 5vw, 5rem);
+      align-items: center;
+    }
+
+    .recap-copy {
+      display: grid;
+      gap: var(--space-lg);
+      min-width: 0;
+    }
+
+    .recap-copy p {
+      max-width: 48ch;
+      color: var(--color-ink-2);
+    }
+
+    .recap-list {
+      display: grid;
+      gap: var(--space-sm);
+      padding: 0;
+      list-style: none;
+    }
+
+    .recap-list li {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-md);
+      padding-top: var(--space-sm);
+      border-top: var(--rule-thin) solid var(--color-rule);
+      color: var(--color-ink-2);
+    }
+
+    .recap-list strong {
+      min-width: 6.5rem;
+      color: var(--color-ink);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .recap-frame {
+      min-width: 0;
+      padding: clamp(0.5rem, 1.5vw, 1rem);
+      border: var(--rule-thin) solid var(--color-rule);
+      border-radius: var(--radius-md);
+      background: var(--color-paper-3);
+      box-shadow: 1rem 1rem 0 var(--color-clay);
+    }
+
+    .recap-frame img {
+      width: 100%;
+      height: auto;
+      border-radius: var(--radius-sm);
+    }
+
+    .status-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+      gap: clamp(1.5rem, 5vw, 5rem);
+      padding: clamp(1.5rem, 4vw, 3rem);
+      border: var(--rule-thin) solid var(--color-rule);
+      border-radius: var(--radius-md);
+      background: var(--color-paper-2);
+    }
+
+    .status-copy {
+      display: grid;
+      align-content: start;
+      gap: var(--space-lg);
+      min-width: 0;
+    }
+
+    .status-copy h2 {
+      max-width: 10ch;
+    }
+
+    .status-copy p {
+      max-width: 50ch;
+      color: var(--color-ink-2);
+    }
+
+    .status-copy .status-label {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      width: fit-content;
+      color: var(--color-moss-deep);
+    }
+
+    .status-label::before {
+      width: 0.6rem;
+      height: 0.6rem;
+      border-radius: 50%;
+      background: var(--color-amber-deep);
+      content: "";
+    }
+
+    .status-list {
+      display: grid;
+      align-content: start;
+      gap: var(--space-md);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .status-list li {
+      padding-top: var(--space-md);
+      border-top: var(--rule-thin) solid var(--color-rule);
+      color: var(--color-ink-2);
+    }
+
+    .status-list li:first-child {
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    .status-list strong {
+      display: block;
+      margin-bottom: var(--space-xs);
+      color: var(--color-ink);
+    }
+
+    .site-footer {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--space-xl);
+      padding-block: var(--space-xl) max(var(--space-xl), env(safe-area-inset-bottom));
+      border-top: var(--rule-thin) solid var(--color-rule);
+    }
+
+    .footer-tagline {
+      max-width: 28ch;
+      margin-top: var(--space-sm);
+      color: var(--color-ink-2);
+      font-family: var(--font-display);
+      font-size: var(--text-md);
+      line-height: 1.2;
+    }
+
+    .footer-meta {
+      display: flex;
+      align-items: end;
+      justify-content: end;
+      gap: var(--space-md);
+      color: var(--color-muted);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      text-align: end;
+    }
+
+    .footer-meta a {
+      color: var(--color-ink-2);
+    }
+
+    @media (min-width: 40rem) {
+      .site-shell {
+        width: min(100% - 3rem, 76rem);
+      }
+    }
+
+    @media (max-width: 60rem) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.78fr);
+      }
+
+      .screen-grid {
+        gap: var(--space-2xl) var(--space-xl);
+      }
+    }
+
+    @media (max-width: 40rem) {
+      .site-shell {
+        width: min(100% - 2rem, 34rem);
+      }
+
+      .site-nav {
+        min-height: 4.5rem;
+      }
+
+      .nav-link {
+        padding-inline: 0.65rem;
+      }
+
+      .hero,
+      .section-heading,
+      .recap,
+      .status-panel,
+      .site-footer {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero {
+        min-height: auto;
+        gap: var(--space-2xl);
+        padding-block: var(--space-3xl);
+      }
+
+      h1 {
+        max-width: 8ch;
+        font-size: clamp(3.25rem, 17vw, 5.25rem);
+      }
+
+      .hero-proof {
+        box-shadow: 0.65rem 0.65rem 0 var(--color-clay);
+      }
+
+      .section-heading {
+        gap: var(--space-lg);
+        margin-bottom: var(--space-2xl);
+      }
+
+      .feature-list,
+      .screen-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .feature,
+      .feature:nth-child(odd),
+      .feature:nth-child(even) {
+        grid-template-columns: 3rem minmax(0, 1fr);
+        padding-inline: 0;
+        border-inline-end: 0;
+      }
+
+      .screen-card:first-child {
+        grid-row: auto;
+      }
+
+      .recap-frame {
+        box-shadow: 0.65rem 0.65rem 0 var(--color-clay);
+      }
+
+      .status-panel {
+        gap: var(--space-xl);
+      }
+
+      .footer-meta {
+        align-items: start;
+        justify-content: start;
+        text-align: start;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 150ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 150ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="site-shell">
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a class="wordmark" href="#top" aria-label="Groot home">Groot<span class="wordmark-dot">.</span></a>
+      <a class="nav-link" href="#screens">See the screens</a>
+    </nav>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">A training log in active development</p>
+          <h1 id="hero-title">Training, with a contract.</h1>
+          <p class="hero-intro"><strong>Groot</strong> brings barbell progression, interval running, weekly habit contracts, and history into one record of the work.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#screens">Tour the app</a>
+            <a class="button button-secondary" href="#status">Read the status</a>
+          </div>
+          <p class="hero-note">The page shows real Groot screens. It is a product study, not a claim that the app is finished.</p>
+        </div>
+
+        <figure class="hero-proof">
+          <picture>
+            <source srcset="images/phone-home-light.webp" type="image/webp">
+            <img src="images/phone-home-light.webp" width="390" height="845" fetchpriority="high" alt="Groot Home screen showing the weekly contract, six weeks kept, a Today run tile, and a history grid">
+          </picture>
+          <figcaption><span>Home</span><span>390 × 845 capture</span></figcaption>
+        </figure>
+      </section>
+
+      <section class="section" aria-labelledby="parts-title">
+        <div class="section-heading">
+          <p class="section-index">01 / The record</p>
+          <div>
+            <h2 id="parts-title">Four parts. One training log.</h2>
+            <p>Each part answers a different question about the week, then leaves a useful trace for the next session.</p>
+          </div>
+        </div>
+
+        <div class="feature-list">
+          <article class="feature">
+            <p class="feature-index">01</p>
+            <div class="feature-copy">
+              <h3>Lift on a ladder</h3>
+              <p>GZCLP progression keeps the exercise and tier together. Squat can move through its heavy T1 and lighter T2 work on separate ladders.</p>
+            </div>
+          </article>
+          <article class="feature">
+            <p class="feature-index">02</p>
+            <div class="feature-copy">
+              <h3>Run by interval</h3>
+              <p>The 0→5K coach gives you a session with timed switches and spoken cues, including the ten-second warning before each change.</p>
+            </div>
+          </article>
+          <article class="feature">
+            <p class="feature-index">03</p>
+            <div class="feature-copy">
+              <h3>Keep the week</h3>
+              <p>A weekly habit contract makes the week legible. The home screen shows what counts, what is due today, and how many weeks you have kept.</p>
+            </div>
+          </article>
+          <article class="feature">
+            <p class="feature-index">04</p>
+            <div class="feature-copy">
+              <h3>Look back clearly</h3>
+              <p>History keeps the sessions you logged close enough to inspect, from the shape of a week to the plates loaded in a single recap.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section workbench" id="screens" aria-labelledby="screens-title">
+        <div class="section-heading">
+          <p class="section-index">02 / The screens</p>
+          <div>
+            <h2 id="screens-title">See what the session asks of you.</h2>
+            <p>Groot stays close to the next action. Tap through a set, follow the interval, or check the contract before the week gets away from you.</p>
+          </div>
+        </div>
+
+        <div class="screen-grid">
+          <article class="screen-card">
+            <figure class="screen-frame">
+              <picture>
+                <source srcset="images/phone-lift-light.webp" type="image/webp">
+                <img src="images/phone-lift-light.webp" width="390" height="845" loading="lazy" decoding="async" alt="Groot Lift screen showing GZCLP day A1 with squat, bench press, and chin-up set circles">
+              </picture>
+            </figure>
+            <div class="screen-caption">
+              <p class="screen-meta">Lift / GZCLP A1</p>
+              <h3>One tap per set.</h3>
+              <p>Squat, bench press, and chin-up stay visible as distinct work. The screen keeps the current set and the next one in reach.</p>
+            </div>
+          </article>
+
+          <article class="screen-card">
+            <figure class="screen-frame">
+              <picture>
+                <source srcset="images/phone-run-light.webp" type="image/webp">
+                <img src="images/phone-run-light.webp" width="390" height="845" loading="lazy" decoding="async" alt="Groot Run screen showing 0 to 5K week 1 day 1 with a five-minute warmup and interval progress strip">
+              </picture>
+            </figure>
+            <div class="screen-caption">
+              <p class="screen-meta">Run / 0→5K W1 · D1</p>
+              <h3>Follow the switch.</h3>
+              <p>A five-minute warmup leads into the first interval. The progress strip and spoken cues tell you when the session changes gear.</p>
+            </div>
+          </article>
+
+          <article class="screen-card">
+            <figure class="screen-frame">
+              <picture>
+                <source srcset="images/phone-home-light.webp" type="image/webp">
+                <img src="images/phone-home-light.webp" width="390" height="845" loading="lazy" decoding="async" alt="Groot Home screen with the Today tile, weekly contract, and session history grid">
+              </picture>
+            </figure>
+            <div class="screen-caption">
+              <p class="screen-meta">Home / weekly contract</p>
+              <h3>Know what counts.</h3>
+              <p>The week card puts today beside the contract and the longer history, so a single session has a place in the wider record.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="recap-title">
+        <div class="recap">
+          <div class="recap-copy">
+            <p class="section-index">03 / The recap</p>
+            <h2 id="recap-title">A record with the weight left in.</h2>
+            <p>The session recap treats the bar as data. It separates what was loaded from what was handled, then keeps the totals beside the plate picture.</p>
+            <ul class="recap-list">
+              <li><strong>Loaded</strong><span>One count for each plate on the bar</span></li>
+              <li><strong>Handled</strong><span>One count for each set, including bodyweight</span></li>
+              <li><strong>History</strong><span>Sessions remain the source for progression</span></li>
+            </ul>
+          </div>
+          <figure class="recap-frame">
+            <picture>
+              <source srcset="images/session-recap-light.webp" type="image/webp">
+              <img src="images/session-recap-light.webp" width="668" height="706" loading="lazy" decoding="async" alt="Groot Session recap showing loaded and handled plates with moved weight, sets, and plates carried">
+            </picture>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section" id="status" aria-labelledby="status-title">
+        <div class="status-panel">
+          <div class="status-copy">
+            <p class="status-label">Active development</p>
+            <h2 id="status-title">The useful parts are here. The wiring is next.</h2>
+            <p>Groot’s progression engines, interval schedules, week contract, screens, and device store are being built together. Some screens still open on defaults instead of reading everything you have logged.</p>
+          </div>
+          <ul class="status-list">
+            <li><strong>Working now</strong>GZCLP progression, plate maths, interval cues, stored run sessions, and the light and dark screen designs.</li>
+            <li><strong>Still to wire</strong>The lift screen to stored sessions, plus sync, settings, and the Progress screen.</li>
+            <li><strong>Position</strong>A focused fitness app, without a hosted backend in the critical path.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="wordmark" href="#top">Groot<span class="wordmark-dot">.</span></a>
+        <p class="footer-tagline">The session, the contract, the history.</p>
+      </div>
+      <div class="footer-meta">
+        <span>Product page · 2026</span>
+        <a href="#status">Development status</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
