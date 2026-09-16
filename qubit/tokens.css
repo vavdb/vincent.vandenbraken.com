@@ -1,0 +1,72 @@
+/* Hallmark · macrostructure: Workbench · tone: technical-utilitarian · anchor hue: Dracula purple */
+/* Hallmark · pre-emit critique: P5 H5 E5 S5 R4 V5 */
+
+@font-face {
+  font-family: 'Asimovian';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/asimovian.woff2') format('woff2');
+}
+
+:root {
+  --color-void: oklch(17% 0.028 276);
+  --color-surface: oklch(21% 0.032 278);
+  --color-panel: oklch(26% 0.036 278);
+  --color-panel-high: oklch(31% 0.038 278);
+  --color-line: oklch(36% 0.036 278);
+  --color-line-soft: oklch(42% 0.09 304 / 0.24);
+  --color-ink: oklch(97% 0.012 102);
+  --color-copy: oklch(79% 0.021 286);
+  --color-muted: oklch(69% 0.095 281);
+  --color-purple: oklch(77% 0.17 305);
+  --color-purple-deep: oklch(67% 0.17 304);
+  --color-purple-soft: oklch(77% 0.17 305 / 0.14);
+  --color-accent: var(--color-purple);
+  --color-accent-ink: var(--color-void);
+  --color-green: oklch(88% 0.24 144);
+  --color-green-deep: oklch(77% 0.19 144);
+  --color-green-soft: oklch(88% 0.24 144 / 0.14);
+  --color-cyan: oklch(86% 0.13 207);
+  --color-cyan-soft: oklch(86% 0.13 207 / 0.12);
+  --color-pink: oklch(76% 0.19 339);
+  --color-orange: oklch(83% 0.15 72);
+  --color-danger: oklch(69% 0.21 25);
+  --color-black: oklch(8% 0.01 280);
+
+  --font-display: 'Asimovian', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'Cascadia Code', 'JetBrains Mono', Consolas, monospace;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  --text-xs: 0.72rem;
+  --text-sm: 0.86rem;
+  --text-md: 1rem;
+  --text-lg: 1.2rem;
+  --text-xl: clamp(1.6rem, 2.3vw, 2.4rem);
+  --text-display: clamp(3.2rem, 8vw, 7.2rem);
+
+  --rule-thin: 1px;
+  --space-rule: 1px;
+  --radius-sm: 0.35rem;
+  --radius-md: 0.7rem;
+  --radius-lg: 1rem;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-short: 120ms;
+  --dur-state: 180ms;
+  --dur-reveal: 500ms;
+}

@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Qubit is an Electron desktop remote for qBittorrent, with multi-server control, media matching, previews, and Windows packaging.">
+  <title>Qubit — the qBittorrent desktop remote</title>
+  <link rel="stylesheet" href="tokens.css">
+  <style>
+    /* Hallmark · macrostructure: Workbench · tone: technical-utilitarian · anchor hue: Dracula purple */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; overflow-x: clip; background: var(--color-void); }
+    body {
+      margin: 0;
+      overflow-x: clip;
+      background: var(--color-void);
+      color: var(--color-ink);
+      font-family: var(--font-body);
+      font-size: var(--text-md);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    img { display: block; max-width: 100%; }
+    :focus-visible { outline: 2px solid var(--color-cyan); outline-offset: 4px; }
+    .skip-link {
+      position: fixed; left: var(--space-4); top: var(--space-4); z-index: 10;
+      padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm);
+      background: var(--color-green); color: var(--color-void); font-weight: 700;
+      transform: translateY(-150%); transition: transform var(--dur-state) var(--ease-out);
+    }
+    .skip-link:focus { transform: translateY(0); }
+    .visually-hidden {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+    }
+    .site-header, .shell { width: min(calc(100% - 3rem), 78rem); margin-inline: auto; }
+    .site-header {
+      display: flex; align-items: center; justify-content: space-between;
+      min-height: 5.5rem; border-bottom: var(--rule-thin) solid var(--color-line);
+    }
+    .brand, .header-nav, .header-back { display: flex; align-items: center; }
+    .brand { gap: var(--space-3); font-family: var(--font-mono); font-size: var(--text-sm); font-weight: 700; letter-spacing: 0.04em; }
+    .brand img { width: 2rem; height: 2rem; border-radius: var(--radius-sm); }
+    .header-nav { gap: var(--space-6); margin-left: auto; margin-right: var(--space-8); color: var(--color-copy); font-size: var(--text-sm); }
+    .header-nav a, .header-back { min-height: 2.75rem; display: inline-flex; align-items: center; }
+    .header-nav a { transition: color var(--dur-state) var(--ease-out); }
+    .header-nav a:hover, .header-nav a:focus-visible { color: var(--color-cyan); }
+    .header-back { color: var(--color-purple); font-family: var(--font-mono); font-size: var(--text-xs); }
+    .header-back::before { content: '↖'; margin-right: var(--space-2); font-size: var(--text-md); }
+    .eyebrow, .mono { font-family: var(--font-mono); }
+    .eyebrow {
+      margin: 0; color: var(--color-green); font-size: var(--text-xs); font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+    }
+    .hero { padding: var(--space-20) 0 var(--space-24); }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr); gap: var(--space-12); align-items: center; }
+    h1, h2, h3, p { margin: 0; }
+    h1, h2, h3 { font-family: var(--font-display); font-style: normal; line-height: 1.02; letter-spacing: -0.045em; overflow-wrap: anywhere; min-width: 0; }
+    h1 { max-width: 9ch; margin-top: var(--space-5); font-size: var(--text-display); font-weight: 700; }
+    h2 { font-size: var(--text-xl); }
+    h3 { font-size: var(--text-lg); letter-spacing: -0.025em; }
+    .hero-copy { max-width: 36rem; }
+    .hero-lead { max-width: 31rem; margin-top: var(--space-8); color: var(--color-copy); font-size: clamp(1.05rem, 1.7vw, 1.3rem); }
+    .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); margin-top: var(--space-8); }
+    .button {
+      display: inline-flex; align-items: center; justify-content: center; min-height: 2.875rem;
+      padding: 0 var(--space-5); border: 1px solid var(--color-purple); border-radius: var(--radius-sm);
+      background: var(--color-accent); color: var(--color-accent-ink); font-weight: 700; white-space: nowrap;
+      transition: background-color var(--dur-state) var(--ease-out), border-color var(--dur-state) var(--ease-out), transform var(--dur-short) var(--ease-out);
+    }
+    .button:hover { background: var(--color-cyan); border-color: var(--color-cyan); transform: translateY(-2px); }
+    .button:active { transform: translateY(1px); }
+    .button--quiet { background: transparent; border-color: var(--color-line); color: var(--color-copy); }
+    .button--quiet:hover { background: var(--color-panel); border-color: var(--color-purple); color: var(--color-ink); }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-5); margin-top: var(--space-8); color: var(--color-muted); font: var(--text-xs) / 1.4 var(--font-mono); }
+    .hero-meta dd { margin: 0; }
+    .hero-fact + .hero-fact::before { content: '·'; margin-right: var(--space-5); color: var(--color-purple); }
+
+    .product-surface { min-width: 0; margin: 0; padding: var(--space-3); border: 1px solid var(--color-line); border-radius: var(--radius-lg); background: var(--color-surface); box-shadow: var(--space-6) var(--space-6) 0 var(--color-purple-soft); }
+    .surface-bar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-3) var(--space-2) var(--space-4); color: var(--color-copy); font: var(--text-xs) / 1 var(--font-mono); }
+    .surface-status { display: inline-flex; align-items: center; gap: var(--space-2); color: var(--color-green); }
+    .surface-status::before { content: ''; width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--color-green); }
+    .surface-tabs { display: flex; gap: var(--space-2); overflow-x: auto; padding: 0 var(--space-2) var(--space-3); scrollbar-width: thin; }
+    .surface-tab { flex: 0 0 auto; padding: var(--space-2) var(--space-3); border: 1px solid var(--color-line); border-radius: var(--radius-sm); color: var(--color-copy); font: var(--text-xs) var(--font-mono); }
+    .surface-tab--active { border-color: var(--color-purple); background: var(--color-purple-soft); color: var(--color-ink); }
+    .surface-layout { display: grid; grid-template-columns: 8.8rem minmax(0, 1fr); min-height: 22rem; border: 1px solid var(--color-line); border-radius: var(--radius-md); overflow: clip; background: var(--color-void); }
+    .surface-sidebar { padding: var(--space-4) var(--space-3); border-right: 1px solid var(--color-line); }
+    .surface-sidebar p { margin-bottom: var(--space-3); color: var(--color-muted); font: 0.62rem var(--font-mono); letter-spacing: 0.09em; text-transform: uppercase; }
+    .surface-list { display: grid; gap: var(--space-1); color: var(--color-copy); font: var(--text-xs) var(--font-mono); }
+    .surface-list li { padding: var(--space-2); border-radius: var(--radius-sm); }
+    .surface-list li:first-child { background: var(--color-panel); color: var(--color-ink); }
+    .surface-list li:first-child::before { content: '▸'; margin-right: var(--space-2); color: var(--color-green); }
+    .surface-main { min-width: 0; padding: var(--space-4); }
+    .surface-main-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); margin-bottom: var(--space-4); }
+    .surface-main-head strong { font-size: var(--text-sm); }
+    .surface-main-head span { color: var(--color-muted); font: 0.65rem var(--font-mono); }
+    .torrent-list { display: grid; gap: var(--space-2); }
+    .torrent-row { display: grid; grid-template-columns: minmax(0, 1.4fr) 5rem 4.2rem; gap: var(--space-3); align-items: center; padding: var(--space-3); border: 1px solid transparent; border-radius: var(--radius-sm); background: var(--color-surface); color: var(--color-copy); font-size: 0.7rem; }
+    .torrent-row--active { border-color: var(--color-purple); background: var(--color-panel); }
+    .torrent-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--color-ink); }
+    .torrent-size, .torrent-state { font: 0.62rem var(--font-mono); }
+    .torrent-state { color: var(--color-green); text-align: right; }
+    .surface-detail { display: grid; grid-template-columns: minmax(0, 1fr) minmax(7rem, 0.58fr); gap: var(--space-3); margin-top: var(--space-3); }
+    .detail-card { padding: var(--space-3); border: 1px solid var(--color-line); border-radius: var(--radius-sm); background: var(--color-panel); }
+    .detail-card p { color: var(--color-muted); font: 0.58rem var(--font-mono); text-transform: uppercase; }
+    .detail-card strong { display: block; margin-top: var(--space-2); color: var(--color-cyan); font-size: var(--text-sm); }
+    .detail-card--preview { position: relative; min-height: 4.6rem; background: linear-gradient(135deg, var(--color-panel-high), var(--color-void)); }
+    .detail-card--preview::after { content: '▶ preview'; position: absolute; right: var(--space-3); bottom: var(--space-3); color: var(--color-green); font: 0.6rem var(--font-mono); }
+
+    .section { padding: var(--space-24) 0; border-top: 1px solid var(--color-line); }
+    .section-head { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: var(--space-12); align-items: end; margin-bottom: var(--space-12); }
+    .section-head p { max-width: 32rem; color: var(--color-copy); }
+    .tour-list { display: grid; gap: var(--space-16); }
+    .tour-step { display: grid; grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); gap: var(--space-12); align-items: center; }
+    .tour-step:nth-child(even) { grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); }
+    .tour-step:nth-child(even) .tour-copy { order: 2; }
+    .tour-copy { min-width: 0; }
+    .tour-number { display: block; margin-bottom: var(--space-5); color: var(--color-purple); font: var(--text-sm) var(--font-mono); }
+    .tour-copy p:not(.tour-number) { margin-top: var(--space-5); color: var(--color-copy); }
+    .tour-visual { min-width: 0; margin: 0; padding: var(--space-5); border: 1px solid var(--color-line); border-radius: var(--radius-md); background: var(--color-surface); }
+    .server-stack { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+    .server-card { min-height: 7.5rem; padding: var(--space-4); border: 1px solid var(--color-line); border-radius: var(--radius-sm); background: var(--color-void); }
+    .server-card--active { border-color: var(--color-green); }
+    .server-card strong { display: block; margin-bottom: var(--space-2); font: var(--text-sm) var(--font-mono); }
+    .server-card span { display: block; color: var(--color-muted); font-size: var(--text-xs); }
+    .server-card em { display: inline-flex; margin-top: var(--space-5); color: var(--color-green); font: 0.62rem var(--font-mono); font-style: normal; }
+    .panel-visual { display: grid; grid-template-columns: minmax(0, 1fr) minmax(8rem, 0.55fr); gap: var(--space-3); }
+    .visual-pane { min-width: 0; padding: var(--space-4); border: 1px solid var(--color-line); border-radius: var(--radius-sm); background: var(--color-void); }
+    .visual-pane h3 { margin-bottom: var(--space-4); font: var(--text-xs) var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+    .visual-tree { display: grid; gap: var(--space-2); color: var(--color-copy); font: var(--text-xs) var(--font-mono); }
+    .visual-tree span { display: block; overflow-wrap: anywhere; }
+    .visual-tree span:nth-child(2) { padding-left: var(--space-4); color: var(--color-cyan); }
+    .visual-tree span:nth-child(3) { padding-left: var(--space-6); color: var(--color-copy); }
+    .progress-line { height: 0.42rem; margin-top: var(--space-6); border-radius: 99px; background: var(--color-panel-high); overflow: clip; }
+    .progress-line::after { content: ''; display: block; width: 72%; height: 100%; background: var(--color-purple); }
+    .add-visual { display: grid; grid-template-columns: minmax(0, 1fr) minmax(9rem, 0.7fr); gap: var(--space-3); }
+    .add-drop, .match-card { min-height: 10rem; padding: var(--space-5); border: 1px dashed var(--color-purple-deep); border-radius: var(--radius-sm); background: var(--color-void); }
+    .add-drop { display: grid; align-content: center; gap: var(--space-2); color: var(--color-copy); }
+    .add-drop strong { color: var(--color-ink); }
+    .add-drop span { color: var(--color-muted); font: var(--text-xs) var(--font-mono); }
+    .match-card { border-style: solid; border-color: var(--color-green-deep); }
+    .match-card p { color: var(--color-muted); font: 0.62rem var(--font-mono); text-transform: uppercase; }
+    .match-card strong { display: block; margin-top: var(--space-3); color: var(--color-green); font-size: var(--text-sm); }
+    .match-card span { display: block; margin-top: var(--space-3); color: var(--color-copy); font-size: var(--text-xs); }
+
+    .feature-section { display: grid; grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr); gap: var(--space-12); align-items: start; }
+    .feature-section > p { max-width: 25rem; color: var(--color-copy); }
+    .feature-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-rule); border: 1px solid var(--color-line); background: var(--color-line); }
+    .feature { min-height: 10rem; padding: var(--space-6); background: var(--color-surface); }
+    .feature:nth-child(2) { background: var(--color-panel); }
+    .feature:nth-child(3) { grid-column: span 2; background: var(--color-void); }
+    .feature-mark { display: block; margin-bottom: var(--space-8); color: var(--color-cyan); font: var(--text-sm) var(--font-mono); }
+    .feature:nth-child(2) .feature-mark { color: var(--color-pink); }
+    .feature:nth-child(3) .feature-mark { color: var(--color-orange); }
+    .feature p:last-child { margin-top: var(--space-3); color: var(--color-copy); font-size: var(--text-sm); }
+    .release { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-8); align-items: center; padding: var(--space-8); border: 1px solid var(--color-purple-deep); background: var(--color-purple-soft); }
+    .release p { margin-top: var(--space-3); max-width: 41rem; color: var(--color-copy); }
+    .release-meta { display: grid; gap: var(--space-2); color: var(--color-green); font: var(--text-xs) var(--font-mono); text-align: right; }
+    .site-footer { display: flex; justify-content: space-between; gap: var(--space-6); padding: var(--space-8) 0 var(--space-12); color: var(--color-muted); font: var(--text-xs) var(--font-mono); }
+    .site-footer a { color: var(--color-purple); white-space: nowrap; }
+    .site-footer a:hover { color: var(--color-cyan); }
+    @media (max-width: 60rem) {
+      .hero-grid, .tour-step, .tour-step:nth-child(even), .feature-section { grid-template-columns: minmax(0, 1fr); gap: var(--space-8); }
+      .tour-step:nth-child(even) .tour-copy { order: initial; }
+      .hero { padding-top: var(--space-16); }
+    }
+    @media (max-width: 42rem) {
+      .site-header, .shell { width: min(calc(100% - 2rem), 78rem); }
+      .site-header { min-height: 4.5rem; }
+      .header-nav { display: none; }
+      .hero { padding: var(--space-12) 0 var(--space-16); }
+      h1 { max-width: 10ch; font-size: clamp(3rem, 16vw, 5rem); }
+      .section { padding: var(--space-16) 0; }
+      .section-head { grid-template-columns: minmax(0, 1fr); gap: var(--space-5); margin-bottom: var(--space-8); }
+      .surface-layout { grid-template-columns: minmax(0, 1fr); }
+      .surface-sidebar { display: none; }
+      .torrent-row { grid-template-columns: minmax(0, 1fr) 4.1rem; }
+      .torrent-size { display: none; }
+      .surface-detail, .panel-visual, .add-visual { grid-template-columns: minmax(0, 1fr); }
+      .server-stack, .feature-grid { grid-template-columns: minmax(0, 1fr); }
+      .feature:nth-child(3) { grid-column: auto; }
+      .release { grid-template-columns: minmax(0, 1fr); padding: var(--space-6); }
+      .release-meta { text-align: left; }
+      .site-footer { align-items: flex-start; flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header" aria-label="Qubit project page header">
+    <a class="brand" href="#top" aria-label="Qubit project page home">
+      <img src="images/icon.png" width="32" height="32" alt="Qubit icon: a bright green magnifying glass inside a charcoal square">
+      <span>QUBIT</span>
+    </a>
+    <nav class="header-nav" aria-label="Page sections">
+      <a href="#tour">Tour</a>
+      <a href="#features">Details</a>
+      <a href="#release">Build</a>
+    </nav>
+    <a class="header-back" href="../">Portfolio</a>
+  </header>
+
+  <main id="main-content">
+    <section class="hero shell" id="top" aria-labelledby="page-title">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Electron desktop remote / qBittorrent</p>
+          <h1 id="page-title">Your qBittorrent desk, in focus.</h1>
+          <p class="hero-lead">Qubit brings servers, torrents, content, and media context into one keyboard-friendly desktop workspace.</p>
+          <div class="hero-actions">
+            <a class="button" href="#tour">Explore the tour <span aria-hidden="true">↘</span></a>
+            <a class="button button--quiet" href="#release">See the build</a>
+          </div>
+          <dl class="hero-meta">
+            <div class="hero-fact"><dt class="visually-hidden">Version</dt><dd>v1.0.0</dd></div>
+            <div class="hero-fact"><dt class="visually-hidden">Platform</dt><dd>Windows x64</dd></div>
+            <div class="hero-fact"><dt class="visually-hidden">License</dt><dd>MIT licensed</dd></div>
+          </dl>
+        </div>
+
+        <figure class="product-surface">
+          <div class="surface-bar">
+            <span>QUBIT / TORRENTS</span>
+            <span class="surface-status">connected</span>
+          </div>
+          <section class="surface-tabs" aria-labelledby="connected-servers-title">
+            <h2 id="connected-servers-title" class="visually-hidden">Connected servers</h2>
+            <span class="surface-tab surface-tab--active">home-lab</span>
+            <span class="surface-tab">seedbox</span>
+            <span class="surface-tab">media-box</span>
+          </section>
+          <div class="surface-layout">
+            <aside class="surface-sidebar" aria-label="Qubit navigation preview">
+              <p>Views</p>
+              <ul class="surface-list">
+                <li>All torrents</li>
+                <li>Downloading</li>
+                <li>Completed</li>
+                <li>Stash</li>
+              </ul>
+            </aside>
+            <div class="surface-main">
+              <div class="surface-main-head"><strong>All torrents</strong><span>4 items</span></div>
+              <section class="torrent-list" aria-labelledby="torrent-list-title">
+                <h2 id="torrent-list-title" class="visually-hidden">Illustrated torrent list</h2>
+                <div class="torrent-row torrent-row--active"><span class="torrent-name">Dune.Part.Two.2024</span><span class="torrent-size">18.2 GB</span><span class="torrent-state">72%</span></div>
+                <div class="torrent-row"><span class="torrent-name">The.Bear.S03</span><span class="torrent-size">4.8 GB</span><span class="torrent-state">done</span></div>
+                <div class="torrent-row"><span class="torrent-name">Linux.ISO.collection</span><span class="torrent-size">9.1 GB</span><span class="torrent-state">31%</span></div>
+                <div class="torrent-row"><span class="torrent-name">Archive.2026.06</span><span class="torrent-size">2.4 GB</span><span class="torrent-state">paused</span></div>
+              </section>
+              <div class="surface-detail">
+                <div class="detail-card"><p>selected / transfer</p><strong>4.6 MB/s ↓</strong></div>
+                <div class="detail-card detail-card--preview"><p>media match</p><strong>preview</strong></div>
+              </div>
+            </div>
+          </div>
+          <figcaption class="visually-hidden">Illustrated Qubit application surface showing a server switcher, torrent list, detail panel, and preview area.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="tour" aria-labelledby="tour-title">
+      <div class="shell">
+        <div class="section-head">
+          <h2 id="tour-title">The useful parts stay close.</h2>
+          <p>Qubit is shaped around the moments that usually send a download workflow across too many windows: choosing a server, inspecting a torrent, adding the next thing, and checking what it belongs to.</p>
+        </div>
+        <div class="tour-list">
+          <article class="tour-step">
+            <div class="tour-copy">
+              <span class="tour-number">01 / SWITCHBOARD</span>
+              <h3>Multiple servers, one working view.</h3>
+              <p>Keep per-server credentials, default save paths, categories, and local path mappings together. Move between a home machine, seedbox, or media box without losing the shape of the work.</p>
+            </div>
+            <figure class="tour-visual server-stack">
+              <div class="server-card server-card--active"><strong>home-lab</strong><span>192.168.1.20</span><em>● online</em></div>
+              <div class="server-card"><strong>seedbox</strong><span>remote / mapped</span><em>● online</em></div>
+              <div class="server-card"><strong>media-box</strong><span>local library</span><em>● online</em></div>
+              <figcaption class="visually-hidden">Illustration of three Qubit server cards.</figcaption>
+            </figure>
+          </article>
+
+          <article class="tour-step">
+            <div class="tour-copy">
+              <span class="tour-number">02 / INSPECT</span>
+              <h3>A torrent is more than a row.</h3>
+              <p>Manage start, stop, force start, recheck, reannounce, and removal from the live list. Open a detail panel for general information, trackers, peers, and a navigable content tree with per-file priorities and download toggles.</p>
+            </div>
+            <figure class="tour-visual panel-visual">
+              <div class="visual-pane"><h3>content tree</h3><div class="visual-tree"><span>▾ Dune.Part.Two</span><span>▾ video</span><span>scene-01.mkv</span><span>scene-02.mkv</span></div><div class="progress-line" aria-hidden="true"></div></div>
+              <div class="visual-pane"><h3>detail</h3><div class="visual-tree"><span>general</span><span>trackers</span><span>peers</span><span>files 12 / 18</span></div></div>
+              <figcaption class="visually-hidden">Illustration of Qubit detail and content panels.</figcaption>
+            </figure>
+          </article>
+
+          <article class="tour-step">
+            <div class="tour-copy">
+              <span class="tour-number">03 / ADD + MATCH</span>
+              <h3>From magnet to the right library.</h3>
+              <p>Add a torrent from a file or magnet, catch duplicates by infohash, and optionally merge trackers. When content lands in a tagged Stash or Plex folder, Qubit can match it against the library and make the result available in the preview flow.</p>
+            </div>
+            <figure class="tour-visual add-visual">
+              <div class="add-drop"><strong>Drop a .torrent</strong><span>or paste a magnet link</span><span>add paused · tracker merge</span></div>
+              <div class="match-card"><p>matched media</p><strong>Scene player ready</strong><span>exact oshash match<br>STASH / MOVIE</span></div>
+              <figcaption class="visually-hidden">Illustration of adding a torrent and matching media.</figcaption>
+            </figure>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features" aria-labelledby="features-title">
+      <div class="shell feature-section">
+        <div>
+          <p class="eyebrow">Built around the desktop</p>
+          <h2 id="features-title" style="margin-top: var(--space-5);">A remote with enough context to be useful.</h2>
+        </div>
+        <div>
+          <p>Qubit keeps the qBittorrent Web API at the centre, then adds the small pieces that make a media-aware setup easier to operate from one place.</p>
+          <div class="feature-grid" style="margin-top: var(--space-8);">
+            <article class="feature"><span class="feature-mark">↳ 01</span><h3>Live torrent control</h3><p>Delta-polled torrent data, sortable and resizable columns, folder grouping, and per-row actions.</p></article>
+            <article class="feature"><span class="feature-mark">↳ 02</span><h3>Media-aware previews</h3><p>Sidecar screenshots, direct image previews, and an in-app player for matched Stash or Plex items.</p></article>
+            <article class="feature"><span class="feature-mark">↳ 03</span><h3>Windows-native handoff</h3><p>Package Qubit for Windows with .torrent and magnet associations through the Default-Apps picker flow.</p></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="release" aria-labelledby="release-title">
+      <div class="shell">
+        <div class="release">
+          <div>
+            <p class="eyebrow">Current source release</p>
+            <h2 id="release-title" style="margin-top: var(--space-4);">Qubit 1.0.0</h2>
+            <p>The repository package manifest identifies the current version as 1.0.0. Its Windows build is configured for an x64 NSIS installer and an x64 ZIP archive via electron-builder.</p>
+          </div>
+          <section class="release-meta" aria-labelledby="build-targets-title">
+            <h2 id="build-targets-title" class="visually-hidden">Build targets</h2>
+            <span>NSIS / x64</span><span>ZIP / x64</span><span>Electron</span>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer shell">
+    <span>QUBIT / qBittorrent remote</span>
+    <a href="../">Back to Vincent’s projects ↗</a>
+  </footer>
+</body>
+</html>
