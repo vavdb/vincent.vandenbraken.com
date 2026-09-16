@@ -1,8 +1,6 @@
 @font-face { font-family: Fraunces; src: url('fonts/Fraunces-latin.woff2') format('woff2'); font-weight: 100 900; font-display: swap; }
 @font-face { font-family: Public Sans; src: url('fonts/PublicSans-latin.woff2') format('woff2'); font-weight: 100 900; font-display: swap; }
 @font-face { font-family: Caveat; src: url('fonts/Caveat-latin.woff2') format('woff2'); font-weight: 400 700; font-display: swap; }
-@font-face { font-family: Bungee; src: url('fonts/Bungee-latin.woff2') format('woff2'); font-display: swap; }
-@font-face { font-family: Asimovian; src: url('fonts/Asimovian-latin.woff2') format('woff2'); font-display: swap; }
 @font-face { font-family: Maple; src: url('fonts/MapleMono-latin.woff2') format('woff2'); font-display: swap; }
 
 :root {
@@ -86,23 +84,13 @@ h1 em { display: block; color: var(--orange); font-weight: 500; }
 .software-project__visual::before { top: .35rem; left: .35rem; border-width: 2px 0 0 2px; }
 .software-project__visual::after { right: .35rem; bottom: .35rem; border-width: 0 2px 2px 0; }
 .software-project__visual img { width: 100%; height: 100%; object-fit: cover; }
-.software-project__copy h3 { display: flex; align-items: center; gap: .55rem; color: var(--title, var(--ink)); }
 .software-project:hover .software-project__copy h3 { text-decoration: underline; text-decoration-thickness: 2px; text-decoration-color: var(--accent); text-underline-offset: .3rem; }
 
-/* project identities: type and colour from each project's own site/game */
-.software-project--groot { --accent: oklch(58% 0.13 72); --title: oklch(29% 0.045 140); }
-.software-project--groot h3 { font: 400 3rem/1 Baskerville, 'Baskerville Old Face', 'Iowan Old Style', 'Libre Baskerville', Georgia, serif; letter-spacing: -.04em; gap: 0; }
-.software-project--groot .dot { color: oklch(58% 0.13 72); }
-.software-project--uermend { --accent: #b08a24; --title: #1f2022; }
-.software-project--uermend h3 { font: 400 1.95rem/1 Bungee, var(--display); letter-spacing: .01em; text-transform: uppercase; }
-.software-project--uermend h3::before { content: ''; flex: none; width: 1.05rem; height: 1.05rem; background: #ddb54a; clip-path: polygon(25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%, 0 50%); }
-.software-project--qubit { --accent: oklch(55% 0.16 150); --title: oklch(28% 0.03 160); }
-.software-project--qubit h3 { font: 400 2.4rem/1 Asimovian, var(--display); }
-.software-project--qubit h3::before { content: ''; flex: none; width: 1.7rem; height: 1.7rem; border-radius: .35rem; background: url('assets/qubit-icon.png') center / cover; }
-.software-project--vindicator { --accent: #3f7fc0; --title: #1b2230; }
-.software-project--vindicator h3 { flex-direction: column; align-items: flex-start; gap: .3rem; font: 400 1.75rem/1 Asimovian, var(--display); letter-spacing: .12em; text-transform: uppercase; }
-.software-project--vindicator h3::after { content: ''; width: 2.6rem; height: 3px; background: #83c3ff; }
-.software-project--boomhut h3 { color: #5b3a1f; }
+/* project accents: arrow, hover underline, banner corners */
+.software-project--groot { --accent: oklch(58% 0.13 72); }
+.software-project--uermend { --accent: #b08a24; }
+.software-project--qubit { --accent: oklch(55% 0.16 150); }
+.software-project--vindicator { --accent: #3f7fc0; }
 
 /* built */
 .built { padding-top: 3rem; padding-bottom: 2rem; padding-left: 24%; }
