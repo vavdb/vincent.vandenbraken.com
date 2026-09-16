@@ -3,18 +3,31 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="Vincent van den Braken builds software, games, and systems.">
   <title>Vincent van den Braken</title>
+  <meta name="description" content="Software engineer and consultant. Side projects: Groot, Uermend, Qubit, Vindicator, and an indoor treehouse.">
+  <link rel="canonical" href="https://vincent.vandenbraken.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://vincent.vandenbraken.com/">
+  <meta property="og:title" content="Vincent van den Braken">
+  <meta property="og:description" content="Software engineer and consultant. Groot, Uermend, Qubit, Vindicator.">
+  <meta property="og:image" content="https://vincent.vandenbraken.com/assets/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#1f2022">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preload" href="fonts/Fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="portfolio.css">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
 
   <header class="site-header shell">
-    <a class="wordmark" href="#top" aria-label="Vincent van den Braken home">Vincent van den Braken</a>
-    <nav aria-label="Primary navigation">
+    <a class="wordmark" href="#top">Vincent van den Braken</a>
+    <nav aria-label="Primary">
       <a href="#work">Work</a>
-      <a href="#built">Built</a>
+      <a href="#built">Boomhut</a>
       <a class="nav-cta" href="cv/index.html">CV</a>
     </nav>
   </header>
@@ -22,63 +35,63 @@
   <main id="main-content">
     <section class="hero shell" id="top" aria-labelledby="hero-title">
       <figure class="hero-art">
-        <img src="assets/vincent-sketch-wide-alpha.png" alt="Graphite portrait of Vincent growing into tree roots, roads, and a small medieval city" width="1600" height="664" fetchpriority="high">
+        <img src="assets/vincent-sketch-wide-alpha.png" alt="Pencil portrait of Vincent, with tree roots running into roads and a small town" width="1600" height="664" fetchpriority="high">
       </figure>
       <div class="hero-copy">
-        <p class="eyebrow">Builder · consultant · curious human</p>
+        <p class="eyebrow">Software engineer · consultant</p>
         <h1 id="hero-title">I build things <em>I want to understand.</em></h1>
-        <p class="hero-lead">Tools, games, systems, and the occasional rabbit hole.</p>
+        <p class="hero-lead">C# and .NET for clients. Godot, Electron and wood for myself.</p>
         <span class="hero-rule" aria-hidden="true"></span>
-        <svg class="hero-note hero-note--left" viewBox="0 0 380 100" role="img" aria-label="Better tools for a more human tomorrow.">
+        <svg class="hero-note hero-note--left" viewBox="0 0 380 100" role="img" aria-label="Four side projects, one treehouse.">
           <path id="note-arc-1" d="M 6 46 Q 130 -2 262 34" fill="none"></path>
           <path id="note-arc-2" d="M 6 96 Q 190 38 376 78" fill="none"></path>
-          <text><textPath href="#note-arc-1">Better tools</textPath></text>
-          <text><textPath href="#note-arc-2">for a more human tomorrow.</textPath></text>
+          <text><textPath href="#note-arc-1">four side projects,</textPath></text>
+          <text><textPath href="#note-arc-2">one treehouse.</textPath></text>
         </svg>
       </div>
       <div class="hero-notes" aria-hidden="true">
-        <p class="hero-note hero-note--mess">drawn<br>by hand.</p>
-        <p class="hero-note hero-note--right">Build<br>explore<br>improve<br>repeat</p>
+        <p class="hero-note hero-note--me">that's me.</p>
+        <p class="hero-note hero-note--right">C# / .NET<br>Godot<br>Electron<br>Autodesk</p>
       </div>
     </section>
 
     <section class="software shell" id="work" aria-labelledby="work-title">
       <div class="section-heading">
-        <p class="eyebrow">Selected projects</p>
+        <h2 class="eyebrow" id="work-title">Selected projects</h2>
         <span class="section-heading__rule" aria-hidden="true"></span>
-        <h2 id="work-title">Ideas <span aria-hidden="true">→</span> things <span aria-hidden="true">→</span> real impact</h2>
+        <p class="section-heading__note">2 apps · 2 games</p>
       </div>
 
       <div class="software-list">
         <article class="software-project software-project--groot">
           <a href="groot/">
             <span class="software-project__index" aria-hidden="true">01</span>
-            <div class="software-project__copy"><h3>Groot</h3><p>A small system for turning effort into something you can see.</p><span class="project-link" aria-hidden="true">→</span></div>
-            <figure class="software-project__visual"><img src="assets/groot-banner.png" alt="Abstracted Groot workout and habit dashboard in forest green and amber" loading="lazy"><figcaption>consistent<br>people build<br>amazing things.</figcaption></figure>
+            <div class="software-project__copy"><h3>Groot</h3><p>Fitness app. Barbell progression, interval runs, weekly habit contracts.</p><span class="project-link" aria-hidden="true">→</span></div>
+            <figure class="software-project__visual"><img src="assets/banners/groot.webp" alt="" width="1600" height="400" loading="lazy"><figcaption aria-hidden="true">lift, run,<br>keep the streak.</figcaption></figure>
           </a>
         </article>
 
         <article class="software-project software-project--uermend">
           <a href="uermend/">
             <span class="software-project__index" aria-hidden="true">02</span>
-            <div class="software-project__copy"><h3>Uermend</h3><p>A city builder about roads, resources, and the places they make.</p><span class="project-link" aria-hidden="true">→</span></div>
-            <figure class="software-project__visual"><img src="assets/uermend-banner.png" alt="Snowy Uermend settlement with roads, houses, lanterns, and a river" loading="lazy"></figure>
+            <div class="software-project__copy"><h3>Uermend</h3><p>Multiplayer hex settlement builder in Godot and C#. Light holds back the dark.</p><span class="project-link" aria-hidden="true">→</span></div>
+            <figure class="software-project__visual"><img src="assets/banners/uermend.webp" alt="" width="1600" height="400" loading="lazy"><figcaption aria-hidden="true">named after<br>Urmond.</figcaption></figure>
           </a>
         </article>
 
         <article class="software-project software-project--qubit">
           <a href="qubit/">
             <span class="software-project__index" aria-hidden="true">03</span>
-            <div class="software-project__copy"><h3>Qubit</h3><p>A desktop control room for servers, files, and the media around them.</p><span class="project-link" aria-hidden="true">→</span></div>
-            <figure class="software-project__visual"><img src="assets/qubit-banner.png" alt="Qubit control room with file lists, media thumbnails, and server status panels" loading="lazy"><figcaption>find<br>understand<br>create faster.</figcaption></figure>
+            <div class="software-project__copy"><h3>Qubit</h3><p>Electron desktop remote for qBittorrent. Several servers, media matching, previews.</p><span class="project-link" aria-hidden="true">→</span></div>
+            <figure class="software-project__visual"><img src="assets/banners/qubit.webp" alt="" width="1600" height="400" loading="lazy"><figcaption aria-hidden="true">one remote,<br>many servers.</figcaption></figure>
           </a>
         </article>
 
         <article class="software-project software-project--vindicator">
           <a href="vindicator/">
             <span class="software-project__index" aria-hidden="true">04</span>
-            <div class="software-project__copy"><h3>Vindicator</h3><p>A space strategy game where fleets are only half the problem.</p><span class="project-link" aria-hidden="true">→</span></div>
-            <figure class="software-project__visual"><img src="assets/vindicator-banner.png" alt="Vindicator science-fiction capital with a central golden axis" loading="lazy"><figcaption>clear systems<br>brighter futures.</figcaption></figure>
+            <div class="software-project__copy"><h3>Vindicator</h3><p>Space game in Godot and C#. Explore, fight and fold through a dying star system.</p><span class="project-link" aria-hidden="true">→</span></div>
+            <figure class="software-project__visual"><img src="assets/banners/vindicator.webp" alt="" width="1600" height="400" loading="lazy"><figcaption aria-hidden="true">an overlay,<br>not a HUD.</figcaption></figure>
           </a>
         </article>
       </div>
@@ -86,17 +99,17 @@
 
     <section class="built shell" id="built" aria-labelledby="built-title">
       <div class="section-heading">
-        <p class="eyebrow">Outside the screen</p>
+        <h2 class="eyebrow" id="built-title">Outside the screen</h2>
         <span class="section-heading__rule" aria-hidden="true"></span>
-        <h2 id="built-title">plan <span aria-hidden="true">→</span> build <span aria-hidden="true">→</span> finish <span aria-hidden="true">→</span> use</h2>
+        <p class="section-heading__note">plan → build → finish → use</p>
       </div>
       <article class="software-project software-project--boomhut built-row">
         <a href="boomhut/">
           <span class="software-project__index" aria-hidden="true">05</span>
-          <div class="software-project__copy"><h3>Boomhut</h3><p>An indoor treehouse in the living room. Drawn in Autodesk, built in wood, 2023.</p><span class="project-link" aria-hidden="true">→</span></div>
+          <div class="software-project__copy"><h3>Boomhut</h3><p>Indoor treehouse, 1.0 × 2.8 m, floor 1.5 m up. Drawn in Autodesk, built in wood, 2023.</p><span class="project-link" aria-hidden="true">→</span></div>
           <figure class="built-plate">
-            <img src="boomhut/images/boomhut-journey.png" alt="Boomhut journey from pencil plan and timber construction to the finished indoor treehouse" width="2142" height="734" loading="lazy">
-            <figcaption><span>plan</span><span>build</span><span>finish</span><span>use</span></figcaption>
+            <img src="boomhut/images/boomhut-journey.webp" alt="Boomhut from pencil plan and timber frame to the finished treehouse" width="1600" height="548" loading="lazy">
+            <figcaption aria-hidden="true"><span>plan</span><span>build</span><span>finish</span><span>use</span></figcaption>
           </figure>
         </a>
       </article>
@@ -104,8 +117,8 @@
   </main>
 
   <footer class="site-footer shell">
-    <p>© 2026 Vincent van den Braken · <a href="mailto:vincent@vandenbraken.com">vincent@vandenbraken.com</a></p>
-    <p class="site-footer__tags">Software<span>People</span><span>Places</span><span>Progress</span><b aria-hidden="true">+</b></p>
+    <p>© 2026 Vincent van den Braken</p>
+    <p class="site-footer__links"><a href="mailto:vincent@vandenbraken.com">vincent@vandenbraken.com</a><a href="cv/index.html">CV</a><b aria-hidden="true">+</b></p>
   </footer>
 </body>
 </html>
