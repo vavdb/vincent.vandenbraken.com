@@ -110,7 +110,9 @@ h1 em { display: block; color: var(--orange); font-weight: 500; }
 
 @media (max-width: 68rem) {
   .software, .built { padding-left: 0; }
-  .hero-art { width: 62%; }
+  .hero-art { top: 1.5rem; width: 50%; }
+  .hero-copy { max-width: 58%; }
+  h1 { font-size: clamp(3rem, 5.2vw, 4.6rem); }
   .hero-note--mess { display: none; }
   h1 { white-space: normal; }
 }
@@ -118,12 +120,15 @@ h1 em { display: block; color: var(--orange); font-weight: 500; }
   .shell { width: min(calc(100% - 2rem), 88rem); }
   .site-header { padding-inline: 1rem; }
   .site-header nav { gap: 1.4rem; }
+  .wordmark { font-size: 1.05rem; white-space: nowrap; }
   .hero-notes { display: none; }
   .hero-copy { padding-left: 0; }
   .hero .eyebrow::before { display: none; }
   .software-project > a { grid-template-columns: var(--index-col) minmax(10rem, .8fr) minmax(12rem, 1.2fr); }
 }
 @media (max-width: 42rem) {
+  .site-header nav a:not(.nav-cta) { display: none; }
+  .hero-copy { max-width: none; }
   h1 { font-size: clamp(3rem, 14vw, 5rem); }
   .hero { min-height: auto; padding-top: 2.5rem; }
   .hero-art { position: relative; top: auto; right: auto; width: 140%; max-width: none; margin-top: 0; margin-left: -20%; }
