@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Faction art language — production implementation — Vindicator</title>
+  <meta name="description" content="Start at the [visual-combat spine](design-visual-combat-spine.md). This bible owns silhouette, palette, materials, wear, hull and station grammar, and reveal-safe labels. It does *…" />
+  <link rel="stylesheet" href="../vindicator.css" />
+</head>
+<body class="doc-body">
+  <header class="site-nav">
+    <a class="site-nav__brand" href="../index.html">VINDICATOR</a>
+    <nav class="site-nav__links" aria-label="Section">
+      <a href="../index.html">Home</a>
+      <a href="../codex/index.html">Codex</a>
+      <a href="../design/index.html" class="is-active">Design</a>
+      <a href="../design-language.html">UI language</a>
+      <a href="../index.html#devlog">Devlog</a>
+    </nav>
+    <a class="site-nav__ext" href="../../index.html">Vincent van den Braken</a>
+  </header>
+  <main class="doc-main">
+    <article class="doc-article">
+      <header class="doc-article__head">
+        <a class="doc-back" href="index.html">← Design</a>
+        <span class="vchip">Design</span>
+        <h1 class="vtitle-display">Faction art language — production implementation</h1>
+        <p class="doc-article__summary">Start at the [visual-combat spine](design-visual-combat-spine.md). This bible owns silhouette, palette, materials, wear, hull and station grammar, and reveal-safe labels. It does *…</p>
+        <p class="banner banner--warn">Design note — systems rationale, not player-facing codex text.</p>
+      </header>
+      <div class="prose">
+<p><strong>Status:</strong> Internal production art bible; forward design, not shipped codex.</p>
+<h2 id="system-spine">System spine</h2>
+<p><strong>Hull = faction body · Hardpoints = neutral sockets · Weapon = modular item
+(template ± module wrap) · FX/art = item family, recolorable · Default loadout ≠
+unique inseparable gun.</strong></p>
+<p>Start at the <a href="design-visual-combat-spine.html">visual-combat spine</a>. This bible owns
+silhouette, palette, materials, wear, hull and station grammar, and reveal-safe
+labels. It does <strong>not</strong> own canvas/export/filter rules, per-weapon DPS, ammo economy,
+or runtime IDs. Technical presentation lives in the
+art style guide; modular hardpoints and art-to-template mapping
+live in <a href="design-weapons-modules.html">weapons and modules</a>; resource gates live in
+<a href="design-munitions.html">munitions</a>; and hull IDs, ladders, proxy mappings, and default
+loadouts live in <a href="design-fleets-content.html">fleet content</a>.</p>
+<p>This document defines the visual grammar, asset boundaries, and first production
+rosters for the factions that need a coherent art language now. It is allowed to
+contain spoilers so artists understand why forms relate. It does not change
+gameplay, shipped art, or player-facing lore by itself.</p>
+<p>Player-facing art labels, captions, codex copy, and marketing must preserve the
+reveal ladder in the story outline and
+story design bible. In particular, they must not disclose that
+humanity and the Ancients are the same civilization, or identify the Unbound&rsquo;s
+condition as the Fold-Plague, before those truths are revealed in play. Internal
+asset names may be explicit; player-visible names may not.</p>
+<p>This bible specializes faction identity within the shared technical rules in the
+art style guide. Existing pack art and assignments
+are inventoried in the asset inventory; they are proxies and
+references, not binding final silhouettes. Current hull-animation limitations are
+recorded in the Foozle animation survey.
+Player-facing hull roles remain defined by <a href="../codex/ships.html">Ships &amp; Hull Classes</a>.</p>
+<h2 id="canon-and-proxy-mapping">Canon and proxy mapping</h2>
+<p>The races that hold territory now have real runtime factions of their own
+(<code>features/factions/data/factions.json</code>, appended 2026-07-25), so the proxy
+column below is history for those rows, not instruction. Authored content —
+every home system — flies the race&rsquo;s own flag. The proxies survive only where
+legacy content still assigns them and where a production category genuinely is
+not a polity.</p>
+<table>
+<thead>
+<tr>
+<th>Production language</th>
+<th>Story identity</th>
+<th>Runtime faction</th>
+<th>Current asset namespace</th>
+<th>Boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ancient / Vindicator</td>
+<td>Ancient machinery and Vann&rsquo;s permanent body chain</td>
+<td><code>faction.player</code> — the player IS the Ancient, so there is no separate Ancient faction</td>
+<td>Owned Vindicator art plus temporary mixed proxies</td>
+<td>One original Continuity civic, military, and rescue product family across shuttle, Vindicator, hosts, and ruins; Blackwater is a separate human lineage.</td>
+</tr>
+<tr>
+<td>Korrathi</td>
+<td>Korrathi scavenger clans</td>
+<td><code>faction.korrathi</code></td>
+<td>Kla&rsquo;ed</td>
+<td>Distinct from <code>faction.pirates</code>: the Kessler Raiders are a runtime role, the Korrathi are a race. Legacy content still spawns raiders and should not be retro-flagged wholesale.</td>
+</tr>
+<tr>
+<td>Teralith</td>
+<td>Teralith licensing authority and navy</td>
+<td><code>faction.teralith</code></td>
+<td>Nairan</td>
+<td>Eos local police are Civilian, not Teralith. Teralith reads lawful-neutral to the player at baseline; the leadership&rsquo;s grudge against Vann is a story-driven standing shift, not the faction&rsquo;s resting stance.</td>
+</tr>
+<tr>
+<td>Blackwater</td>
+<td>Blackwater Incorporated trade guild</td>
+<td><code>faction.blackwater</code></td>
+<td>Welded-box guild art</td>
+<td>A separate human lineage from the Ancients, and explicitly not the Civilian umbrella.</td>
+</tr>
+<tr>
+<td>Gorrath / Sen&rsquo;Ther / Trine / Kithar</td>
+<td>Brood worlds, storm flights, ocean households, broker network</td>
+<td><code>faction.gorrath</code>, <code>faction.senther</code>, <code>faction.trine</code>, <code>faction.kithar</code></td>
+<td>Per-race <code>art/reference/&lt;race&gt;/</code></td>
+<td>Gorrath and Sen&rsquo;Ther carry only a raider stance until story fixes their disposition; Kithar hold no territory and no weapons.</td>
+</tr>
+<tr>
+<td>Civilian</td>
+<td>Visual umbrella for Free Haulers, Independents, and local police</td>
+<td><code>faction.civilian</code>, <code>faction.independent</code>, <code>faction.militia</code></td>
+<td>Mixed civilian and proxy pools</td>
+<td>A production category, not a polity, and explicitly not Blackwater Incorporated. These stay proxies by design.</td>
+</tr>
+<tr>
+<td>Unbound</td>
+<td>The Melding</td>
+<td>No runtime faction — lore-only, no ships</td>
+<td>No settled namespace</td>
+<td>Working combat names and archetypes remain provisional until story work fixes them.</td>
+</tr>
+</tbody>
+</table>
+<p>Station naming follows story authority, not whichever proxy sprite is currently
+assigned. Eos local defense uses the <code>Civilian-Police-*</code> navy/cream language. Route,
+license, and tax authority uses <code>Teralith-Bulwark-Station</code>. A current
+<code>faction.militia</code> assignment or Nairan sprite is runtime proxy data only and never
+authorization to paint Eos police as a gold Teralith navy.</p>
+<p>Old pack art establishes useful overlay conventions and broad color precedents.
+It remains legacy/proxy art and does <strong>not</strong> lock final silhouettes, faction
+anatomy, or specific hull-to-role assignments. New work must obey this document
+and the shared production contract before it inherits details from a proxy sprite.</p>
+<h2 id="shared-production-contract">Shared production contract</h2>
+<h3 id="presentation-track">Presentation track</h3>
+<p>The final direction is high-resolution cel hull and structure art with broad,
+clean material planes, controlled contour antialiasing, and shapes that remain
+readable when downscaled. Energy FX are separate and may use soft alpha, subpixel
+motion, and restrained bloom. Existing low-resolution pixel packs are runtime
+proxies during the transition, not a second final style or a mandate for new art.</p>
+<p>The shading model is soft cel, settled by the house-v1 sweep (2026-07-24): smooth
+shading across each plate with a gentle falloff from light to dark within a
+single mass, while the edges where two masses meet stay hard. Fully quantized
+value bands and painted-matte rendering were the runners-up; both converged on
+nearly the same hull at tile size, and soft cel kept the plate read without
+going painterly.</p>
+<p>Gameplay art remains strict top-down and nose-up. Black is permitted only on
+concept review plates; production bases and overlays use transparent alpha with
+adequate padding. Master sizes, delivery sizes, filtering, import/schema changes,
+camera scale, animation layout, and legacy pixel compatibility are owned by the
+art style guide, not repeated in this faction bible.</p>
+<h3 id="lighting">Lighting</h3>
+<p><strong>Hulls ship unlit.</strong> A sprite rotates, and baked light does not: a highlight
+painted on the port bow stays on the port bow through a full turn, so the craft
+reads as carrying its own little sun around the map. Star-relative lighting is
+therefore the renderer&rsquo;s job — <code>Light2D</code> plus normal maps, driven by the actual
+star direction — and the art must give it a neutral surface to work on.</p>
+<p>No asset may contain a sun direction, a terminator, a rim or key light, a cast or
+drop shadow, or ambient occlusion darkening a crevice. Form is described by the
+material and by the value structure alone. Emissives are the one exception, and
+they are light belonging to the object: a seam, aperture or lamp throws a short
+restrained bleed onto the surface immediately beside it and stops there. Painted
+colour never glows, and light never fills a shape the way pigment does.</p>
+<p>This is also what the shipped celestial bodies and the stargate already do, which
+is why they are the reference for the house look rather than an unrelated style.</p>
+<h3 id="the-house-layer">The house layer</h3>
+<p>Three files own three separate things, and a prompt composes all three:</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>File</th>
+<th>Owns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>House</td>
+<td><code>art/reference/house.txt</code></td>
+<td>the look — value structure, lighting, contour, background</td>
+</tr>
+<tr>
+<td>Race</td>
+<td><code>art/reference/&lt;race&gt;/style.txt</code></td>
+<td>the material — palette, finish, markings</td>
+</tr>
+<tr>
+<td>Subject</td>
+<td>the manifest row or sweep file</td>
+<td>the form — silhouette, class, proportion</td>
+</tr>
+</tbody>
+</table>
+<p>Keeping them apart is load-bearing. When the house layer was unwritten and only
+the race file could vary, every batch silently held the look constant at whatever
+the generator defaulted to, and no one could tell which layer a problem lived in.
+Nothing faction-specific belongs in <code>house.txt</code>; nothing about lighting or value
+structure belongs in a race file.</p>
+<h3 id="base-hull-and-effect-separation">Base hull and effect separation</h3>
+<p>The clean base hull contains structure only. It may include dark engine nozzles,
+closed apertures, sockets, physical shield emitters, and unlit weapon mounts. It
+must not contain:</p>
+<ul>
+<li>engine flame, exhaust, heat shimmer, or glow outside the silhouette;</li>
+<li>an active shield, shield halo, or impact flash;</li>
+<li>weapon fire, beam, projectile, muzzle flash, or charge effect;</li>
+<li>a baked shadow or drop shadow;</li>
+<li>destruction debris, explosion, smoke, or damage flash.</li>
+</ul>
+<p>Engines, shields, weapons, and destruction are separate aligned assets or
+engine-side effects. This lets thrust respond to motion, shields respond to
+impacts, weapons originate from real hardpoints, and wreck states remain
+authorable rather than painted into the living hull.</p>
+<h3 id="modular-weapons">Modular weapons</h3>
+<p>Weapons are modular retrofit items: the same mechanical template may ship built
+into a craft or wrapped as a grid module. Hull art never bakes permanent unique
+guns as the only way to express faction identity; an optional role graft, such as
+one oversized Korrathi launcher integrated as a chassis feature, is the narrow
+exception. Artists author neutral hardpoint anchors, then gun sprites and separate
+FX attach at runtime. Default NPC loadouts are content choices over modules and
+templates, not a second art pipeline. Loot, salvage, shops, and fabrication can
+move the same recolorable visual kit across factions: ownership comes from hull
+anatomy and markings, not from declaring that only one faction may use a given bolt.
+See <a href="design-weapons-modules.html">weapons and modules</a> for item families and mapping.</p>
+<p>The current animated-hull path and <code>visual.base</code> overlay path are mutually
+exclusive. A template that adopts idle/move/attack hull-body animation currently
+loses the <code>visual.base</code> overlay cluster used for mounts, engine flame, shield,
+and destruction. Therefore <strong>art deliverable readiness is not wiring readiness</strong>.
+Do not merge body animation and overlay layers into one compromise sheet; hold
+the complete source cluster until the schema work described in the animation
+survey lands.</p>
+<h3 id="readability-gates">Readability gates</h3>
+<p>Every approved asset must pass all of these checks:</p>
+<ol>
+<li>Solid-black silhouette at intended gameplay footprint: faction and front/back read
+without color or markings.</li>
+<li>Flat-color thumbnail: role and scale class read at actual gameplay scale.</li>
+<li>Dark-space plate: dark hull materials remain separated from the background.</li>
+<li>Mixed-fleet plate: the asset cannot be mistaken for another detailed faction.</li>
+<li>Motion plate: thrust direction, turn center, shield footprint, and weapon
+origin remain unambiguous.</li>
+</ol>
+<p>No cockpit, shuttle bay, major weapon, engine anchor, or navigation-critical edge
+may depend on detail lost at gameplay scale. A concept that works only enlarged
+is not ready for sprite production.</p>
+<h3 id="source-layers-pivots-anchors-and-hardpoints">Source layers, pivots, anchors, and hardpoints</h3>
+<p>Keep editable source files with named layers for base hull, panel groups,
+cockpit/glass, faction markings, emissives, damage, engine mounts, shield emitters,
+and each movable weapon. Provide a flattened clean-base PNG only after the layer
+file is archived.</p>
+<p>Every asset gets an anchor sheet that states:</p>
+<ul>
+<li>tile dimensions, nose direction, center pivot, and opaque bounds;</li>
+<li>engine/exhaust anchors and the expected thrust vector;</li>
+<li>weapon hardpoints, muzzle points, firing arcs, and turret pivots;</li>
+<li>docking, bay, tow, cargo, gate-throat, or drone-launch anchors as applicable;</li>
+<li>shield center and radius or the aligned shield-strip frame;</li>
+<li>detachable pieces, damage seams, and destruction origin.</li>
+</ul>
+<p>Pivots stay stable across base, variants, wear tiers, and all animation frames.
+Hardpoints belong to functional geometry, not convenient empty space.</p>
+<h2 id="ancient-vindicator">Ancient / Vindicator</h2>
+<h3 id="design-promise">Design promise</h3>
+<p>Ancient hardware is retro-modern optimistic industrial design: the confident
+future imagined from the 1960s through the 1980s, realized as genuinely advanced
+craft. It is elegant, tactile, maintainable, and humane rather than mystical.
+Eons of abandonment interrupt that optimism without erasing it. Vindicator craft
+are restored or reconfigured members of the same family, not a separate style.</p>
+<p>The permanent body chain is <strong>shuttle ⊂ Vindicator ⊂ host</strong>. Art must never depict
+Vann transferring a loose core between disposable bodies or abandoning the
+shuttle. The shuttle remains visibly nested, protected, or structurally implied
+inside every larger body even when the external silhouette changes.</p>
+<h3 id="silhouettes-and-shape-vocabulary">Silhouettes and shape vocabulary</h3>
+<ul>
+<li>Long triangular wedges with clear pointed noses and composed bilateral weight.</li>
+<li><strong>The ring is the Ancient structural signature, and it is the fold drive</strong>
+(see codex <code>travel-folding.md</code> and <code>ships.md</code>). A concentric ring carries the
+wedge rather than decorating it: the hull passes through it, the ring takes
+load, and the craft reads as built around that ring outward. It is the same
+technology as a stargate at ship scale, so the stargate is the ring alone. A
+hull with a ring can fold; the shuttle has none and cannot. When an Ancient
+hull folds, the wormhole throat anchors through the ring, not off the nose, so
+keep the ring clear as an aperture the effect layer can drive. Small craft may
+carry none, fold-capable craft carry one, and the largest repeat them
+concentrically.</li>
+<li>Surfaces are sleek and flowing but strictly geometric. Smooth planes meet at
+clean machined cuts, curvature is swept and continuous, and every transition
+looks turned or milled. This is not biomorphic softness: Blackwater hulls flow
+organically, Ancient hulls flow because someone machined the curve.</li>
+<li>Rounded rectangles, capsule windows, broad shoulder plates, and smooth wing
+roots soften the wedge.</li>
+<li>Negative space is deliberate: forked engine shoulders, recessed bays, the open
+volume framed inside a ring, or a service notch must look engineered rather
+than broken at random.</li>
+<li>Stations and gates scale the same grammar into concentric, modular structures
+with repeating ribs and legible access paths.</li>
+<li>The silhouette should feel fast where it is a ship and patiently permanent
+where it is infrastructure.</li>
+</ul>
+<h4 id="monumental-infrastructure-grammar">Monumental infrastructure grammar</h4>
+<p>The Stargate is the reference asset for Ancient monumental infrastructure. Build
+the first read from a few thick concentric load-bearing bands, deep charcoal
+recesses, and a disciplined rhythm of large radial anchors. The construction is
+modular and exact, but not ornamental: repeated modules explain assembly and
+force transfer before any surface detail is added. Use broad stepped profiles,
+regular seams, and restrained inset channels so the silhouette survives at
+gameplay scale.</p>
+<p>Gates carry the Ancient palette at its coolest. Dark gunmetal, slate, and
+blue-grey hold the mass, pale ceramic sits on structural faces, edge plates, and
+socket blocks, and cyan is the only light present. Dormant infrastructure earns
+no orange service marks and no green confirmation, because nothing has been
+restored. Station-scale Ancient machinery follows the same weighting and keeps
+the ordered panel logic of smaller Ancient craft.</p>
+<p>Avoid mystical filigree, decorative glyph belts, gold trim, spikes, random
+greeble fog, and disconnected floating ornaments. Ancient infrastructure is
+advanced human engineering, not a ritual object. It is free-floating orbital
+machinery: never add a ground pedestal, architectural foot, or visual support
+that implies a planetary installation unless the asset&rsquo;s role explicitly calls
+for one.</p>
+<h3 id="palette">Palette</h3>
+<p>Use a compact family built around:</p>
+<ul>
+<li>pale blue-grey <code>#91A8AD</code> and shadow <code>#526D75</code>;</li>
+<li>charcoal internals <code>#202A30</code> and outline <code>#151C21</code>;</li>
+<li>warm ivory <code>#D9D3BF</code> and highlight <code>#F2ECD7</code>;</li>
+<li>safety orange <code>#D86A2B</code> with light accent <code>#F3A34F</code>;</li>
+<li>cyan glass/energy <code>#45C9D5</code> with hot core <code>#B7F5F2</code>;</li>
+<li>small green player confirmation lights <code>#69C46B</code>.</li>
+</ul>
+<p>Blue-grey and charcoal carry the mass. Ancient hulls are cool slate ceramic, not
+cream: warm ivory is an accent reserved for structural faces, edge plates, and
+socket blocks, and it never becomes the body. The shipped stargate rings and the
+Vindicator are the reference for this weighting.</p>
+<p>Orange identifies service, hazard, and rescue functions. Cyan identifies active
+Ancient systems. Green is a sparse confirmation state on player-controlled or
+successfully restored hardware, never the dominant hull color.</p>
+<p>Restoration reads through light, not repaint. The base hull is slate and cyan at
+every stage, dormant or restored. Orange and green never join the hull mass: they
+are small functional marks and lights that appear when a system is in service or
+under player control, and they read as state layered onto the craft rather than
+as a change of livery.</p>
+<h3 id="materials-and-surfaces">Materials and surfaces</h3>
+<p>Primary shells are satin ceramic composite over anodized structural metal. Dark
+rubber seals, thick cyan-tinted glass, brushed access rails, and clean insulated
+cable bundles provide material contrast. Broad surfaces carry the read; tiny
+greebles do not. Surviving internals remain unusually ordered.</p>
+<h3 id="construction-and-panel-logic">Construction and panel logic</h3>
+<p>Panel seams follow maintenance access and load paths. Corners are radiused,
+fastener spacing is regular, and orange alignment marks explain how a panel opens.
+Do not scatter decorative seams across every plane.</p>
+<p>Use three authored wear tiers:</p>
+<ul>
+<li><strong>Intact:</strong> all primary panels present; tiny age variation only.</li>
+<li><strong>Service-worn:</strong> one mismatched replacement, faded markings, or opened service
+hatch, but the craft is fully legible and functional.</li>
+<li><strong>Derelict:</strong> most old field objects receive exactly one deliberate missing
+panel exposing orderly ribs, a cyan/orange service bus, ceramic-insulated
+cabling, or an empty module socket.</li>
+</ul>
+<p>The missing panel is selected by the artist, not randomized per spawn. It never
+hides a cockpit, shuttle bay, front/back cue, weapon or hardpoint, engine/FX
+anchor, or required animation seam. Not every object must lose the same panel,
+and wear must never collapse all Ancient assets into one universal damaged state.
+The Vindicator keeps one repaired scar or mismatched replacement panel as history,
+not as an open fatal wound.</p>
+<h3 id="wear-and-damage">Wear and damage</h3>
+<p>Eons produce bleaching, ceramic edge chips, hairline fractures, seal decay,
+faded alignment ink, and darkened exposed structure. Avoid ordinary orange rust,
+random grime clouds, or freshly torn scrapyard texture. Combat damage is sharper:
+localized impact craters, fractured ceramic, cleanly exposed ribs, and failing
+cyan buses. Derelict and combat-damaged layers must remain distinct.</p>
+<h3 id="lighting-and-emissives">Lighting and emissives</h3>
+<p>Cyan is the normal operational light. Orange marks warnings and service states;
+green confirms player ownership, handshake, or restored control. On ordinary
+hardware, emissives are small, crisp, and tied to apertures or light pipes.
+Monumental infrastructure may expand that same language into broad, contained
+energy apertures and routed ring channels. Complete-ring atlas phases may carry
+the routed surface current while a separate shader owns the aperture field, but
+neither may alter the underlying physical construction or become undirected neon
+strips or soft bloom painted into the dormant structure.</p>
+<h3 id="motion-and-vfx-behavior">Motion and VFX behavior</h3>
+<p>Engines start with controlled cyan-white exhaust and steady synchronized pulses.
+Large systems wake in ordered sequences from center to edge. Shields assemble as
+precise pale-cyan facets or rings. Weapons charge cleanly at visible hardpoints.
+Ancient failure is restrained: a missed pulse, dark sector, or stuttering bus is
+more characteristic than wild sparking everywhere.</p>
+<h3 id="weapons-and-vfx-verb">Weapons and VFX verb</h3>
+<p>Charge gathers cleanly at an authored hardpoint around a narrow white-hot core and
+controlled cyan halo, followed by a restrained muzzle response. Ancient weapons
+never read as scrap bolts or improvised barrels. Reuse tintable shared weapon and
+FX families through the <a href="#modular-weapons">modular weapon contract</a>, not a unique
+sheet per hull.</p>
+<h3 id="scale-and-readability">Scale and readability</h3>
+<p>The shuttle reads as a compact medical/rescue craft; the Vindicator adds military
+shoulders, cradle handshake hardware, and stronger longitudinal authority without
+erasing the shuttle&rsquo;s body. Larger objects repeat recognizable service openings,
+ribs, and orange alignment marks at coarser scales. At gameplay scale, preserve the
+nose, cockpit, shoulder masses, and aft nozzles before any panel detail.</p>
+<h3 id="markings">Markings</h3>
+<p>Use non-readable geometric rescue bands, serial blocks, alignment ticks, docking
+chevrons, and colored service zones. Ancient typography may exist in close-up
+environment art but must not become legible player-facing proof before the story
+allows it. The Vindicator may carry one restrained green control mark.</p>
+<h3 id="forbidden-traits">Forbidden traits</h3>
+<ul>
+<li>No mystical filigree, fantasy runes, floating ornaments, or inexplicable gold.</li>
+<li>No disposable core pod, abandoned shuttle, or visible body-transfer sequence.</li>
+<li>No random missing-panel selection or damage that breaks functional anchors.</li>
+<li>No ordinary rust bucket treatment, dense greebles, or universal wreck texture.</li>
+<li>No baked engine flame, shield, weapon fire, shadow, or destruction.</li>
+</ul>
+<h3 id="production-and-variant-rules">Production and variant rules</h3>
+<p>Build one clean master per chassis, then derive function variants through approved
+module, marking, and wear layers. Preserve family proportions and anchors between
+tiers. Ancient ruins use derelict layers; restored player hardware uses intact or
+service-worn layers. A variant must change role readability, not merely hue.</p>
+<h3 id="required-assets">Required assets</h3>
+<h4 id="ancient-shuttle-mvp-act-i">Ancient-Shuttle — MVP / Act I</h4>
+<ul>
+<li><strong>Silhouette:</strong> compact pointed medical wedge with rounded shoulders, a bright
+forward cockpit, and paired dark aft nozzles.</li>
+<li><strong>Role/read:</strong> vulnerable civilian rescue and salvage craft; nimble enough for
+wreck interiors, explicitly not a fighter.</li>
+<li><strong>Distinctive features:</strong> ivory rescue shell, orange service bands, cyan glass,
+a belly salvage aperture, and body geometry that can be recognized inside the
+Vindicator.</li>
+<li><strong>Animation/VFX:</strong> restrained paired exhaust, salvage-beam anchor, running
+lights, damage states, and no weapon muzzle anchors.</li>
+</ul>
+<h4 id="ancient-vindicator-mvp-act-i">Ancient-Vindicator — MVP / Act I</h4>
+<ul>
+<li><strong>Silhouette:</strong> sharp heroic triangle built around the shuttle, with broader
+military shoulders, protected centerline, and unmistakable nose/aft split.</li>
+<li><strong>Role/read:</strong> the first combat-capable permanent body; premium and capable,
+but still part of the same industrial family.</li>
+<li><strong>Distinctive features:</strong> visible integration seam around the nested shuttle,
+one repaired scar or mismatched panel, orange/cyan service geometry, and green
+confirmation lights.</li>
+<li><strong>Animation/VFX:</strong> separate engine cluster, shield footprint, weapon hardpoints,
+fold-state emissives, damage layers, and destruction that never ejects the
+shuttle as an abandoned object.</li>
+</ul>
+<h4 id="ancient-cassius-tug-mvp-act-i">Ancient-CASSIUS-Tug — MVP / Act I</h4>
+<ul>
+<li><strong>Silhouette:</strong> broad work-tug shoulders around a compact Ancient-compatible
+center, with tow arms and external repair history.</li>
+<li><strong>Role/read:</strong> dependable old utility intelligence disguised by centuries of
+practical frontier work.</li>
+<li><strong>Distinctive features:</strong> Ancient core spacing beneath mismatched Civilian-era
+repairs; one orderly open service cavity; large tow/dock anchors.</li>
+<li><strong>Animation/VFX:</strong> slow stable exhaust, tow/tractor origin, utility lights,
+articulated-arm option, and layered repair/damage states.</li>
+</ul>
+<h4 id="ancient-mining-barge-mvp-act-i">Ancient-Mining-Barge — MVP / Act I</h4>
+<ul>
+<li><strong>Silhouette:</strong> long blunt industrial spine with ore bays framing an older
+triangular command core.</li>
+<li><strong>Role/read:</strong> derelict objective and environmental landmark, not a warship.</li>
+<li><strong>Distinctive features:</strong> exactly one large missing side panel exposing ordered
+ribs, faded cargo indexing, and a readable shuttle-scale access bay.</li>
+<li><strong>Animation/VFX:</strong> dormant and weak-power states, dust/ore effects kept separate,
+salvage anchors, localized collapse pieces, and no permanent glow.</li>
+</ul>
+<h4 id="ancient-miner-drone-mvp-act-i">Ancient-Miner-Drone — MVP / Act I</h4>
+<ul>
+<li><strong>Silhouette:</strong> tiny rounded triangular tool body with two forward manipulator
+prongs and a single clear aft nozzle.</li>
+<li><strong>Role/read:</strong> precise autonomous mining tool, distinct from a combat fighter.</li>
+<li><strong>Distinctive features:</strong> orange tool face, cyan sensor slit, drill/cutter socket,
+and parent-compatible docking pin.</li>
+<li><strong>Animation/VFX:</strong> mining beam/cutter origin, ore-return light, compact thrust,
+and one readable disabled frame.</li>
+</ul>
+<h4 id="ancient-escort-drone-mvp-act-i">Ancient-Escort-Drone — MVP / Act I</h4>
+<ul>
+<li><strong>Silhouette:</strong> sharper sibling to the miner drone, with protected sensor center
+and paired lateral weapon stubs.</li>
+<li><strong>Role/read:</strong> small defensive escort rather than disposable attack swarm.</li>
+<li><strong>Distinctive features:</strong> fewer orange service areas, stronger charcoal armor,
+cyan sensor, and obvious difference from the Miner-Drone at thumbnail size.</li>
+<li><strong>Animation/VFX:</strong> paired muzzle anchors, shield flicker, synchronized thrust,
+return-to-carrier cue, and destruction strip.</li>
+</ul>
+<h4 id="ancient-stargate-mvp-act-i">Ancient-Stargate — MVP / Act I</h4>
+<ul>
+<li><strong>Silhouette:</strong> a free-floating ring-on-ring station: one large sender ring and
+one smaller receiver ring overlapping its lower-right foreground. The
+receiver&rsquo;s centre sits on the middle of the sender&rsquo;s structural band. Keep
+both rings complete and independently readable; no pedestal, connecting
+spine, double-funnel throat, or symmetrical figure-eight.</li>
+<li><strong>Role/read:</strong> monumental lane infrastructure, older and more exact than any
+faction-built station.</li>
+<li><strong>Construction/materials:</strong> thick segmented gunmetal and slate bands, charcoal
+recesses, restrained warm ceramic faces, and exactly eight repeated radial
+anchors. Detail density stays medium-low: broad engineered modules first,
+regular seams and shallow channels second, no filigree or greeble fog.</li>
+<li><strong>State read:</strong> sender and receiver each use complete-ring atlas phases whose
+metal structure is identical in every power and repair state. Active phases
+add routed surface energy; offline, dormant, and broken phases go dark and
+still. They never gain cracks, missing pieces, rubble, or damaged geometry.</li>
+<li><strong>Animation/VFX:</strong> sender and receiver are independently controlled for all
+four on/off combinations. Deep blue-cyan sender energy travels inward from its
+eight emitters toward the aperture; receiver energy travels outward from its
+aperture toward its eight emitters. The two metal rings slowly counter-rotate,
+while both shader-driven aperture fields remain stationary in world space.
+Keep the vortex, glow, and event accents out of the physical ring artwork.</li>
+</ul>
+<h4 id="ancient-rd-station-and-vault-act-iii-post-game">Ancient-R&amp;D-Station-and-Vault — Act III / post-game</h4>
+<ul>
+<li><strong>Silhouette:</strong> layered research station wrapped around a protected geometric
+vault, with a clear approach axis and human-scale inner modules.</li>
+<li><strong>Role/read:</strong> forbidden deep infrastructure and narrative destination, not a
+generic orbital city. Act II needs only an intel or schematic representation;
+it does not require a production station asset.</li>
+<li><strong>Distinctive features:</strong> repeated laboratory pods, disciplined missing-panel
+exposure, sealed cyan core, and architecture that echoes Vindicator geometry.</li>
+<li><strong>Animation/VFX:</strong> staged power-up sectors, door and lock anchors, local shield
+fields, separate data/energy effects, and authored intact/derelict states.</li>
+</ul>
+<h4 id="ancient-cradle-host-future">Ancient-Cradle-Host — future</h4>
+<ul>
+<li><strong>Silhouette:</strong> massive carrier/body shell whose central cradle unmistakably
+contains the complete Vindicator, preserving the nesting chain.</li>
+<li><strong>Role/read:</strong> strategic host body and mobile fortress, never a replacement that
+makes the inner craft disposable.</li>
+<li><strong>Distinctive features:</strong> protected insertion geometry, repeated Ancient ribs,
+broad host-scale shoulders, and one retained historical repair region.</li>
+<li><strong>Animation/VFX:</strong> cradle lock sequence, host engines and shields, multi-scale
+weapon anchors, detachable damage pieces, and no core-transfer imagery.</li>
+</ul>
+<h2 id="korrathi">Korrathi</h2>
+<h3 id="design-promise-1">Design promise</h3>
+<p>Korrathi ships are scavenger weapons: stolen Ancient technology visibly grafted
+onto hulls whose crews understand its immediate use but not its original system.
+They should look dangerous while parked—red, jagged, forward-hungry, and one
+improvised upgrade away from structural failure. They are clans, not a formal navy.</p>
+<h3 id="silhouettes-and-shape-vocabulary-1">Silhouettes and shape vocabulary</h3>
+<ul>
+<li>Forward hooks, saw teeth, spear points, split noses, and raked shoulders.</li>
+<li>Deliberate asymmetry in grafts and armor masses over a flight-stable core.</li>
+<li>Oversized guns, engines, clamps, or salvaged Ancient modules distort the host.</li>
+<li>Aft structures taper or look under-supported; mass and threat point forward.</li>
+</ul>
+<h3 id="palette-1">Palette</h3>
+<ul>
+<li>blood red <code>#A92E32</code> and scarlet highlight <code>#E04B3F</code>;</li>
+<li>near-black plating <code>#1D2024</code> and outline <code>#111316</code>;</li>
+<li>burnt steel <code>#55545A</code> and hot edge <code>#858087</code>;</li>
+<li>dirty bone <code>#B7AA8B</code>;</li>
+<li>unstable amber <code>#F09A32</code> and hot core <code>#FFD071</code>.</li>
+</ul>
+<p>Red is clan threat/ownership; amber is heat, power, and stolen-system activity.
+Dirty bone may identify stripped Ancient ceramic without using Ancient cyan as a
+dominant Korrathi color.</p>
+<h3 id="materials-and-surfaces-1">Materials and surfaces</h3>
+<p>Scorched steel, cut armor, welded braces, heat-stained barrels, dirty ceramic
+salvage, exposed conduits, and repurposed industrial clamps. Surfaces may be rough,
+but mark clusters remain intentional. Do not simulate texture with random noise.</p>
+<h3 id="construction-and-panel-logic-1">Construction and panel logic</h3>
+<p>The underlying hull has a crude but workable frame. New modules are visibly
+grafted through brackets, weld beads, adapter collars, and off-pattern plating.
+One large stolen component should explain each variant&rsquo;s combat role. Repeated
+clan hulls share a chassis but never become perfectly standardized.</p>
+<h3 id="wear-and-damage-1">Wear and damage</h3>
+<p>Wear is fresh violence: blast scorch, peeled red paint, bent tips, patched holes,
+and new weld discoloration. Damage propagates around graft points and overloaded
+systems. Avoid the bleached, patient decay of Ancient ruins.</p>
+<h3 id="lighting-and-emissives-1">Lighting and emissives</h3>
+<p>Amber power wells and red warning slits pulse unevenly. A stolen Ancient component
+may retain a small cyan remnant, but it should be occluded, caged, or forced through
+an amber adapter so ownership remains clear.</p>
+<h3 id="motion-and-vfx-behavior-1">Motion and VFX behavior</h3>
+<p>Thrust is short, turbulent, and slightly asynchronous. Idle engines miss beats;
+boosts flare hard. Weapon charge telegraphs through heating barrels, venting, and
+unstable light. Shields, when present, flicker unevenly and fail by sector.</p>
+<h3 id="weapons-and-vfx-verb-1">Weapons and VFX verb</h3>
+<p>Barrels heat with unstable amber light, scorch their housings, and vent unevenly;
+asymmetrical weapon forms emphasize improvised adapters. A stolen system may cage one cyan remnant
+inside an amber Korrathi assembly. Reuse and recolor shared modular weapon/FX
+families; only the approved oversized role graft belongs permanently to a chassis.</p>
+<h3 id="scale-and-readability-1">Scale and readability</h3>
+<p>Small hulls read as blades and hooks. Capitals read through one grossly oversized
+weapon or armored prow, not simply more teeth. Keep asymmetry bold enough to read
+at gameplay scale; micro-scrap vanishes and is forbidden as a substitute.</p>
+<h3 id="markings-1">Markings</h3>
+<p>Use broad red hand-painted wedges, kill notches, clan slashes, captured-panel
+overpaint, and crude hazard blocks. No readable text or uniform navy numbering.</p>
+<h3 id="forbidden-traits-1">Forbidden traits</h3>
+<ul>
+<li>No immaculate symmetry, parade formation polish, or standardized clean plates.</li>
+<li>No elegant alien curves, insect hive anatomy, or mystical pirate ornament.</li>
+<li>No fully understood, seamlessly integrated Ancient module.</li>
+<li>No random surface noise or teeth on every edge until the silhouette becomes mush.</li>
+<li>No baked flame, shield, weapon fire, shadow, or destruction.</li>
+</ul>
+<h3 id="production-and-variant-rules-1">Production and variant rules</h3>
+<p>Create a small shared clan-frame kit, then assign one role-defining graft per
+variant. Preserve common engine and cockpit anatomy while varying captured plates,
+armor repairs, and large weapons. Each silhouette needs a different threat verb:
+stalk, cut, latch, ram, tow, command, or besiege.</p>
+<p>MVP / Act I production requires the Raider and Marauder only. All other Korrathi
+assets, including the Raider-Bastion, begin in Act II or later.</p>
+<h3 id="required-assets-1">Required assets</h3>
+<h4 id="korrathi-prowler-act-ii">Korrathi-Prowler — Act II</h4>
+<ul>
+<li><strong>Silhouette:</strong> narrow hooked scout with offset sensor mast.</li>
+<li><strong>Role/read:</strong> stalking reconnaissance and target marking.</li>
+<li><strong>Distinctive features:</strong> caged Ancient sensor fragment and minimal armor.</li>
+<li><strong>Animation/VFX:</strong> dim irregular thrust, sensor sweep, mark-designator origin,
+and fast breakup.</li>
+</ul>
+<h4 id="korrathi-raider-mvp-act-i">Korrathi-Raider — MVP / Act I</h4>
+<ul>
+<li><strong>Silhouette:</strong> compact jagged arrowhead with split prow and red blade shoulders.</li>
+<li><strong>Role/read:</strong> baseline hostile fighter; immediate first-contact threat.</li>
+<li><strong>Distinctive features:</strong> visible salvage plate, paired crude guns, exposed amber
+power line, and readable cockpit/aft separation.</li>
+<li><strong>Animation/VFX:</strong> turbulent engine loop, paired muzzle anchors, weak shield or
+armor-hit response, and destruction strip.</li>
+</ul>
+<h4 id="korrathi-leech-act-ii">Korrathi-Leech — Act II</h4>
+<ul>
+<li><strong>Silhouette:</strong> squat clamp-bodied attacker with inward-hooking arms.</li>
+<li><strong>Role/read:</strong> boarding, disabling, or energy-drain specialist.</li>
+<li><strong>Distinctive features:</strong> magnetic jaws, cable drums, and stolen interface spike.</li>
+<li><strong>Animation/VFX:</strong> clamp articulation, tether origin, contact sparks kept in FX,
+and attached/detached states.</li>
+</ul>
+<h4 id="korrathi-breacher-act-ii">Korrathi-Breacher — Act II</h4>
+<ul>
+<li><strong>Silhouette:</strong> thick central ram with sacrificial wedge armor.</li>
+<li><strong>Role/read:</strong> station and capital-hull assault craft.</li>
+<li><strong>Distinctive features:</strong> battered prow, rear-set cockpit, and overload chambers.</li>
+<li><strong>Animation/VFX:</strong> charge heat, ram-impact anchor, violent boost, and prow-first
+damage progression.</li>
+</ul>
+<h4 id="korrathi-harpoon-act-ii">Korrathi-Harpoon — Act II</h4>
+<ul>
+<li><strong>Silhouette:</strong> long off-center launcher dominating a light tow frame.</li>
+<li><strong>Role/read:</strong> capture and forced-positioning ship.</li>
+<li><strong>Distinctive features:</strong> giant spool, braced barrel, and asymmetrical recoil arm.</li>
+<li><strong>Animation/VFX:</strong> projectile/tether origin, spool rotation, recoil frames, and
+stressed engine pulses under load.</li>
+</ul>
+<h4 id="korrathi-corsair-act-ii">Korrathi-Corsair — Act II</h4>
+<ul>
+<li><strong>Silhouette:</strong> swept multi-blade attack hull with cargo/boarding belly.</li>
+<li><strong>Role/read:</strong> fast clan leader and prize-taking raider.</li>
+<li><strong>Distinctive features:</strong> trophy panels, stronger command sensor, and mixed guns.</li>
+<li><strong>Animation/VFX:</strong> boost burst, multiple hardpoints, boarding cue, and sectional
+shield failure.</li>
+</ul>
+<h4 id="korrathi-marauder-mvp-act-i">Korrathi-Marauder — MVP / Act I</h4>
+<ul>
+<li><strong>Silhouette:</strong> unique overgunned frigate bent around one stolen oversized weapon.</li>
+<li><strong>Role/read:</strong> raid leader and Act I escalation; never a scaled-up Raider.</li>
+<li><strong>Distinctive features:</strong> mismatched Ancient power chamber, heavy forward rake,
+asymmetrical armor, and visibly strained rear frame.</li>
+<li><strong>Animation/VFX:</strong> long unstable charge tell, recoil, staggered engines, local
+shield effects, detachable graft, and authored boss damage states.</li>
+</ul>
+<h4 id="korrathi-warlord-act-ii">Korrathi-Warlord — Act II</h4>
+<ul>
+<li><strong>Silhouette:</strong> command cruiser with crowned prow blades and layered captured
+hull sections.</li>
+<li><strong>Role/read:</strong> clan command, coordination, and intimidation.</li>
+<li><strong>Distinctive features:</strong> broad signal mast, trophy armor, and protected command
+core behind an aggressive front.</li>
+<li><strong>Animation/VFX:</strong> command pulse, fighter-launch anchors, heavy weapons, layered
+shield failure, and multi-stage destruction.</li>
+</ul>
+<h4 id="korrathi-ravager-future">Korrathi-Ravager — future</h4>
+<ul>
+<li><strong>Silhouette:</strong> massive siege hull whose central stolen system breaks the normal
+clan frame into an unstable crescent.</li>
+<li><strong>Role/read:</strong> late-game ruin-stripper and infrastructure killer.</li>
+<li><strong>Distinctive features:</strong> industrial cutting arrays, ore/debris maw, and exposed
+reactor braces.</li>
+<li><strong>Animation/VFX:</strong> cutter/beam anchors, debris intake, overload cascade, and
+staged structural collapse.</li>
+</ul>
+<h4 id="korrathi-raider-bastion-act-ii">Korrathi-Raider-Bastion — Act II</h4>
+<ul>
+<li><strong>Silhouette:</strong> irregular anchored ring or slab assembled around a captured hub,
+with guns and dock arms pointing outward.</li>
+<li><strong>Role/read:</strong> temporary raid base and salvage depot for later territorial
+pressure. The Act I raid is mobile and does not require a Korrathi base.</li>
+<li><strong>Distinctive features:</strong> red scaffold, stolen ceramic core, scrap bays, and a
+single dominant command sector.</li>
+<li><strong>Animation/VFX:</strong> docking lights, turret anchors, intermittent shield sectors,
+launch points, and modular destruction; station engines are absent unless the
+story explicitly makes it mobile.</li>
+</ul>
+<h2 id="teralith">Teralith</h2>
+<h3 id="design-promise-2">Design promise</h3>
+<p>Teralith art presents authority as immaculate engineering. Their licensing navy
+is sleek, gold, standardized, and quietly oppressive: every panel inspected,
+numbered, and replaceable. Their order superficially imitates Ancient panel rhythm
+to support their inheritance doctrine, but the internal geometry is decisively not
+Ancient. The Teralith monolith is an Ancient relic under custody, never a
+Teralith-built object.</p>
+<h3 id="silhouettes-and-shape-vocabulary-2">Silhouettes and shape vocabulary</h3>
+<ul>
+<li>Exact bilateral symmetry, shield forms, disciplined arrowheads, and nested armor.</li>
+<li>Rounded pauldron plates protect a rigid central spine.</li>
+<li>Capitals widen into heraldic shields; support craft retain measured proportions.</li>
+<li>Nothing looks improvised, under-supported, or accidentally asymmetrical.</li>
+</ul>
+<h3 id="palette-2">Palette</h3>
+<ul>
+<li>hull navy <code>#1B2432</code> and hull black <code>#14171C</code>;</li>
+<li>plate mid <code>#2A3242</code> and outline <code>#08090B</code>;</li>
+<li>authority gold <code>#C99A3D</code> and highlight <code>#F0CF72</code>;</li>
+<li>emissive amber <code>#FFB44A</code> and hot core <code>#FFE3A8</code>;</li>
+<li>pale shield blue <code>#7FC7E5</code> and hot shield <code>#D3F2F5</code>;</li>
+<li>cream <code>#D8D2BD</code>, markings and seals only.</li>
+</ul>
+<p>The faction reads on value contrast. The hull is matte navy falling to black in
+shadow, and everything that identifies it sits light against that hull. Plate
+mid separates facets and does not lighten the body. Cream appears only in
+marking blocks, never as a hull color.</p>
+<p>Two separate elements carry the identity and must not merge. Authority gold
+<code>#C99A3D</code> is matte pigment on plate: chevrons, license bars, rank bands, and
+inspection seals. Emissive amber <code>#FFB44A</code> is light: one or two uninterrupted
+identifying lines along the principal chines and nacelles, plus sparse hot bleed
+at cut panel seams near vents and weapon recesses. Painted gold never glows.
+Emissive amber is never a paint fill. Gold identifies licensed authority, not
+wealth decoration.</p>
+<p>Restraint is the point. A hull outlined in glowing contours reads as generic
+neon and destroys the hierarchy that line placement is supposed to carry. Line
+count does not scale with rank: a Sovereign does not wear more lines than a
+Sentry, it wears longer and better-placed ones.</p>
+<p>Pale shield blue marks command, shield, and legal-service distinctions. It reads
+hot against a dark hull. It is a functional color that separates shields from
+the faction&rsquo;s amber identity lighting, and it is not part of the identity read
+itself.</p>
+<p>Teralith and Civilian local police share a navy family and must not collapse
+into each other. Police wear a lighter desaturated navy <code>#35506A</code> with large
+white/cream recognition panels and small amber warning lights, a high-visibility
+civil livery. Teralith sit several values darker, carry no cream panels, and
+mark in gold. Value and gold-versus-cream are the tell at any zoom.</p>
+<h3 id="materials-and-surfaces-2">Materials and surfaces</h3>
+<p>Matte faceted armor plate over dark anodized structure, enamel identity blocks,
+dark sealed joints, polished weapon housings, and clean shield emitters.
+Surfaces stay low-gloss so the emissive strips and gold markings hold every
+highlight. Specular hits are narrow and consistent. There are no exposed cables
+or raw welds on serviceable craft.</p>
+<h3 id="construction-and-panel-logic-2">Construction and panel logic</h3>
+<p>Nested plates follow standardized replacement zones. Every panel has a reason,
+index position, and mirrored counterpart. Seam rhythm may echo Ancient examples,
+but Teralith panels are shallower, more armored, and organized around inspection
+access rather than Ancient service buses. Interior ribs, sockets, and fasteners
+must not match Ancient anatomy.</p>
+<h3 id="wear-and-damage-2">Wear and damage</h3>
+<p>Normal fleet assets show minimal wear: polished leading edges, tiny shield scorch,
+and exact-color replacement panels. Combat damage is localized and quickly boxed
+off by clean emergency shutters. Derelict Teralith assets may exist later, but
+should still show disciplined compartmental construction.</p>
+<h3 id="lighting-and-emissives-2">Lighting and emissives</h3>
+<p>One or two amber identifying lines run uninterrupted along the principal chines
+or nacelles and hold steady. Hot amber bleeds sparsely at cut panel seams near
+vents and weapon recesses, never as a general edge glow. Pale-blue shields and
+gold status strips illuminate in exact sequences. All paired lights match.
+Warning states use measured amber blocks, not Korrathi flicker or Ancient cyan
+service buses. A broken or unpaired line reads as damage, so undamaged hulls
+never show one.</p>
+<h3 id="motion-and-vfx-behavior-2">Motion and VFX behavior</h3>
+<p>Engines ignite simultaneously and maintain clean, narrow exhaust. Ships turn in
+disciplined arcs; formation effects should reinforce shared timing. Shields appear
+as stable geometric sectors. Weapons telegraph through precise apertures and
+retract or close when inactive.</p>
+<h3 id="weapons-and-vfx-verb-2">Weapons and VFX verb</h3>
+<p>Pale geometric beams and shield sectors begin at apertures that open and close in
+measured sequence; their narrow white-hot cores use controlled pale halos. Paired
+weapon lights and charges always match. Shared modular weapon and FX families may
+be recolored into this disciplined presentation; do
+not author a faction-exclusive effect sheet for every Teralith hull.</p>
+<h3 id="scale-and-readability-2">Scale and readability</h3>
+<p>At small scale, a single uninterrupted amber line on a dark mass identifies the
+faction. An emissive line survives downscaling and a painted chevron does not,
+so scouts and fighters rely on the line alone while capitals carry the line and
+legible painted markings. At capital scale, nested
+shield plates and perfect symmetry dominate. Do not add more gold until class is
+readable; change proportion and armor mass first.</p>
+<h3 id="markings-2">Markings</h3>
+<p>Use panel numbers as abstract blocks, license bars, rank bands, inspection seals,
+and mirrored formation marks. Avoid readable lettering. Command blue appears on
+Sovereign or Warden assets, not every patrol hull.</p>
+<h3 id="forbidden-traits-2">Forbidden traits</h3>
+<ul>
+<li>No improvised welds, exposed cabling, missing service panels, or random repairs.</li>
+<li>No actual Ancient internal ribs or visual proof that the doctrine is true.</li>
+<li>No Korrathi hooks, Civilian cargo clutter, or Blackwater biomorphic form.
+Curvature is not the prohibition: rounded pauldron plates and shield-arc
+silhouettes are Teralith. Flowing, grown, or creature-like hulls are not.</li>
+<li>No asymmetric officer vanity variants.</li>
+<li>No baked flame, shield, weapon fire, shadow, or destruction.</li>
+</ul>
+<h3 id="production-and-variant-rules-2">Production and variant rules</h3>
+<p>Use a controlled chassis ladder and mirrored module sockets. Variants may replace
+complete numbered plate groups, never bolt arbitrary weapons onto the surface.
+Maintain one approved dark-hull/gold balance across the fleet. Damage is a separate
+layer; a clean replacement returns exactly to spec.</p>
+<p><code>Teralith-Bulwark-Station</code> is the route, license, and tax-authority station. It is
+not the visual template for Eos local defense, even while a Nairan or
+<code>faction.militia</code> proxy temporarily stands in at runtime.</p>
+<h3 id="required-assets-2">Required assets</h3>
+<h4 id="teralith-sentry-act-ii">Teralith-Sentry — Act II</h4>
+<ul>
+<li><strong>Silhouette:</strong> small shield-shaped interceptor with a narrow arrow nose.</li>
+<li><strong>Role/read:</strong> checkpoint picket and fast enforcement response.</li>
+<li><strong>Distinctive features:</strong> paired gold shoulder strips, dark center, and exact sensor bar.</li>
+<li><strong>Animation/VFX:</strong> synchronized engines, paired muzzle anchors, stable shield,
+and concise destruction strip.</li>
+</ul>
+<h4 id="teralith-patrol-act-ii">Teralith-Patrol — Act II</h4>
+<ul>
+<li><strong>Silhouette:</strong> balanced arrowhead fighter with broader inspection-grade armor.</li>
+<li><strong>Role/read:</strong> standard licensed patrol and recognizable faction baseline.</li>
+<li><strong>Distinctive features:</strong> numbered mirrored plates and blue legal-service band.</li>
+<li><strong>Animation/VFX:</strong> clean engine loop, weapon apertures, comms scan, shield frames,
+and damage layer.</li>
+</ul>
+<h4 id="teralith-tender-act-ii">Teralith-Tender — Act II</h4>
+<ul>
+<li><strong>Silhouette:</strong> protected central spine between two symmetrical service arms.</li>
+<li><strong>Role/read:</strong> repair, logistics, and authorized resupply.</li>
+<li><strong>Distinctive features:</strong> sealed tool bays, docking clamps, and service-amber strip runs.</li>
+<li><strong>Animation/VFX:</strong> arm articulation, repair-beam anchors, dock lights, and no
+accidental combat silhouette.</li>
+</ul>
+<h4 id="teralith-sapper-act-ii">Teralith-Sapper — Act II</h4>
+<ul>
+<li><strong>Silhouette:</strong> compact armored wedge around a forward deployment bay.</li>
+<li><strong>Role/read:</strong> mine, interdiction, and gate-control specialist.</li>
+<li><strong>Distinctive features:</strong> blue bay door, paired deployment rails, heavy underside.</li>
+<li><strong>Animation/VFX:</strong> mine-launch anchors, bay open/closed states, shield, and clean
+withdrawal thrust.</li>
+</ul>
+<h4 id="teralith-lancer-act-ii">Teralith-Lancer — Act II</h4>
+<ul>
+<li><strong>Silhouette:</strong> long precise spear with small mirrored armor shoulders.</li>
+<li><strong>Role/read:</strong> stand-off strike craft and formation line-breaker.</li>
+<li><strong>Distinctive features:</strong> enclosed centerline weapon and narrow gold guide rails.</li>
+<li><strong>Animation/VFX:</strong> exact charge sequence, center muzzle, recoil pulse, and stable
+engine synchronization.</li>
+</ul>
+<h4 id="teralith-warden-act-ii">Teralith-Warden — Act II</h4>
+<ul>
+<li><strong>Silhouette:</strong> broad shield-front frigate protecting a slim command center.</li>
+<li><strong>Role/read:</strong> convoy protection and local command.</li>
+<li><strong>Distinctive features:</strong> layered frontal plates, command-blue rank block, and
+expanded shield emitters.</li>
+<li><strong>Animation/VFX:</strong> formation shield link, turret anchors, command pulse, damage
+compartments, and multi-piece destruction.</li>
+</ul>
+<h4 id="teralith-bulwark-act-ii">Teralith-Bulwark — Act II</h4>
+<ul>
+<li><strong>Silhouette:</strong> heavy symmetrical capital shaped like overlapping shields.</li>
+<li><strong>Role/read:</strong> route-control battleship and immovable authority.</li>
+<li><strong>Distinctive features:</strong> nested gold-edged armor, black weapon recesses, and a seam-lit core.</li>
+<li><strong>Animation/VFX:</strong> strong sector shields, multiple aligned hardpoints, disciplined
+engine bank, and staged armor loss.</li>
+</ul>
+<h4 id="teralith-sovereign-future">Teralith-Sovereign — future</h4>
+<ul>
+<li><strong>Silhouette:</strong> elongated command capital with a formal shield-crown profile.</li>
+<li><strong>Role/read:</strong> fleet authority, doctrine, and political presence.</li>
+<li><strong>Distinctive features:</strong> pale shield-blue command plane, ceremonial gold
+only on major plates, and perfect hierarchy of scale.</li>
+<li><strong>Animation/VFX:</strong> fleet command pulse, launch bays, multi-sector shields,
+synchronized batteries, and long staged destruction.</li>
+</ul>
+<h4 id="teralith-bulwark-station-act-ii">Teralith-Bulwark-Station — Act II</h4>
+<ul>
+<li><strong>Silhouette:</strong> radial fortress of repeated shield modules around a licensed gate
+or trade-control center.</li>
+<li><strong>Role/read:</strong> checkpoint, tax authority, and defended route infrastructure.</li>
+<li><strong>Distinctive features:</strong> numbered docking sectors, exact symmetry, and visible
+standardized capital modules.</li>
+<li><strong>Animation/VFX:</strong> rotating or indexed sections, shield sectors, dock guidance,
+turret anchors, and compartment destruction.</li>
+</ul>
+<h4 id="teralith-monolith-act-ii">Teralith-Monolith — Act II</h4>
+<ul>
+<li><strong>Silhouette:</strong> austere Ancient relic held inside a clearly separate Teralith
+custody frame.</li>
+<li><strong>Role/read:</strong> theological foundation and political evidence under guard.</li>
+<li><strong>Distinctive features:</strong> the inner object uses Ancient material/anatomy; clamps,
+platforms, shields, and signage use Teralith language. Never blend them.</li>
+<li><strong>Animation/VFX:</strong> dormant Ancient response kept separate from Teralith security
+lights and shields; no visual claim that Teralith built the relic.</li>
+</ul>
+<h2 id="civilian">Civilian</h2>
+<h3 id="design-promise-3">Design promise</h3>
+<p>Civilian is a visual production category, not a polity. It covers Free Haulers,
+Independents, and Eos local police using a shared frontier kit of workboats, tugs,
+trawlers, forklifts, stations, and drones. Function is visible, repairs are honest,
+and modules are replaceable. Civilian art is explicitly not Blackwater art.</p>
+<h3 id="silhouettes-and-shape-vocabulary-3">Silhouettes and shape vocabulary</h3>
+<ul>
+<li>Blunt workboat noses, boxy tug shoulders, long cargo spines, cranes, booms,
+external tanks, radiator fins, and visible docking geometry.</li>
+<li>Asymmetry is functional: a crane, ore hopper, tow arm, or replacement module.</li>
+<li>Ships look designed around payload and access rather than combat performance.</li>
+<li>Stations grow as practical clusters with an obvious core, docks, and industry.</li>
+</ul>
+<h3 id="palette-3">Palette</h3>
+<p>Shared hull ramps:</p>
+<ul>
+<li>industrial grey <code>#6E7477</code> and dark <code>#373E42</code>;</li>
+<li>faded cream <code>#C9C2A8</code>;</li>
+<li>mustard <code>#C59A3A</code>;</li>
+<li>oxide orange <code>#B95E36</code>;</li>
+<li>utility cyan <code>#4DADB4</code> and work-light <code>#D8E7C4</code>.</li>
+</ul>
+<p>Sub-palettes identify operators without creating new hull languages:</p>
+<ul>
+<li>Free Haulers: mustard cargo bands and cream identification blocks.</li>
+<li>Independents: oxide-orange repairs, mixed neutral panels, personal geometric marks.</li>
+<li>Local police: desaturated navy <code>#35506A</code>, white/cream recognition panels, and
+small amber warning lights.</li>
+</ul>
+<h3 id="materials-and-surfaces-3">Materials and surfaces</h3>
+<p>Painted steel, practical composite panels, rubber bumpers, mesh radiators, glass
+work cabs, cargo containers, tanks, and exposed tool housings. Surfaces are worn
+but maintained. Utility hardware should explain where crews load, repair, dock,
+or tow.</p>
+<h3 id="construction-and-panel-logic-3">Construction and panel logic</h3>
+<p>Use a modular frame kit: cockpit/bridge, power block, engine pod, cargo spine,
+tool arm, tank, radiator, docking collar, and armor module. Connections are large
+and legible. Repairs replace whole panels or modules and may mismatch in color.
+Police armor bolts onto this same civilian chassis; it is not a Teralith hull.</p>
+<h3 id="wear-and-damage-3">Wear and damage</h3>
+<p>Scraped corners, soot around dark nozzles, faded paint, patched bumpers, replaced
+panels, and work-surface abrasion. Avoid neglect for its own sake: hoses are tied
+down and pressure vessels remain maintained. Combat damage differs from everyday
+wear and belongs on separate layers.</p>
+<h3 id="lighting-and-emissives-3">Lighting and emissives</h3>
+<p>Warm work lights, amber hazard lamps, cool cockpit glass, and operator-colored
+navigation blocks. Police use a separate animated warning-light overlay. No broad
+neon strips or active engine glow in the clean base.</p>
+<h3 id="motion-and-vfx-behavior-3">Motion and VFX behavior</h3>
+<p>Work craft accelerate deliberately, with strong but unglamorous exhaust. Mining,
+salvage, tow, dock, and cargo effects originate from visible tools. Police thrust
+is tighter and more responsive but still belongs to the same engine kit. Stations
+use local moving machinery rather than an overall idle wobble.</p>
+<h3 id="weapons-and-vfx-verb-3">Weapons and VFX verb</h3>
+<p>Mining, salvage, repair, tow, and survey tools establish the visual language first
+through practical green/yellow cues and remain distinct from hero combat energy.
+Civilian combat weapons look visibly bolted onto neutral sockets. Reuse and recolor
+shared modular weapon/FX families; operator paint and hull construction show
+ownership, not a unique gun sprite.</p>
+<h3 id="scale-and-readability-3">Scale and readability</h3>
+<p>Payload defines class: courier is cockpit-forward, hauler exposes cargo, freighter
+is a long logistics spine, and industry stations show large process modules. At
+gameplay scale preserve cab, payload, and engines; for stations preserve core,
+docks, and one dominant industry function.</p>
+<h3 id="markings-3">Markings</h3>
+<p>Use hazard chevrons, cargo bands, unit blocks, dock numbers as abstract forms,
+owner-color panels, and broad police recognition zones. Avoid readable words or
+logos. A decal layer must be replaceable without repainting the base material ramp.</p>
+<h3 id="forbidden-traits-3">Forbidden traits</h3>
+<ul>
+<li>No implication that Civilian is one government or navy.</li>
+<li>No green manta-form Blackwater language.</li>
+<li>No gold exact-symmetry Teralith police hulls.</li>
+<li>No Ancient cyan service anatomy presented as ordinary construction.</li>
+<li>No decorative weapons, random junk piles, or unsafe unreadable tool clusters.</li>
+<li>No baked flame, shield, weapon fire, shadow, warning strobe, or destruction.</li>
+</ul>
+<h3 id="production-and-variant-rules-3">Production and variant rules</h3>
+<p>Build a common modular kit first, then derive operator variants with payload,
+decals, and modest panel swaps. Free Haulers, Independents, and police must remain
+recognizably related. Role variants change silhouette through real work modules;
+recolors alone do not create a new ship. Eos assets below are MVP / Act I unless
+marked otherwise.</p>
+<h3 id="required-assets-3">Required assets</h3>
+<h4 id="civilian-courier-mvp-act-i">Civilian-Courier — MVP / Act I</h4>
+<ul>
+<li><strong>Silhouette:</strong> compact cockpit-forward workboat with a small sealed cargo pod.</li>
+<li><strong>Role/read:</strong> messages, passengers, and light high-priority freight.</li>
+<li><strong>Distinctive features:</strong> cream cab, operator decal panel, and clear docking collar.</li>
+<li><strong>Animation/VFX:</strong> economical paired thrust, navigation lights, dock cue, and
+light damage/destruction.</li>
+</ul>
+<h4 id="civilian-hauler-mvp-act-i">Civilian-Hauler — MVP / Act I</h4>
+<ul>
+<li><strong>Silhouette:</strong> tug frame visibly carrying one or two external cargo modules.</li>
+<li><strong>Role/read:</strong> common local freight traffic and the baseline Civilian silhouette.</li>
+<li><strong>Distinctive features:</strong> mustard cargo bands, tow points, bumpers, and replaceable
+engine pods.</li>
+<li><strong>Animation/VFX:</strong> load-dependent thrust options, tow anchor, dock lights, and
+detachable cargo only if runtime ownership is defined.</li>
+</ul>
+<h4 id="civilian-freighter-act-ii">Civilian-Freighter — Act II</h4>
+<ul>
+<li><strong>Silhouette:</strong> long cargo spine with bridge forward and repeated container bays.</li>
+<li><strong>Role/read:</strong> intersystem bulk transport, not a disguised warship.</li>
+<li><strong>Distinctive features:</strong> standardized containers, radiators, service tender dock,
+and clear vulnerable engine block.</li>
+<li><strong>Animation/VFX:</strong> multiple synchronized engine pods, dock/bay lights, cargo
+anchors, optional tug interaction, and sectional destruction.</li>
+</ul>
+<h4 id="civilian-prospector-mvp-act-i">Civilian-Prospector — MVP / Act I</h4>
+<ul>
+<li><strong>Silhouette:</strong> compact survey workboat with sensor boom and sample pod.</li>
+<li><strong>Role/read:</strong> independent resource scout and claim finder.</li>
+<li><strong>Distinctive features:</strong> oxide repair panels, forward scan dish, and sample arm.</li>
+<li><strong>Animation/VFX:</strong> scan cone, sample-tool anchor, beacon deploy point, and light
+utility thrust.</li>
+</ul>
+<h4 id="civilian-reclaimer-mvp-act-i">Civilian-Reclaimer — MVP / Act I</h4>
+<ul>
+<li><strong>Silhouette:</strong> asymmetrical salvage tug with one large articulated recovery arm.</li>
+<li><strong>Role/read:</strong> wreck stripping, towing, and component recovery.</li>
+<li><strong>Distinctive features:</strong> clamp, cable spool, open cargo rack, and heavy bumper.</li>
+<li><strong>Animation/VFX:</strong> arm states, salvage beam/cutter anchor, tow cable, cargo-return
+cue, and debris effects separate from the hull.</li>
+</ul>
+<h4 id="civilian-police-patrol-mvp-act-i">Civilian-Police-Patrol — MVP / Act I</h4>
+<ul>
+<li><strong>Silhouette:</strong> armored version of the common courier/hauler frame with protected
+shoulders and a clear forward interceptor read.</li>
+<li><strong>Role/read:</strong> Eos local law enforcement and escort, not Teralith military.</li>
+<li><strong>Distinctive features:</strong> navy/cream recognition panels, bolt-on armor, amber
+warning bar as a separate overlay, and modest standardized weapon mounts.</li>
+<li><strong>Animation/VFX:</strong> warning-light loop, responsive thrust, paired weapon anchors,
+practical shield option, and damage layers.</li>
+</ul>
+<h4 id="civilian-trade-station-mvp-act-i">Civilian-Trade-Station — MVP / Act I</h4>
+<ul>
+<li><strong>Silhouette:</strong> central dock hub with radial cargo arms and a clearly open approach.</li>
+<li><strong>Role/read:</strong> commerce, refuel, repair, and social landmark.</li>
+<li><strong>Distinctive features:</strong> mixed operator modules, mustard freight zones, visible
+docking collars, habitation blocks, and no fortress silhouette.</li>
+<li><strong>Animation/VFX:</strong> dock guidance, crane/arm options, local work lights, traffic
+anchors, and sectional damage.</li>
+</ul>
+<h4 id="civilian-refinery-mvp-act-i">Civilian-Refinery — MVP / Act I</h4>
+<ul>
+<li><strong>Silhouette:</strong> tanks and process drums balanced around a protected industrial core.</li>
+<li><strong>Role/read:</strong> converts mined feedstock; dangerous industry rather than settlement.</li>
+<li><strong>Distinctive features:</strong> pipes, radiators, hazard bands, flare/vent sockets, and
+ore intake dock.</li>
+<li><strong>Animation/VFX:</strong> process lights, venting and flare as separate effects, cargo
+transfer anchors, and tank-specific damage.</li>
+</ul>
+<h4 id="civilian-mining-yard-mvp-act-i">Civilian-Mining-Yard — MVP / Act I</h4>
+<ul>
+<li><strong>Silhouette:</strong> open gantry around ore bins, drone racks, and repair dock.</li>
+<li><strong>Role/read:</strong> local mining base and drone-control landmark.</li>
+<li><strong>Distinctive features:</strong> visible bins, cranes, mustard work zones, and approach
+lanes sized for miners.</li>
+<li><strong>Animation/VFX:</strong> drone launch anchors, crane states, ore-transfer effects,
+warning lamps, and modular damage.</li>
+</ul>
+<h4 id="civilian-salvage-yard-mvp-act-i">Civilian-Salvage-Yard — MVP / Act I</h4>
+<ul>
+<li><strong>Silhouette:</strong> irregular but organized frame around sorting racks and tow bays.</li>
+<li><strong>Role/read:</strong> wreck processing and recovery, visually distinct from Mining-Yard.</li>
+<li><strong>Distinctive features:</strong> clamp gantries, separated scrap silhouettes, cutter bay,
+and oxide operator panels.</li>
+<li><strong>Animation/VFX:</strong> tow arrivals, cutter/spark FX kept separate, moving clamps,
+salvage-drone launches, and sectional damage.</li>
+</ul>
+<h4 id="civilian-miner-drone-mvp-act-i">Civilian-Miner-Drone — MVP / Act I</h4>
+<ul>
+<li><strong>Silhouette:</strong> tiny robust tool pod with broad drill/cutter face and aft thruster.</li>
+<li><strong>Role/read:</strong> cheap local mining labor, less elegant than the Ancient drone.</li>
+<li><strong>Distinctive features:</strong> visible bolts, yellow hazard face, replaceable tool socket,
+and operator decal tile.</li>
+<li><strong>Animation/VFX:</strong> cutter/mining origin, ore light, simple thrust, dock cue, and
+disabled frame.</li>
+</ul>
+<h4 id="civilian-salvage-drone-mvp-act-i">Civilian-Salvage-Drone — MVP / Act I</h4>
+<ul>
+<li><strong>Silhouette:</strong> two-pronged clamp pod with a small central cargo cradle.</li>
+<li><strong>Role/read:</strong> retrieves components and loose wreckage.</li>
+<li><strong>Distinctive features:</strong> asymmetrical repair plate, clamp jaws, cable anchor, and
+clear visual difference from Miner-Drone.</li>
+<li><strong>Animation/VFX:</strong> clamp states, salvage beam/tether, return light, thrust, and
+compact destruction.</li>
+</ul>
+<h4 id="civilian-claim-guard-mvp-act-i">Civilian-Claim-Guard — MVP / Act I</h4>
+<ul>
+<li><strong>Silhouette:</strong> workboat frame carrying a large sensor/weapon module instead of cargo.</li>
+<li><strong>Role/read:</strong> independent claim defense and hired security, rougher than police.</li>
+<li><strong>Distinctive features:</strong> personal markings, mismatched armor, spotlight, and one
+obvious deterrent weapon.</li>
+<li><strong>Animation/VFX:</strong> scan/spotlight option, weapon anchor, uneven but serviceable
+thrust, and limited shield.</li>
+</ul>
+<h4 id="civilian-police-bulwark-act-ii">Civilian-Police-Bulwark — Act II</h4>
+<ul>
+<li><strong>Silhouette:</strong> heavy patrol craft built from a reinforced freighter/tug spine,
+with bolt-on frontal armor and protected engines.</li>
+<li><strong>Role/read:</strong> local police command and emergency response, not a Teralith capital.</li>
+<li><strong>Distinctive features:</strong> navy/cream recognition zones, rescue bay, standardized
+Civilian hardpoints, and visible underlying work chassis.</li>
+<li><strong>Animation/VFX:</strong> warning lights, rescue/dock anchors, shield sectors, turrets,
+strong practical engines, and staged armor damage.</li>
+</ul>
+<h2 id="unbound">Unbound</h2>
+<h3 id="design-promise-4">Design promise</h3>
+<p>The Unbound are biological machine accidents: the Melding, in which flesh and
+machinery cannot agree where one ends and the other begins. They are not an alien
+species that deliberately grows ships, and they are not a coherent biotech navy.
+Their forms preserve enough recognizable engineered structure to make the fusion
+wrong. Internal production may state the flesh-machine and plague truth; art
+labels and player-facing copy must not identify a human origin or the Fold-Plague
+before the reveal.</p>
+<h3 id="hull-origin-locked">Hull origin (locked)</h3>
+<p><strong>Unbound ships are other factions&rsquo; hulls, fucked up.</strong> There is no native
+Unbound ship line. Every combat hull, station nest, and drone starts as a
+victim chassis — militia, Korrathi/scavenger, independent industrial, civilian,
+or Ancient/Continuity — then a Melding event at one or more system boundaries
+(engine, interface, power bus, weapon, structural break). Growth is primarily
+<strong>seeding wrecks and derelicts</strong> (and high-value live capture under the
+SALVAGEABLE branch): offspring / process-nodes take hold in empty machine and
+rewrite it over time. The player should still read &ldquo;that was a militia escort&rdquo;
+or &ldquo;that was a Korrathi frigate&rdquo; before they read &ldquo;monster.&rdquo;</p>
+<h3 id="silhouettes-and-shape-vocabulary-4">Silhouettes and shape vocabulary</h3>
+<ul>
+<li>Asymmetrical swollen masses distort recognizable ribs, hull wedges, and apertures.</li>
+<li>Tissue is irregular and never repeats. It swells where it grips a spar or fitting
+and thins where it stretches across a gap, and no two masses share a size or a
+contour. This non-repetition is the point: constant bore, even spacing, and
+parallel runs are the signature of manufacture, so a form that reads as regular
+reads as machinery, not as something grown.</li>
+<li>One side may retain engineered geometry while the other flexes, sags, or blooms.</li>
+<li>Tendon-like tension follows real load paths; growth does not become random tentacles.</li>
+<li>Mouth-like openings are rare and functional. The primary read is violated machine,
+not monster face.</li>
+<li>Prefer remixing existing faction silhouettes over inventing new house shapes.</li>
+</ul>
+<h3 id="palette-4">Palette</h3>
+<ul>
+<li>calcified ivory <code>#D2C7AF</code> and bone highlight <code>#EEE1C6</code>;</li>
+<li>bruised purple biomass <code>#704A85</code> and deep tissue <code>#35243F</code>;</li>
+<li>retained victim metal, led by machine charcoal <code>#24282C</code> but preserving enough
+of the source faction&rsquo;s material ramp to identify the chassis;</li>
+<li>bright sky-blue plasma <code>#35D8FF</code> and hot conduit core <code>#B8F5FF</code>.</li>
+</ul>
+<p>Ivory, purple, and victim metal carry the read — the flesh, the bone, and the
+recognizable chassis. Sky-blue plasma is confined to the tube interiors and its
+immediate contact reflection; it is an accent, never the faction&rsquo;s dominant hue.
+Red may survive only in original warning lamps, markings, or weapon FX; it is never
+the colour of Unbound circulation.</p>
+<h3 id="materials-and-surfaces-4">Materials and surfaces</h3>
+<p>Flesh carries the read. Tissue, bone, and membrane are the first things seen; the
+retained victim plate is the ground they grow through, and the surviving tubes are
+a minor supporting detail. A hull dominated by regular hardware runs reads as retro
+industrial machinery, not as something alive — that is the exact failure the whole
+faction language exists to avoid.</p>
+<p>Three material families sit against each other, and the contrast between them is
+what sells the fusion:</p>
+<ul>
+<li><strong>Wet tissue.</strong> Purple biomass and muscle bands are wet. A soft specular sheen
+on swollen mass and stretched membrane, against the matte victim plate and the
+dry chalk of bone, is what separates flesh from plastic. Tissue swells where it
+grips and thins where it stretches; no two masses match.</li>
+<li><strong>Dry bone.</strong> Calcified ivory reinforcement is matte and chalky. It braces real
+load paths — ribs continue into ship frames, cartilage knuckles sit at the
+joints — and is structure, not ornamental carapace. Flesh grips, bridges, or
+replaces machinery; it is never a decorative skin laid over a complete ship.</li>
+<li><strong>Retained machine.</strong> Ceramic and structural metal keep the victim&rsquo;s finish and
+enough of its palette to name the chassis. Constant bore, even spacing, and
+parallel runs are the signature of manufacture, so they survive only in this
+retained hardware and in the sealed tubes below — never in the grown forms.</li>
+</ul>
+<p>Sealed plasma tubes are a surviving remnant, not the faction signature. Where one
+persists it is a glass tube of constant bore carrying sky-blue plasma, socketed at
+both ends into machined metal fittings and clamped to structure — a scrap of the
+victim&rsquo;s plumbing that the Melding grew around rather than replaced. A few of them
+read correctly; a hull built out of them does not. The glass wall stays visible
+where the plasma is dim, so an unlit tube is still an object.</p>
+<h3 id="construction-and-panel-logic-4">Construction and panel logic</h3>
+<p>Begin from a plausible victim chassis or machine structure. Choose specific system
+boundaries where the Melding took hold: engine, cockpit/interface, power bus,
+weapon, or structural break. Preserve some original seams and ribs so engulfment
+can be read. Muscle grips and bridges the machinery, membranes seal broken panels
+with light pooling behind them, and bone-like growth carries loads along the real
+frame. There is no modular faction standard.</p>
+<p>Where a plasma tube survives, it visibly enters or bridges a real engine,
+interface, power bus, weapon, or structural break — a scrap of retained plumbing,
+not surface decoration. A surviving tube keeps its diameter along its whole length
+and terminates in a fitting at both ends, because that constant bore is the mark of
+the manufacture it came from. It does not branch into capillary webs, dendrites,
+root systems, or lightning trees, and it never tapers away into hairlines. That
+branching morphology reads as vasculature and would put glowing circulation inside
+the flesh — exactly the neon-vein cliché the Unbound must not become. The grown
+biology is irregular and load-following; the surviving hardware is regular and
+socketed; the two never blur into a glowing branch network.</p>
+<h3 id="wear-and-damage-4">Wear and damage</h3>
+<p>Old machine wear coexists with active biological repair: bleached ceramic beside
+fresh membrane, scar tissue puckered around a cracked rib where flesh meets metal
+like a wound healed wrong, and a surviving plasma tube crossing a dead cable run.
+Combat damage exposes biological anatomy <strong>and</strong> broken machinery — torn muscle,
+snapped bone brace, and ruptured plate together. A surviving tube shatters rather
+than tears, leaving jagged glass in a socket that still grips; the severed run
+leaks luminous plasma, arcs across nearby metal, and leaves everything downstream
+dark. Avoid blood, constant dripping, gratuitous organs, or gore so dense that
+structural storytelling disappears.</p>
+<h3 id="lighting-and-emissives-4">Lighting and emissives</h3>
+<p>The Unbound glow comes from inside the tissue. Sky-blue light pools deep in the
+thickest biomass and glows up through translucent membrane, brightest where the
+mass is deepest and dimming to nothing where it thins. It is subsurface — light
+living in the flesh — never a line drawn on a surface and never a contour that
+travels the hull. This is the primary emissive read, and it is a pooling, not a
+network.</p>
+<p>The surviving plasma tubes are the only other light source, and a minor one. The
+glow belongs to plasma sealed inside the glass; a restrained cyan reflection falls
+on the metal, bone, or membrane immediately beside a run, and that contact light is
+what makes the tube read as luminous rather than painted on. It stops there. Cyan
+never travels through the hull as veins, never branches into a capillary or
+dendrite glow, and never opens into a broad neon wash — the moment the light forms
+a branching network the hull reads as circuitry or vasculature instead of living
+mass. Some machine lights may fire late or in the wrong order as a plasma impulse
+crosses them.</p>
+<h3 id="motion-and-vfx-behavior-4">Motion and VFX behavior</h3>
+<p>Idle forms breathe or contract slowly. Local twitches interrupt that rhythm.
+Engines resemble contracting organs around recognizable nozzles; exhaust fires in
+peristaltic pulses. Turns may lag on the engulfed side. Weapon telegraphs propagate
+as a conduit pulse, muscle tightening, or pressure swelling before the separate shot FX.</p>
+<h3 id="weapons-and-vfx-verb-4">Weapons and VFX verb</h3>
+<p>A plasma-conduit path telegraphs pressure or muscle contraction before a separate
+shot FX leaves the authored hardpoint. Fire should feel involuntary and uneven,
+never like a clean parade beam; conduit light is the system telegraph, not a
+permanent glow wrapped around every projectile. Shared modular weapon/FX families
+may be distorted, tinted, and timed for the Unbound; do not bake a unique projectile
+into each body or collapse weapon colour into the circulation language.</p>
+<h3 id="scale-and-readability-4">Scale and readability</h3>
+<p>At gameplay scale preserve the victim chassis and one major deformation — the
+swollen biological mass reading against the recognizable hull, with subsurface
+light pooling in its thickest point. A surviving plasma tube is optional detail at
+this scale, not a required element. On larger assets add engulfed bays and repeated
+ribs, not more tentacles. Every asset must remain readable as a ship/station with a
+front, back, pivot, and functional anchors. Horror may unsettle orientation but
+cannot erase gameplay orientation.</p>
+<h3 id="markings-4">Markings</h3>
+<p>The Unbound add no deliberate insignia. Remnants of victim markings may survive,
+stretched, occluded, or interrupted by tissue. Do not use repeated hive sigils.</p>
+<h3 id="forbidden-traits-4">Forbidden traits</h3>
+<ul>
+<li>No deliberately grown alien fleet, elegant biotech civilization, or coherent navy.</li>
+<li>No generic insect hive, swarm carapace, or derivative bug silhouette language.</li>
+<li>No gore blanket, tentacle quota, or face on every object.</li>
+<li>No blood-red circulation, blood spray, or gore-first read; damaged anatomy leaks
+bright plasma and loses conduit light.</li>
+<li>No branching conduit morphology. Capillary webs, dendrites, root systems, veins
+under membrane, and lightning trees all read as vasculature and are forbidden.
+Power travels in glass tubes of constant bore that terminate in fittings.</li>
+<li>No perfect symmetry or clean separation between organic and machine regions.</li>
+<li>No player-facing human-origin or Fold-Plague disclosure before the reveal.</li>
+<li>No baked exhaust, shield, weapon fire, shadow, or destruction.</li>
+</ul>
+<h3 id="production-and-variant-rules-4">Production and variant rules</h3>
+<p>Each asset starts from a victim-function brief, then selects one dominant Melding
+event. Preserve recognizable engineered structure in every design. The first art
+test must retain about 40% of a recognizable Ancient triangular chassis while one
+wing root and one engine are distorted into a coupled biological system. Combat
+archetypes and names below are working labels pending story confirmation.</p>
+<p>The Melding pass runs as img2img over a finished victim render; calibration on
+2026-07-24 found denoise 0.65–0.8 leaves the victim untouched while ~0.9 produces
+the flesh-and-bone read with the victim still nameable.</p>
+<h3 id="required-assets-4">Required assets</h3>
+<h4 id="unbound-interceptor-future-experimental">Unbound-Interceptor — future / experimental</h4>
+<ul>
+<li><strong>Silhouette:</strong> recognizable Ancient triangular interceptor at roughly 40% intact,
+with one wing root swollen and one engine replaced/engulfed by a pulsing organ.</li>
+<li><strong>Role/read:</strong> first biological-machine art test and direct A/B against clean
+Ancient language.</li>
+<li><strong>Distinctive features:</strong> visible Ancient ribs, bone-white shell, bruised tissue,
+one sky-blue plasma-conduit path, and preserved nose/cockpit reference.</li>
+<li><strong>Animation/VFX:</strong> asymmetric engine pulses, slow flex, local twitch, conduit charge,
+separate projectile/shield response, and anatomy-plus-machine destruction.</li>
+</ul>
+<h4 id="melded-fighter-future-provisional">Melded-Fighter — future / provisional</h4>
+<ul>
+<li><strong>Silhouette:</strong> small victim fighter distorted around one interface and weapon side.</li>
+<li><strong>Role/read:</strong> fast hostile whose original combat function remains legible.</li>
+<li><strong>Distinctive features:</strong> one intact weapon mount, one muscle-driven counterpart,
+stretched victim markings, and off-balance armor.</li>
+<li><strong>Animation/VFX:</strong> twitch turn, peristaltic thrust, conduit telegraph, weapon anchor,
+plasma leakage, and compact biological/mechanical breakup.</li>
+</ul>
+<h4 id="melded-frigate-future-provisional">Melded-Frigate — future / provisional</h4>
+<ul>
+<li><strong>Silhouette:</strong> long machine spine bowed by a large lateral tissue mass.</li>
+<li><strong>Role/read:</strong> durable line threat and clearer demonstration of competing systems.</li>
+<li><strong>Distinctive features:</strong> exposed ribs crossing membrane, sealed breach, multiple
+machine bays at different stages of engulfment.</li>
+<li><strong>Animation/VFX:</strong> lagging-side thrust, crawling light sequence, hardpoint mix,
+local contractions, and staged compartment failure.</li>
+</ul>
+<h4 id="melded-carrier-future-provisional">Melded-Carrier — future / provisional</h4>
+<ul>
+<li><strong>Silhouette:</strong> broad damaged carrier frame whose launch bay has become a contracting
+internal cavity without reading as a literal mouth.</li>
+<li><strong>Role/read:</strong> source of smaller Melded threats and mobile infection landmark.</li>
+<li><strong>Distinctive features:</strong> recognizable bay ribs, membrane shutters, calcified armor,
+and remnants of victim navigation marks.</li>
+<li><strong>Animation/VFX:</strong> bay contraction, launch anchors, internal plasma pulses, heavy
+asymmetric thrust, and multi-stage organic/mechanical destruction.</li>
+</ul>
+<h4 id="nest-station-future-provisional">Nest-Station — future / provisional</h4>
+<ul>
+<li><strong>Silhouette:</strong> fixed engineered station core pulled off-axis by layered biological
+masses anchored along existing spokes and docks.</li>
+<li><strong>Role/read:</strong> environmental source/accumulation site, not proof of an organized
+Unbound civilization.</li>
+<li><strong>Distinctive features:</strong> recognizable station modules, sealed docks, growth along
+real machine buses, and one active central plasma-conduit network.</li>
+<li><strong>Animation/VFX:</strong> slow whole-structure breathing kept subtle, local twitches,
+launch/contact anchors, pulsing sectors, and separable collapse states.</li>
+</ul>
+<h2 id="other-named-groups">Other named groups</h2>
+<h3 id="blackwater-incorporated">Blackwater Incorporated</h3>
+<h4 id="canon-and-design-promise">Canon and design promise</h4>
+<p>Blackwater is humanity&rsquo;s autonomous commercial and logistics automation,
+continuously refabricated across eons after its operators vanished. It shares an
+origin with Ancient machinery but not a product lineage or exterior style: Ancient
+art is the original Continuity civic, military, and rescue family; Blackwater is a
+commercial network that kept rebuilding itself. This truth is gated player
+knowledge. Early art and copy may call Blackwater ancient, ubiquitous, and oddly
+compatible, but must not show readable human marks or state its human origin before
+the reveal.</p>
+<p>The two lineages share only underlying human standards: docking collars, cargo
+container grid and socket spacing, bilateral functional layouts, and human-scale
+service access. Compatibility should become obvious in hindsight, never through
+shared armor, ribs, palettes, or heroic exterior forms.</p>
+<h4 id="silhouette-and-fleet-grammar">Silhouette and fleet grammar</h4>
+<ul>
+<li>Welded rectangular blocks of different sizes mass off-symmetrically around a
+central cargo keel: boring manufactured boxes, flat faces, clean production
+seams. (Owner ruling 2026-07-24; the earlier manta/diamond planform is parked
+for reassignment to another race.)</li>
+<li>Standardized cargo and docking modules hang beneath the body, keeping function
+legible from above and making convoy variants read as one logistical family.</li>
+<li>Fleets move like coordinated schooling traffic: small synchronized course
+corrections, stable spacing, and ordered route/cargo pulses rather than parade
+drill or predatory lunges.</li>
+<li>Weapons are recessed, defensive, and modular. They protect routes and payloads;
+they do not dominate the silhouette.</li>
+</ul>
+<h4 id="materials-palette-and-wear">Materials, palette, and wear</h4>
+<p>Blackwater shells are <strong>grown only in the manufacturing sense</strong>: automated additive
+deposition lays mineral/composite laminates into seamless, stress-aligned surfaces
+with few large seams. They are never flesh, chitin, bone, wet tissue, or breathing
+skin. The primary palette is bottle-to-emerald green over graphite and neutral
+composite, with restrained routed green status and traffic lights. Avoid Ancient
+ivory/orange/cyan and Unbound purple, bone, and sky-blue plasma.</p>
+<p>Continuous maintenance leaves inlaid laminate patches and locally renewed surfaces
+instead of bolted scrap. An intact unit is quiet, clean, and maintained rather than
+luxurious. Repairs remain readable through subtle changes in deposition direction,
+finish, or green tone without turning the hull into Korrathi patchwork.</p>
+<h4 id="becalmed-state">Becalmed state</h4>
+<p>The Becalmed inherit exact Blackwater hull DNA; they are an isolated operating
+condition, not a new faction or silhouette family. Separation shows through
+unsynchronized lights, stale route indications, uneven correction, neglected
+spacing, and accumulated repairs. A sound Blackwater convoy behaves as one system;
+a Becalmed hull repeatedly fails to join that rhythm.</p>
+<h4 id="forbidden-traits-5">Forbidden traits</h4>
+<ul>
+<li>No Ancient heroic wedge, concentric ribs, ivory/orange structure, or cyan service
+anatomy.</li>
+<li>No Unbound wet tissue, bone growth, breathing motion, or vascular plasma conduit.</li>
+<li>No generic luxury-alien manta ornament, ornamental fins, or decorative filigree.</li>
+<li>No readable human corporate marks or explicit human-origin labels before reveal.</li>
+<li>No baked engine, weapon, shield, traffic-light, shadow, or destruction effects.</li>
+</ul>
+<h3 id="the-becalmed-not-a-faction">The Becalmed (not a faction)</h3>
+<p>[To be determined from story]</p>
+<h3 id="gorrath">Gorrath</h3>
+<p>[To be determined from story]</p>
+<h3 id="kithar">Kithar</h3>
+<p>[To be determined from story]</p>
+<h3 id="verid">Verid</h3>
+<p>[To be determined from story]</p>
+<h3 id="senther">Sen&rsquo;Ther</h3>
+<p>[To be determined from story]</p>
+<h2 id="production-checklist">Production checklist</h2>
+<p>Before any asset is considered ready for integration:</p>
+<ul>
+<li>[ ] Produce silhouette thumbnails and identify faction/role from black shape alone.</li>
+<li>[ ] Lock the faction palette and material cel ramps; record any approved exception.</li>
+<li>[ ] Make a concept review plate on black, including clean, wear, and scale comparisons.</li>
+<li>[ ] Archive layered source and export a clean transparent base with stable pivot.</li>
+<li>[ ] Separate engines, shields, weapons, warning lights, and destruction from the base.</li>
+<li>[ ] Assign the correct authored wear tier; never improvise wear in wiring.</li>
+<li>[ ] Provide combat damage and destruction logic appropriate to the material anatomy.</li>
+<li>[ ] Deliver an anchor sheet for pivots, engines, hardpoints, bays, docks, tools,
+shields, detachable pieces, and special interaction points.</li>
+<li>[ ] Run the actual-gameplay-footprint readability test and mixed-fleet comparison.</li>
+<li>[ ] Confirm current data schema can wire the intended base/body/overlay combination;
+if not, mark art ready and wiring blocked rather than flattening the asset.</li>
+<li>[ ] Capture the integrated asset in game under <code>concepts/</code> and obtain owner visual
+sign-off before shipping any presentation change.</li>
+<li>[ ] For any gameplay-visible adoption, update the relevant player-voiced
+<code>assets/codex/*.md</code> article in the same change and preserve reveal gating.</li>
+</ul>
+      </div>
+      <nav class="doc-pager" aria-label="Adjacent articles">
+        <a class="doc-pager__link" href="design-weapons-modules.html">← Modular weapons and modules</a>
+        <a class="doc-pager__link" href="design-economy.html">Mining → trading → construction → modules — design capture →</a>
+      </nav>
+    </article>
+  </main>
+  <footer class="footer">
+    <span>Built 2026-08-10 from game sources</span>
+    <span><a href="../index.html">Home</a> · <a href="mailto:vincent@vandenbraken.com">Contact</a></span>
+    <span>© Vincent van den Braken</span>
+  </footer>
+</body>
+</html>

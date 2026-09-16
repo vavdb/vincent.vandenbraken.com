@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Refining — Vindicator</title>
+  <meta name="description" content="Stations turn raw ore into components on their own schedule — you deliver the feedstock and collect the product." />
+  <link rel="stylesheet" href="../vindicator.css" />
+</head>
+<body class="doc-body">
+  <header class="site-nav">
+    <a class="site-nav__brand" href="../index.html">VINDICATOR</a>
+    <nav class="site-nav__links" aria-label="Section">
+      <a href="../index.html">Home</a>
+      <a href="../codex/index.html" class="is-active">Codex</a>
+      <a href="../design/index.html">Design</a>
+      <a href="../design-language.html">UI language</a>
+      <a href="../index.html#devlog">Devlog</a>
+    </nav>
+    <a class="site-nav__ext" href="../../index.html">Vincent van den Braken</a>
+  </header>
+  <main class="doc-main">
+    <article class="doc-article">
+      <header class="doc-article__head">
+        <a class="doc-back" href="index.html">← Codex</a>
+        <span class="vchip">Economy</span>
+        <h1 class="vtitle-display">Refining</h1>
+        <p class="doc-article__summary">Stations turn raw ore into components on their own schedule — you deliver the feedstock and collect the product.</p>
+        
+      </header>
+      <div class="prose">
+<p>Raw ore is worth credits, but not its full share — not until it&rsquo;s been
+through a refinery. That&rsquo;s the leg of the chain that turns a middling ore
+run into a real payday, and the reason a hold full of ore is worth
+escorting.</p>
+<p>What it isn&rsquo;t is something you do. A refinery is a machine somebody else
+owns and runs. You feed it.</p>
+<h2 id="a-refinery-is-a-licence-not-a-building">A refinery is a licence, not a building</h2>
+<p>There&rsquo;s no such thing as a factory that&rsquo;s a different kind of thing from a
+refinery. They&rsquo;re the same machine. What separates them is the <strong>licence</strong> —
+the one recipe that station is permitted to run.</p>
+<p>One station, one licence. A yard that refines ferrite refines ferrite and
+nothing else, and if you want circuit boards you go find the station that
+makes circuit boards. That&rsquo;s not an artificial limit. It&rsquo;s the reason ore
+has to travel at all, and the reason there&rsquo;s a haul between every pair of
+stations worth ambushing.</p>
+<h2 id="what-comes-out-of-what">What comes out of what</h2>
+<p>Every ladder mineral has its own recipe, and the ratios are per recipe —
+there&rsquo;s no single universal conversion rate.</p>
+<table>
+<thead>
+<tr>
+<th>Recipe</th>
+<th>Takes</th>
+<th>Makes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Refine Ferrite</td>
+<td>2 Ferrite</td>
+<td>1 Alloy Plate</td>
+</tr>
+<tr>
+<td>Refine Silica</td>
+<td>2 Silica</td>
+<td>1 Circuit Board</td>
+</tr>
+<tr>
+<td>Refine Ice</td>
+<td>2 Ice</td>
+<td>1 Battery</td>
+</tr>
+<tr>
+<td>Refine Titanium</td>
+<td>2 Titanium</td>
+<td>1 Armor Plating</td>
+</tr>
+<tr>
+<td>Refine Iridium</td>
+<td>2 Iridium</td>
+<td>1 Weapon Core</td>
+</tr>
+<tr>
+<td>Refine Voidite</td>
+<td>2 Voidite</td>
+<td>1 Fold Capacitor</td>
+</tr>
+<tr>
+<td>Assemble Power Cell</td>
+<td>1 Battery + 1 Circuit Board + 1 Hard Ferrite</td>
+<td>2 Power Cells</td>
+</tr>
+</tbody>
+</table>
+<p>Note where the Power Cell comes from. It isn&rsquo;t refined out of anything — it&rsquo;s
+<strong>assembled</strong>, from three components that come off three different ore
+lines. Every station in the galaxy burns Power Cells to keep its lights on,
+which means the good everything depends on can&rsquo;t be made anywhere that
+isn&rsquo;t fed by three separate supply routes. That&rsquo;s deliberate.</p>
+<p>Gem and every salvage commodity have no recipe at all. They&rsquo;re rarity procs
+and scrap, not feedstock.</p>
+<h2 id="byproducts-are-rolls-not-promises">Byproducts are rolls, not promises</h2>
+<p>Most refining recipes sometimes throw off something extra. Sometimes — these
+are odds per batch, not guarantees:</p>
+<table>
+<thead>
+<tr>
+<th>Recipe</th>
+<th>Sometimes also</th>
+<th>Odds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Refine Ferrite</td>
+<td>Hard Ferrite</td>
+<td>25%</td>
+</tr>
+<tr>
+<td>Refine Silica</td>
+<td>Mullite</td>
+<td>25%</td>
+</tr>
+<tr>
+<td>Refine Titanium</td>
+<td>Titanium Sponge</td>
+<td>20%</td>
+</tr>
+<tr>
+<td>Refine Iridium</td>
+<td>Osmiridium</td>
+<td>15%</td>
+</tr>
+<tr>
+<td>Refine Voidite</td>
+<td>Unobtanium</td>
+<td>10%</td>
+</tr>
+</tbody>
+</table>
+<p>Refine Ice throws off nothing. What it makes is the Battery, every time.</p>
+<p>Hard Ferrite is the one to care about. It comes <strong>only</strong> from refining
+Ferrite — the cheapest, most common ore on the ladder — and the Power Cell
+needs it. So a played-out T1 belt is never actually played out: the tier
+ladder never obsoletes its own bottom rung, because the top of the chain
+still eats it.</p>
+<h2 id="a-run-takes-time">A run takes time</h2>
+<p>Feed a refinery and it doesn&rsquo;t answer instantly. Every recipe has a cycle
+length, and one batch takes that long. An ore cycle is quick; assembling a
+power cell takes longer; building a whole drone hull is the longest job on
+the board.</p>
+<p>That&rsquo;s what makes a refinery a machine rather than a vending slot. It has a
+<strong>rate</strong>, so it can fall behind — a mine that outproduces the refinery it
+feeds will back up, and the only fix is another refinery, not a bigger one.
+Bottlenecks are the point; they&rsquo;re what makes one station worth defending
+more than the station next to it.</p>
+<p>Two consequences worth knowing:</p>
+<ul>
+<li><strong>The inputs are spent when the run STARTS.</strong> If a station goes dark
+mid-cycle, the ore that went in doesn&rsquo;t come back out. An interrupted run
+is a real loss, which is why nobody starts a batch they can&rsquo;t finish.</li>
+<li><strong>A run needs somewhere to put the result.</strong> A station whose hold is
+already full sits on its finished batch until something hauls the backlog
+away. Nothing is destroyed. Nothing moves either.</li>
+</ul>
+<h2 id="it-works-while-youre-somewhere-else">It works while you&rsquo;re somewhere else</h2>
+<p>A refinery is not waiting for you to arrive. It runs on its own schedule,
+in systems you&rsquo;ve never visited, burning through whatever&rsquo;s in its hold and
+stacking up product while you&rsquo;re three jumps away doing something else.</p>
+<p>So does everything around it: mines fill their holds, stations burn down
+their power reserve, deliveries land. The economy doesn&rsquo;t hold its breath
+when you leave the room.</p>
+<p>The exception is darkness. A station with no Power Cells left, or one that&rsquo;s
+been vented open by sustained fire, does no work at all — its line stops and
+its in-progress batch just sits there. It doesn&rsquo;t recover by waiting. It
+recovers when somebody delivers cells.</p>
+<h2 id="the-ore-comes-to-it">The ore comes to it</h2>
+<p>A refinery doesn&rsquo;t only wait, either. It knows what its line eats, and if a
+station in the same system is sitting on that ore, it sends its own freight
+bot out to fetch it — dock, load, fly home, unload, and go again once the
+hoppers run low. Nobody places an order. The recipe <strong>is</strong> the order.</p>
+<p>That changes what a mine does with its ore. A pit that used to sell
+everything at the nearest counter now holds back whatever a local refinery
+is short of, and ships out only the genuine surplus for credits. Feed the
+chain first, sell what&rsquo;s left — which means the ore road inside a system is
+busy in a way it never used to be, and busy roads are where things get
+taken.</p>
+<p>The bot flying it is a <strong>Drudge</strong>: a hold with an engine bolted on. No guns,
+no shield, slower than anything that might want it. It carries no
+transponder either, so a gate won&rsquo;t count it as a traveler — a Drudge lives
+and dies inside the one system it was built for.</p>
+<p>What it does have is a radio. Shoot one and it calls its flag, once, and
+keeps flying while you take it apart. Whether anyone comes is a different
+question — see <em>When the Belt Fights Back</em>.</p>
+<h2 id="your-part-you-deliver-you-dont-operate">Your part: you deliver, you don&rsquo;t operate</h2>
+<p>Dock at any station that keeps a hold and your cargo rows grow a <strong>DEPOSIT</strong>
+button beside SELL. That&rsquo;s the whole of your involvement with refining.</p>
+<p>Depositing is exactly the same act as one of their haulers arriving with a
+load. The ore goes into their hold, and from that moment the station treats
+it like any other input it received — queued behind whatever&rsquo;s already
+running, converted on its own clock. You don&rsquo;t press anything to make it
+happen and there&rsquo;s no way to make it happen faster.</p>
+<p>What you get back you collect, or buy, later — like anyone else.</p>
+<p>A few things follow from that:</p>
+<ul>
+<li><strong>A full station refuses the drop.</strong> The line above your cargo shows what
+the station&rsquo;s hold is holding and whether it&rsquo;s FULL. If only part of your
+load fits, only that part leaves your hold — the rest stays with you.
+Nothing evaporates.</li>
+<li><strong>A trade station can&rsquo;t take a deposit at all.</strong> It buys; it doesn&rsquo;t
+warehouse. That&rsquo;s what SELL is for.</li>
+<li><strong>Wanting components fast means owning the bottleneck</strong>, not skipping it.
+If a chain isn&rsquo;t producing what you need, the answer is to fix the chain —
+feed it, defend it, or build your own — rather than to do the refining
+yourself. There is no yourself to do it with.</li>
+</ul>
+<h2 id="the-galaxy-does-not-wait-for-you">The galaxy does not wait for you</h2>
+<p>None of this needs you in the system — or anywhere near it. A quarry you
+have never visited keeps digging, its refinery keeps cracking what the
+quarry sends, and when a station two gates away posts a call for what
+they&rsquo;re sitting on, a freight run answers it whether or not anyone is
+watching the lanes it crosses.</p>
+<p>Fly through a working cluster and you&rsquo;ll see the trucks doing it: dock
+runs, market runs, the long haul to a gate. Leave, and the same runs
+keep happening — you just stop seeing the hulls. The only thing your
+absence changes is risk: nobody can ambush a freight run in a system
+nobody is in. The goods arrive either way.</p>
+      </div>
+      <nav class="doc-pager" aria-label="Adjacent articles">
+        <a class="doc-pager__link" href="cargo.html">← Cargo &amp; Commodities</a>
+        <a class="doc-pager__link" href="trading.html">Trading →</a>
+      </nav>
+    </article>
+  </main>
+  <footer class="footer">
+    <span>Built 2026-08-10 from game sources</span>
+    <span><a href="../index.html">Home</a> · <a href="mailto:vincent@vandenbraken.com">Contact</a></span>
+    <span>© Vincent van den Braken</span>
+  </footer>
+</body>
+</html>

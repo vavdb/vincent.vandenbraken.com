@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fleet content — runtime IDs, hull ladder, and default loadouts — Vindicator</title>
+  <meta name="description" content="This document owns fleet **content wiring**: runtime faction and ship IDs, the hull ladder, default loadout lists, and temporary asset-pack mappings. Final silhouettes, palettes, m…" />
+  <link rel="stylesheet" href="../vindicator.css" />
+</head>
+<body class="doc-body">
+  <header class="site-nav">
+    <a class="site-nav__brand" href="../index.html">VINDICATOR</a>
+    <nav class="site-nav__links" aria-label="Section">
+      <a href="../index.html">Home</a>
+      <a href="../codex/index.html">Codex</a>
+      <a href="../design/index.html" class="is-active">Design</a>
+      <a href="../design-language.html">UI language</a>
+      <a href="../index.html#devlog">Devlog</a>
+    </nav>
+    <a class="site-nav__ext" href="../../index.html">Vincent van den Braken</a>
+  </header>
+  <main class="doc-main">
+    <article class="doc-article">
+      <header class="doc-article__head">
+        <a class="doc-back" href="index.html">← Design</a>
+        <span class="vchip">Design</span>
+        <h1 class="vtitle-display">Fleet content — runtime IDs, hull ladder, and default loadouts</h1>
+        <p class="doc-article__summary">This document owns fleet **content wiring**: runtime faction and ship IDs, the hull ladder, default loadout lists, and temporary asset-pack mappings. Final silhouettes, palettes, m…</p>
+        <p class="banner banner--warn">Design note — systems rationale, not player-facing codex text.</p>
+      </header>
+      <div class="prose">
+<p>This document owns fleet <strong>content wiring</strong>: runtime faction and ship IDs, the
+hull ladder, default loadout lists, and temporary asset-pack mappings. Final
+silhouettes, palettes, materials, and faction labels live in
+<a href="design-faction-art-language.html"><code>design-faction-art-language.md</code></a>. Weapon item,
+hardpoint, and FX-family implementation lives in
+<a href="design-weapons-modules.html"><code>design-weapons-modules.md</code></a>. Start at the short
+<a href="design-visual-combat-spine.html"><code>visual/combat spine</code></a> when a change crosses
+those boundaries.</p>
+<h2 id="system-spine">System spine</h2>
+<blockquote>
+<p><strong>Hull = faction body · Hardpoints = neutral sockets · Weapon = modular item
+(<code>WeaponTemplate</code> ± module wrap) · FX/art = recolorable item family · Default
+loadout ≠ unique inseparable gun.</strong></p>
+</blockquote>
+<p>This file chooses which modular weapon IDs a hull spawns with. It does not
+create faction-exclusive weapon art or a second NPC weapon pipeline. Loot,
+salvage, shops, and retrofit can move the same weapon family between hulls;
+ownership reads from hull form and markings.</p>
+<h2 id="hull-class-ladder">Hull class ladder</h2>
+<p><code>HullClass</code> says what a ship <strong>is</strong>; role and pilot doctrine say what it
+<strong>does</strong>. The target ladder remains useful even where current proxy packs have
+not yet supplied every rung.</p>
+<table>
+<thead>
+<tr>
+<th><code>HullClass</code></th>
+<th>Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scout</td>
+<td>x-small</td>
+</tr>
+<tr>
+<td>Fighter</td>
+<td>x-small</td>
+</tr>
+<tr>
+<td>Support Ship</td>
+<td>small</td>
+</tr>
+<tr>
+<td>Bomber</td>
+<td>small</td>
+</tr>
+<tr>
+<td>Torpedo Ship</td>
+<td>medium</td>
+</tr>
+<tr>
+<td>Frigate</td>
+<td>medium</td>
+</tr>
+<tr>
+<td>Battlecruiser</td>
+<td>large</td>
+</tr>
+<tr>
+<td>Dreadnought</td>
+<td>x-large</td>
+</tr>
+</tbody>
+</table>
+<p>Do not invent a final silhouette from this table. Use the faction art bible&rsquo;s
+named asset briefs, then map the finished asset back to the relevant runtime
+template.</p>
+<h2 id="story-names-runtime-labels-and-temporary-proxy-packs">Story names, runtime labels, and temporary proxy packs</h2>
+<p>These layers are intentionally separate until final art and story-safe runtime
+renames land:</p>
+<table>
+<thead>
+<tr>
+<th>Production identity</th>
+<th>Current runtime label / ID</th>
+<th>Temporary asset namespace</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ancient / Vindicator</td>
+<td>Vindicator / <code>faction.player</code></td>
+<td>player/Ancient assets; legacy Void player proxy where still referenced</td>
+<td>Player lineage, not a generic civilian paint variant.</td>
+</tr>
+<tr>
+<td>Korrathi</td>
+<td>Kessler Raiders / <code>faction.pirates</code></td>
+<td><code>klaed_*</code> fleet pack plus <code>raider_*</code> production templates</td>
+<td>Kla&rsquo;ed is an asset namespace, not the story faction name.</td>
+</tr>
+<tr>
+<td>Teralith</td>
+<td>System Militia / <code>faction.militia</code></td>
+<td><code>nairan_*</code> fleet pack plus <code>militia_*</code> runtime templates</td>
+<td>Nairan and System Militia are proxies only; Eos local police must not inherit Teralith gold.</td>
+</tr>
+<tr>
+<td>Civilian visual umbrella</td>
+<td>Free Haulers / <code>faction.civilian</code>; Independents / <code>faction.independent</code></td>
+<td><code>nautolan_*</code>, <code>civilian_*</code>, and <code>independent_*</code></td>
+<td>Civilian is shared frontier construction language. It is <strong>not Blackwater</strong>.</td>
+</tr>
+</tbody>
+</table>
+<p>Proxy pack sprites are temporary production scaffolding. Replace their visual
+references as faction art lands; do not preserve Kla&rsquo;ed/Nairan/Nautolan shapes
+or colors merely because their IDs remain useful for compatibility.</p>
+<ul>
+<li>Eos local defense uses the <code>Civilian-Police-*</code> navy/cream production family,
+even while content temporarily resolves through <code>faction.militia</code> or a
+Nairan sprite.</li>
+<li>Route and tax authority uses <strong>Teralith-Bulwark-Station</strong> production art.
+Do not use that gold authority language for Eos police.</li>
+</ul>
+<h3 id="current-ship-template-namespaces">Current ship-template namespaces</h3>
+<ul>
+<li><strong>Player:</strong> <code>ship.player_shuttle_xs</code>, <code>ship.player_vindicator_xs</code>.</li>
+<li><strong>Korrathi story templates:</strong> <code>ship.raider_fighter_xs</code>,
+<code>ship.raider_marauder_m</code>; Kla&rsquo;ed proxy ladder uses <code>ship.klaed_*</code> IDs for
+scout, support, bomber, torpedo ship, frigate, battlecruiser, and
+dreadnought.</li>
+<li><strong>Teralith proxy:</strong> <code>ship.militia_fighter_xs</code>; Nairan proxy ladder uses
+<code>ship.nairan_*</code> IDs for scout, support, bomber, torpedo ship, frigate,
+battlecruiser, and dreadnought.</li>
+<li><strong>Civilian:</strong> <code>ship.civilian_courier_xs</code>, <code>ship.civilian_hauler_s</code>,
+<code>ship.civilian_freighter_m</code>, <code>ship.independent_miner_xs</code>, and
+<code>ship.independent_salvager_xs</code>; Nautolan proxy templates currently cover
+scout, fighter, bomber, torpedo ship, frigate, and dreadnought.</li>
+</ul>
+<p>Do not create missing proxy rungs simply to complete a pack. Add a ship
+template when play or story needs that role.</p>
+<h2 id="default-loadouts">Default loadouts</h2>
+<p>The <code>weapons</code> array on a ship template is a list of modular
+<code>WeaponTemplate</code> IDs. It is a spawn/default-content choice, not a permanent
+part of the hull illustration.</p>
+<table>
+<thead>
+<tr>
+<th>Content group</th>
+<th>Current default examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Player</td>
+<td>Vindicator: <code>weapon.pulse_cannon_xs</code>, <code>weapon.energy_beam</code>; shuttle: none.</td>
+</tr>
+<tr>
+<td>Korrathi / raider</td>
+<td><code>weapon.raider_cannon_xs</code>, <code>weapon.crimson_lance</code>; Kla&rsquo;ed proxies also use <code>weapon.klaed_double_blaster_xs</code>, <code>weapon.klaed_torpedo_m</code>, and <code>weapon.klaed_laser_m</code>.</td>
+</tr>
+<tr>
+<td>Teralith / militia proxy</td>
+<td><code>weapon.nairan_laser_xs</code>; Nairan proxies also use <code>weapon.nairan_missile_s</code> and <code>weapon.nairan_cruise_missile_m</code>.</td>
+</tr>
+<tr>
+<td>Civilian</td>
+<td>Haulers/couriers are commonly unarmed; miners and salvagers use <code>weapon.nairan_mining_beam</code> and <code>weapon.nautolan_salvage_array</code>; Nautolan combat proxies use <code>weapon.nautolan_bullet_xs</code>, <code>weapon.nautolan_laser_xs</code>, and <code>weapon.nautolan_toxic_missile_s</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>Optional role grafts may visibly reshape a chassis—for example one oversized
+Korrathi launcher—but its firing contract still resolves through authored
+hardpoints and weapon content. See the weapons/modules document for the shared
+art-to-template map and FX families.</p>
+<h2 id="gallery-and-codex">Gallery and codex</h2>
+<p>The gallery may enumerate templates and proxy IDs for development, but it must
+use reveal-safe labels. Player-facing truth belongs in
+<code>assets/codex/ships.md</code>, <code>assets/codex/weapons.md</code>, and
+<code>assets/codex/ship-modules.md</code>; those articles describe only what has shipped,
+never proxy-pack provenance or unrevealed faction identities.</p>
+      </div>
+      <nav class="doc-pager" aria-label="Adjacent articles">
+        <a class="doc-pager__link" href="design-fleet.html">← Fleet, crew, and role AI — design capture</a>
+        <a class="doc-pager__link" href="design-stations.html">Player-owned stations — design capture →</a>
+      </nav>
+    </article>
+  </main>
+  <footer class="footer">
+    <span>Built 2026-08-10 from game sources</span>
+    <span><a href="../index.html">Home</a> · <a href="mailto:vincent@vandenbraken.com">Contact</a></span>
+    <span>© Vincent van den Braken</span>
+  </footer>
+</body>
+</html>

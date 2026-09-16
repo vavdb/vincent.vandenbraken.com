@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mining → trading → construction → modules — design capture — Vindicator</title>
+  <meta name="description" content="Captured 2026-07-10. The economy spine; precedes the fleet design (docs/design-fleet.md) which consumes it. Not yet scheduled." />
+  <link rel="stylesheet" href="../vindicator.css" />
+</head>
+<body class="doc-body">
+  <header class="site-nav">
+    <a class="site-nav__brand" href="../index.html">VINDICATOR</a>
+    <nav class="site-nav__links" aria-label="Section">
+      <a href="../index.html">Home</a>
+      <a href="../codex/index.html">Codex</a>
+      <a href="../design/index.html" class="is-active">Design</a>
+      <a href="../design-language.html">UI language</a>
+      <a href="../index.html#devlog">Devlog</a>
+    </nav>
+    <a class="site-nav__ext" href="../../index.html">Vincent van den Braken</a>
+  </header>
+  <main class="doc-main">
+    <article class="doc-article">
+      <header class="doc-article__head">
+        <a class="doc-back" href="index.html">← Design</a>
+        <span class="vchip">Design</span>
+        <h1 class="vtitle-display">Mining → trading → construction → modules — design capture</h1>
+        <p class="doc-article__summary">Captured 2026-07-10. The economy spine; precedes the fleet design (docs/design-fleet.md) which consumes it. Not yet scheduled.</p>
+        <p class="banner banner--warn">Design note — systems rationale, not player-facing codex text.</p>
+      </header>
+      <div class="prose">
+<p>Captured 2026-07-10. The economy spine; precedes the fleet design
+(docs/design-fleet.md) which consumes it. Not yet scheduled.</p>
+<p><strong>System spine:</strong> hulls carry faction identity, neutral hardpoints receive
+modular weapons, and default loadouts are content choices rather than
+inseparable guns. Read the <a href="design-visual-combat-spine.html">visual combat system spine</a>
+first. This document owns acquisition, fabrication, and shop distribution;
+<a href="design-weapons-modules.html">modular weapons</a> owns hardpoint/art mapping, while
+<a href="design-munitions.html">munitions</a> owns ammunition and rearm rules.</p>
+<h2 id="minerals-tiered-ladder">Minerals (tiered ladder)</h2>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Mineral</th>
+<th>Source</th>
+<th>Used for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T1</td>
+<td>Ferrite</td>
+<td>everywhere</td>
+<td>hulls, structure, bulk</td>
+</tr>
+<tr>
+<td>T2</td>
+<td>Silica</td>
+<td>common, belt-specific</td>
+<td>electronics</td>
+</tr>
+<tr>
+<td>T2</td>
+<td>Ice</td>
+<td>cold outer belts only</td>
+<td>volatiles/fuel</td>
+</tr>
+<tr>
+<td>T3</td>
+<td>Titanium</td>
+<td>frontier systems</td>
+<td>engines, armor</td>
+</tr>
+<tr>
+<td>T4</td>
+<td>Iridium</td>
+<td>rare belts</td>
+<td>weapons, high-tech</td>
+</tr>
+<tr>
+<td>T5</td>
+<td>Voidite</td>
+<td>ONLY near black holes (Veil)</td>
+<td>fold tech, exotics</td>
+</tr>
+</tbody>
+</table>
+<h2 id="distribution">Distribution</h2>
+<ul>
+<li>Each belt: one <strong>dominant</strong> mineral (~80%) + optional <strong>trace</strong> (~20%),
+declared in the belt&rsquo;s JSON (extends OrbitDef).</li>
+<li>Single-type belts keep routing legible (&ldquo;the titanium belt in Karda&rdquo;);
+the trace keeps every belt worth prospecting.</li>
+<li>No literal inter-system belts (systems are separate scenes); the same
+flavor comes from paired belts on both sides of a starlane carrying each
+other&rsquo;s trace mineral.</li>
+</ul>
+<h2 id="danger-richness">Danger = richness</h2>
+<p>Systems get a danger tier scaling pirate spawn pressure AND mineral
+richness/variety. Existing systems already ladder:</p>
+<ul>
+<li>Eos — safe: Ferrite/Silica</li>
+<li>Karda — frontier: Titanium (pirates already lurk in that belt)</li>
+<li>Veil — deadly: Voidite at the black hole; the endgame mine</li>
+</ul>
+<h2 id="chain">Chain</h2>
+<p>mine ore → sell raw at stations (trading gives ore worth) → refine at
+stations (refinery) → components → <strong>construct modules</strong>. Hauling (fleet
+design) moves every link. MVP order: mineable asteroids + ore cargo +
+raw selling first; refine/construct after.</p>
+<h2 id="contested-supply-chains-owner-spec-2026-07-11">Contested supply chains (owner spec, 2026-07-11)</h2>
+<p>Danger=richness is not just spawn pressure — it is GEOGRAPHY that forces
+hauling. The high-tier minerals can ONLY be mined where it is dangerous,
+and the refinery that turns them into anything can ONLY sit somewhere
+else. Raw ore has to survive the trip between them.</p>
+<ul>
+<li><strong>Mine and refinery are deliberately separated.</strong> A tier&rsquo;s ore is
+mineable only in its hostile belt; no refinery exists in that system
+(or the local one only takes lower tiers). The refined-goods value
+lives one or more danger-crossings away — a starlane run through pirate
+space with a hold full of unrefined, unsellable-at-full-value ore.</li>
+<li><strong>Raw ore is the vulnerable form.</strong> Unrefined ore is bulky, low-value
+if dumped locally, and lost with the hull — so the risk rides on the
+hauler, not on a wallet. Refining &ldquo;banks&rdquo; the value; until then it is
+cargo a pirate can take.</li>
+<li><strong>This is the core risk loop</strong>, not a side quest: Voidite (Veil, at the
+black hole) already is the extreme case — mine in the deadliest system,
+haul it out to refine. Generalize it down the ladder so Titanium
+(Karda frontier) wants a run back to Eos, etc. Belt richness, refinery
+placement, and pirate pressure are the three knobs, set per system in
+content, not hardcoded.</li>
+<li><strong>Escort/haul fleet roles exist because of this</strong> (docs/design-fleet.md):
+the answer to a dangerous haul is a hauler + fighter escort, or a fast
+solo run — a real loadout choice, not a formality.</li>
+</ul>
+<h2 id="already-in-engine-2026-07-11-audit">Already in-engine (2026-07-11 audit)</h2>
+<p>Combat and the mining/salvage TOOLS are built; the economy they feed is
+not. Beam/cannon/missile weapon templates ship; <code>nairan_mining_beam</code> and
+<code>nautolan_salvage_array</code> exist as utility &ldquo;weapons&rdquo; with nothing to point
+at yet. Belts render in every system but carry NO mineral data. The dock
+screen has a stubbed &ldquo;OUTFITTING&rdquo; shop slot. So the foundation slice is
+data + loop (mineral defs, cargo hold, mineable rocks, ore items, station
+prices), not new combat.</p>
+<h2 id="ship-modules">Ship modules</h2>
+<p>Categories: <strong>Weapons</strong>, <strong>Engines</strong>, <strong>Ship tweaks</strong> (shields, cargo
+expanders, capacitors, ...). Modules are constructed from minerals, found
+as loot/wreck salvage, or bought.</p>
+<p>Constructed modules explicitly include <strong>weapons</strong>. Fabrication outputs reusable
+modular items, never guns unique to one hull: the same <code>WeaponTemplate</code> may
+arrive built into a ship or through a <code>ModuleCategory.Weapon</code> wrapper. The
+Arena is the current retrofit/loadout laboratory before the outfitting shop
+opens; it exercises the same module items the economy will later fabricate,
+salvage, and sell.</p>
+<h2 id="tetris-inventory-backpack-battles-style">Tetris inventory (Backpack Battles style)</h2>
+<ul>
+<li>Every ship has a <strong>grid inventory</strong>; grid size scales with ShipSize
+(roughly xs 4x3, s 5x4, m 6x5, l 8x6, xl 10x7 — tune).</li>
+<li>Modules occupy <strong>shapes</strong> (cell lists). Rarity affects stats AND
+shape/size — the same stats in a friendlier shape is a drop-excitement
+axis of its own (compact 1x2 rare vs clunky L common).</li>
+<li>Later: <strong>adjacency synergies</strong> (module touching module matters —
+capacitor beside engine, ammo beside cannon). This is the long-term
+build-crafting depth.</li>
+<li><strong>MVP: every module is 1x1</strong> in a working grid (render, drag-drop,
+equip effects). The data model stores shape-as-cell-list from day one,
+so shapes/rarity-shapes/adjacency are content and UI polish, not a
+refactor.</li>
+</ul>
+<h2 id="trade-data-access-owner-spec-2026-07-10">Trade data access (owner spec, 2026-07-10)</h2>
+<p>Station stock/prices seed from JSON (each station: mineral -&gt; {stock,
+price}; prices skew by system danger + local supply). The PLAYER&rsquo;s view
+of remote market data is gated by their trade interface:</p>
+<ul>
+<li><strong>Lore</strong>: one commercial entity owns all trade software; subscription
+tiers unlock market data from further away — pay more, see further.</li>
+<li><strong>Tiers</strong>: base = current station only; upgrades extend range
+(system -&gt; adjacent systems -&gt; galaxy).</li>
+<li><strong>Pirated variants</strong>: show only certain materials but with looser/no
+range limits — cheaper/free, incomplete, maybe reputation risk with
+militia/civilians if detected. A real early-game choice: legal
+narrow-and-complete vs pirated wide-and-patchy.</li>
+<li>Trade UI lives in the dock screen&rsquo;s stubbed shop slot first; a map
+overlay (prices on the galaxy chart) once range tiers exist.</li>
+</ul>
+<h3 id="one-distance-model-reuse-the-autopilots-dont-invent-a-second-2026-07-11">One distance model — reuse the autopilot&rsquo;s, don&rsquo;t invent a second (2026-07-11)</h3>
+<p>Interstellar trade (range tiers, price-by-distance, &ldquo;further = pricier /
+foggier&rdquo;) measures distance with the SAME primitives the autopilot and the
+chart already use — there is no separate trade distance calculator:</p>
+<ul>
+<li><strong>Lane hops = range and reachability.</strong> <code>features/player/LaneRoute.cs</code>
+(BFS over the usable-lane graph) already answers &ldquo;how many jumps to system
+X, and is it reachable at all&rdquo;. The subscription range tiers ARE lane-hop
+counts: base = this station, tier 2 = 1 hop (adjacent systems), tier 3 =
+N hops / whole reachable graph. A fold-only system (no lane route) is
+&ldquo;off the network&rdquo; for legal trade data — a natural reason its goods are
+exotic/valuable. Pirated feeds ignore the hop cap.</li>
+<li><strong>World distance = price magnitude.</strong> Straight-line galaxy distance
+(<code>GalaxyScale</code> / <code>StarSystemDef.WorldPosition</code>, the same numbers the chart
+and lane-flight profile use) scales how much a price skews with remoteness,
+on top of the danger and local-supply skews.</li>
+<li><strong>The contested-supply-chain risk rides the SAME route.</strong> The lane path the
+autopilot flies with a hold full of ore is exactly the path a trade tier
+&ldquo;sees&rdquo; prices along and a hauler fleet role plans over — one graph, one set
+of hops, so mine → haul → refine → sell all speak the same geometry.</li>
+</ul>
+<h2 id="dependency-order-merged-with-fleet-doc">Dependency order (merged with fleet doc)</h2>
+<ol>
+<li>Mineable asteroids (belt JSON: dominant/trace) + ore items + cargo hold</li>
+<li>Trading: prices per station, buy/sell UI in the dock screen (shop slot
+already stubbed), price differentials per system danger</li>
+<li>Grid inventory MVP (1x1 modules; weapons/engines/tweaks as equipables)</li>
+<li>Refining/construction at stations</li>
+<li>Wrecks + salvage (feeds fleet design salvagers + pixel destruction)</li>
+<li>Player-owned stations (buildable platforms — docs/design-stations.md):
+the delivery-hold platform the hauler/trader roles buy and sell against</li>
+<li>Then: fleet roles consume all of it (docs/design-fleet.md)</li>
+</ol>
+<h2 id="mvp-build-plan-minesalvage-haul-sell-owner-spec-2026-07-11">MVP BUILD PLAN — mine/salvage → haul → sell (owner spec, 2026-07-11)</h2>
+<p>The concrete first economy milestone. Deliberately SHALLOW breadth: two
+gather verbs, two commodity tiers each, one sell verb. Depth (the T1–T5
+ladder, refining, modules, trade tiers above) comes AFTER this loop is fun.</p>
+<h3 id="commodity-model-everything-sells-the-same-way">Commodity model — everything sells the same way</h3>
+<p>One <code>Commodity</code> type (id, name, category, <code>baseWorth</code>). Cargo is a hold on
+the ship (capacity in units; add/remove; lost with the hull — the risk).
+Selling is <code>sum(baseWorth × qty) × stationPriceSkew</code>. MVP commodities:</p>
+<ul>
+<li><strong>Ferrite</strong> (mineral, common) — the belt baseline.</li>
+<li><strong>Gem</strong> (mineral, RARE) — a rarity proc rides ON TOP of a normal mine, it
+does not replace it: a normal success yields Ferrite; a rare proc yields
+Ferrite <strong>+</strong> Gem (owner call — additive, not either/or).</li>
+<li><strong>Generic Salvage</strong> (salvage, common) — from derelict hulls.</li>
+<li><strong>Ancient/Exotic Salvage</strong> (salvage, RARE) — the salvage rarity proc.
+All four just carry a <code>baseWorth</code> and sell like any other — perfecting what
+each ACTUALLY is (specific alloys, named artifacts) is deferred.</li>
+</ul>
+<h3 id="the-gather-verbs-reuse-the-utility-tools-that-already-exist">The gather verbs reuse the utility tools that already exist</h3>
+<p><code>weapon.nairan_mining_beam</code> and <code>weapon.nautolan_salvage_array</code> are already
+utility mounts (damage 0, brains never fire them). Give them a real effect:
+aim at a node, hold the trigger, a progress fills, and cargo gains the node&rsquo;s
+commodity — plus a <code>rareChance</code> roll for the bonus rare unit. Nodes deplete.</p>
+<h3 id="content">Content</h3>
+<ul>
+<li><strong>Belts</strong> gain a dominant mineral + <code>rareChance</code> (Ferrite belts everywhere,
+the Karda/frontier belts richer). Belt rocks OR dedicated ore nodes are the
+mine targets.</li>
+<li><strong>Eos ancient ship graveyard</strong>: a field of derelict hulls (a new orbit
+feature / scatter of wreck nodes) — the common salvage ground, safe and
+close so salvage is the tutorial gather verb.</li>
+</ul>
+<h3 id="neutral-independent-economy-faction-owner-spec">Neutral &ldquo;Independent&rdquo; economy faction (owner spec)</h3>
+<p>Add <code>faction.independent</code> — prospectors and salvagers, standings ~0 with
+EVERYONE (nobody shoots them, they shoot nobody), flying the independent /
+unarmed utility loadout. It exists so the economy has ambient ACTORS:</p>
+<ul>
+<li>A <strong>salvage station</strong> in Eos by the graveyard (independent faction) that
+spawns salvage drones / small salvage ships working the wrecks.</li>
+<li>A <strong>mining outpost</strong> by a belt (independent faction) that spawns mining
+drones working the rocks.
+These demonstrate the loop before the player does it and give the world
+texture. They reuse the escort/drone leash (drones on a short leash around
+their station-carrier — see docs/design-fleet.md escort primitive) plus the
+gather-verb effect. Selling at their own station closes their loop off-screen.</li>
+</ul>
+<h3 id="phased-tasks">Phased tasks</h3>
+<ul>
+<li><strong>E0 Cargo + commodities</strong>: Commodity model + JSON, cargo hold on Ship,
+the four MVP commodities. No gathering yet — just the containers + worth.</li>
+<li><strong>E1 Mining</strong>: mineable belt/ore nodes (dominant mineral + rareChance),
+mining beam gather effect (hold-to-fill, deplete, rare proc adds Gem),
+cargo fills. HUD cargo/progress readout.</li>
+<li><strong>E2 Salvage + graveyard</strong>: Eos graveyard content (derelict nodes),
+salvage array gather effect (Generic + rare Exotic proc), nodes deplete.</li>
+<li><strong>E3 Sell</strong>: station trading — dock → sell cargo for credits
+(<code>baseWorth × danger/supply skew</code>), dock-screen shop slot UI, wallet gain.</li>
+<li><strong>E4 Independent faction + actors</strong>: <code>faction.independent</code> (neutral all),
+salvage station + drones by the graveyard, mining outpost + drones by a
+belt. (Depends on the escort/drone primitive — build that first or stub the
+drones as simple gather-loopers.)</li>
+</ul>
+<p>MVP done = the player can fly to a belt, mine Ferrite (sometimes a Gem), fly
+to the Eos graveyard, salvage, haul it to a station, and sell it for credits —
+through the hostile ground the combat sandbox now provides. Everything past
+that (rarity ladder, refining, modules, trade tiers, hauler/trader fleet
+roles) is the existing dependency order above, layered on once this is fun.</p>
+<h2 id="fold-crystal-economy-captured-2026-07-12">Fold Crystal economy (captured 2026-07-12)</h2>
+<p>Fold Crystals are the fold drive&rsquo;s fuel (docs/design-bible.md, docs/story-outline.md:
+one crystal per jump, prime-core only). This is a separate resource lane
+from the mineral ladder above — deliberately not just &ldquo;Voidite but rarer&rdquo; —
+because no living faction can manufacture them. They are pre-Collapse human
+artifacts. Humanity is extinct. The supply that exists <strong>today</strong> is
+everything that will ever exist until the player invents a way to make more.</p>
+<h3 id="why-no-market-sells-them">Why no market sells them</h3>
+<p>Every other commodity in this doc has a station that stocks it, because
+some faction still produces it. Fold Crystals fail that test: the Verid
+trade in information, not materials (assets/codex/faction-verid.md); no
+other successor species reverse-engineered fold tech (that&rsquo;s the whole
+point of the fold signature being a surprise). So:</p>
+<ul>
+<li><strong>No station price.</strong> Fold Crystals never appear on a dock shop-slot
+market screen, at any trade-tier (docs/design-economy.md &ldquo;Trade data
+access&rdquo; above). There is no <code>stationPriceSkew</code> for an item nobody stocks.</li>
+<li><strong>Value is expressed narratively, not numerically.</strong> A crystal&rsquo;s &ldquo;price&rdquo;
+is a quest gate, a faction&rsquo;s asking favor, or the risk of the run to go
+get one — not a credit figure a wallet can just absorb. Where a hard
+number is unavoidable (e.g. a black-market vendor barters one for a
+quest item), price it as an outlier 10-100x the T5 Voidite baseline, and
+treat that vendor as a one-off, not a template for a shop type.</li>
+</ul>
+<h3 id="rarity-found-vs-synthesized">Rarity: found vs. synthesized</h3>
+<p>Two tiers, matching the two eras of the story (Act I/II scarcity vs.
+Act III capability):</p>
+<ul>
+<li><strong>Found (default, whole game).</strong> Loot-only. Scattered in human ruins —
+derelict hulls, sealed vaults, black-hole research posts — as a
+discrete pickup, not a gather-verb yield. Mechanically this rides the
+<strong>Ancient/Exotic Salvage rarity proc</strong> already scoped for Econ E2
+(docs/design-economy.md &ldquo;Commodity model&rdquo; above): an Exotic Salvage
+node has a small additional chance to drop a Fold Crystal instead of
+(not in addition to — these are too precious for &ldquo;sometimes both&rdquo;) the
+usual exotic unit. No new gather system needed; this is a table entry
+on a system that already exists. The Veil vault (docs/story-outline.md)
+is the seeded, guaranteed cache that starts the run; every crystal after
+that is this proc, elsewhere in human ruins.</li>
+<li><strong>Synthesized (Act III unlock, endgame only).</strong> A blueprint/research
+gate — found late, likely tied to the fold-enabled AI core prototype
+site or a Verid trade — unlocks a refinery recipe that turns refined
+Voidite (T5, &ldquo;fold tech, exotics&rdquo; — already the ladder&rsquo;s endpoint) into
+a crystal at a steep ratio (many Voidite units per crystal) and gated
+by a scarce catalyst component, not a straight sell-buy loop. This is
+what makes late-game folding sustainable instead of a hard stop when
+the found stockpile runs dry, while keeping every crystal spent before
+the unlock a real, unrecoverable choice.</li>
+</ul>
+<h3 id="locations">Locations</h3>
+<ul>
+<li><strong>Veil</strong> — the vault (guaranteed start cache) and the only system with
+a Voidite belt, so it&rsquo;s both the origin point and, post-synthesis-unlock,
+the only place to <em>make</em> more.</li>
+<li><strong>Human ruins, galaxy-wide</strong> — derelict hulls and sealed sites flagged
+as Exotic Salvage grounds (Eos graveyard is the first, tutorial-tier
+instance of this site type; more get scattered as systems are built out)
+carry the found-crystal proc. Danger-tier of the ruin should track the
+danger=richness rule above — a crystal find in a safe system undercuts
+the tension the whole mineral ladder is built on.</li>
+<li><strong>Nowhere on a market screen</strong>, by design (see above).</li>
+</ul>
+<h3 id="trade-value">Trade value</h3>
+<p>Not a number in a price table — a design constraint: every crystal spent
+is a jump the player chose over a jump they didn&rsquo;t, and every crystal
+found is a moment worth writing up, not a commodity tick. Keep it that
+way until the synthesis unlock is live; only then does &ldquo;cost to make one&rdquo;
+become a real, quotable number (Voidite ratio + catalyst rarity), and even</p>
+<h2 id="verid-data-trade-captured-2026-07-12">Verid data trade (captured 2026-07-12)</h2>
+<p>The Verid (assets/codex/faction-verid.md) &ldquo;trade exclusively in
+information ... and never reveal what they know without extracting
+something of equal weight.&rdquo; That&rsquo;s a barter table, not a shop-slot —
+it has to stay outside every mechanism the &ldquo;Trade data access&rdquo; system
+above already owns, the same way Fold Crystals stay off the market
+screen (previous section), or the faction&rsquo;s whole point collapses into
+&ldquo;NPC with a price list.&rdquo;</p>
+<ul>
+<li><strong>No credit price, at any subscription tier.</strong> Verid intel never
+appears as a line item on the dock shop-slot market, and no trade-tier
+upgrade (system -&gt; adjacent -&gt; galaxy range, above) ever surfaces it —
+credits cannot buy it, full stop. This is the load-bearing distinction
+between the generic market-data system (what&rsquo;s for sale, how far you
+can see it) and a Verid encounter (whether they&rsquo;ll deal with you at
+all).</li>
+<li><strong>Barter, not currency.</strong> A trade opens only via player-initiated hail
+on a present Verid contact (docs/design-universe.md §7). The offer
+table is keyed to items/flags the player already holds that are
+provably costly to have gotten — a Fold Crystal, a specific discovered
+location/ruin flag, a story-critical artifact — never credits, never a
+generic commodity. Each entry consumes the offered item/flag and
+unlocks exactly one thing in return: a codex reveal, a story-flag
+advance, or (rare, one-off, never repeatable) a permanent stat grant —
+mirroring the Fold Crystal rule that irreplaceable trades don&rsquo;t get a
+shop UI, they get a dialogue choice.</li>
+<li><strong>CASSIUS&rsquo;s hail window is the UI, not a new one.</strong> Reuse the existing
+radar-contact -&gt; comms interaction (tutorial-script.md&rsquo;s HAIL prompt)
+for the Verid barter dialogue. A Verid offer table is dialogue-tree
+content, not a new trade screen — the point is the conversation feels
+like extracting a favour from someone who holds all the leverage, not
+like browsing a store.</li>
+<li><strong>Declining is always safe; low-balling is not guaranteed safe.</strong> The
+Verid disengage without penalty if the player has nothing to offer or
+walks away. What they do if a player tries to lowball or repeat-farm a
+one-off trade is intentionally left as a story/DM lever (reputation
+hit, refusal to ever trade again, or — per docs/design-universe.md §7 —
+reclassifying the contact as provoked) rather than a fixed rule; the
+faction&rsquo;s whole identity is that its terms are opaque.
+then it belongs in a refinery recipe, not a station&rsquo;s buy/sell columns.</li>
+</ul>
+<h2 id="economy-testbed-accelerated-sim-2026-07-17">Economy testbed (accelerated sim, 2026-07-17)</h2>
+<p>Before hauler/trader roles land, pricing/mining/salvage behavior is easier
+to tune against a dedicated sandbox than against the shipping universe. The
+testbed is a separate four-system constellation authored purely for economy
+observation. Since 2026-07-26 (Plan/econ-testbed-joins-the-galaxy.md, owner
+call) it SHIPS in the main galaxy as a detached fold-only cluster in the
+south-west — dead-end like Sol, lanes internal only — and the debug sim mode
+restricts to it rather than swapping it in.</p>
+<ul>
+<li><p><strong>The constellation</strong> (<code>features/universe/data/sim_*.json</code>, ids <code>system.sim_*</code>):
+a ring of <code>sim_hub</code> (Safe) → <code>sim_reach</code> (Frontier) → <code>sim_deep</code> (Deadly) →
+<code>sim_edge</code> (Frontier) → back to <code>sim_hub</code>, all lanes reciprocal. Each system
+carries a belt with a different dominant+trace mineral pair (hub
+Ferrite/Silica, reach Titanium/Iridium, deep Voidite/Iridium, edge
+Ice/Titanium); hub and deep also carry a derelict graveyard. Trade +
+refinery stations, with authored <code>supplySkew</code> per station so price varies
+both across danger tiers AND within a tier from local supply. Three
+independent miners per belt plus a salvager on each graveyard generate the
+flows. No hostiles — the sandbox is about flows, and danger-tier PRICING is
+a property of the system (<code>dangerTier</code>), not enforced by spawns. The ring
+is authored around <code>[-7, -5]</code>, ~4 galaxy units clear of the nearest shipped
+system, and no lane crosses its boundary in either direction
+(<code>EconomySimContentTest</code> pins the detachment) — in the normal game it is
+reachable only by fold, exactly Sol&rsquo;s arrangement.</p>
+</li>
+<li><p><strong>How to run it.</strong> <code>scripts/economy-sim.ps1</code> (optional <code>-TimeScale</code>, default
+10x) launches a windowed debug build with <code>--vindicator-economy-sim</code>. That
+flag makes <code>Debug/EconomySim</code> (an autoload, no-op otherwise) restrict the
+loaded set to the ring and translate it so <code>sim_hub</code> sits at the galaxy
+origin (<code>ContentDatabase.RestrictToSystems</code>) before <code>SystemHost</code> builds the
+universe — the Main-scene player spawns at the origin, so the re-center is
+what puts him inside <code>sim_hub</code>, neutral and idle.</p>
+</li>
+<li><p><strong>Presence.</strong> The presence rule keeps only ONE system live (the piloted
+ship&rsquo;s, and systems sit far past two capture radii apart), which would freeze
+every gather ship outside the hub. The design already supports multi-system
+presence (a fleet — &ldquo;a parked miner is also a watchtower&rdquo;), so the sim raises
+a <code>ForceAllPresent</code> flag <code>SystemHost</code> unions in, forcing the whole set live so
+mining/salvage flows run in all danger tiers at once. A normal launch never
+sets it.</p>
+</li>
+<li><p><strong>Acceleration.</strong> <code>Engine.TimeScale</code> (not <code>physics_ticks_per_second</code>).
+TimeScale scales the <code>delta</code> handed to every process step uniformly —
+movement, the gather-beam drain, unload timers, refine — so the run is a
+faithful fast-forward, not a reweighting; timers stay honest relative to the
+sim. Ticks-per-second scaling only changes fixed-step DENSITY (more, smaller
+steps, same simulated time) or would decouple delta timers from the step.</p>
+</li>
+<li><p><strong>What to look at.</strong> Every sim-minute the harness appends one row per
+station-commodity to <code>user://economy-sim/&lt;timestamp&gt;.csv</code>
+(<code>sim_seconds,system,station,commodity,price,qty,incoming,outgoing</code>), driven
+off the same <code>EconomySnapshot</code> the F8 tracker reads, so the log and the live
+overlay can never disagree. Across a run, watch <code>incoming</code> change as miners
+fill and dump holds (a full hold in flight shows as inbound to its target
+station, then clears on unload), and compare <code>price</code> across systems (deep
+Voidite the richest, hub Ferrite the cheapest) and across stations in one
+system (supplySkew spread). <code>qty</code>/<code>outgoing</code> stay 0 by design until station
+stock and the hauler role ship — the CSV field is the wired plug point.</p>
+</li>
+</ul>
+<h2 id="research-chain-trine-relic-sol-veil-ark-owner-spec-2026-07-24">Research chain — Trine relic → Sol → Veil Ark (owner spec, 2026-07-24)</h2>
+<p>Research stations consume two inputs with different jobs:</p>
+<ul>
+<li><strong>Operational cost</strong>: bulk T1. The station is POWERED only while fed.</li>
+<li><strong>Progress fuel</strong>: T5/exotic. Research advances only while the exotic is
+stocked AND the station is powered. No exotic or no power = progress holds.</li>
+</ul>
+<p>The exotic mix for the arc: a lot of T1, a bit of T5, plus items obtainable
+only from combat drops or from salvage in a system with permanent periodic
+wreck spawns — a standing salvage ground, so the rare leg of the chain is a
+place you go, not a lottery you reroll.</p>
+<p><strong>The arc, three stations in sequence:</strong></p>
+<ol>
+<li><strong>Trine relic station</strong> — the Ancient station locked in the Trine home
+ice moon. The FIRST station to run this loop and deliberately the
+easiest; its completed research is the unlock itself: the fold
+coordinates to Sol.</li>
+<li><strong>Sol Research Station</strong> — in orbit around charred first-planet Earth.
+Completing &ldquo;Access Research Station&rdquo; reveals where humanity ended and
+gives the clue to where humanity went — and instructs the player to
+build a research station in the Veil.</li>
+<li><strong>Veil research station</strong> — PLAYER-BUILT (the station C-series grows a
+research kind). Its research finds the Ark data. The arc ends on
+infrastructure the player made, not found.</li>
+</ol>
+<p><strong>Standing buy orders.</strong> Commerce/trade stations post buy orders: a posted
+price and wanted quantity that any hauler — player or NPC — can fill. Both
+supply models are first-class: mine-and-haul directly to the consumer, or
+build your own trade station, let buy orders concentrate goods there, and
+run the trunk route yourself. The research stations express all demand
+through the same buy-order mechanism; nothing about the arc is quest-coded.</p>
+<p><strong>Route defense.</strong> Defense platforms (the small roster station kind:
+one turret, drone or repair slot) are placeable around stargates to keep
+trade routes safe — for everyone&rsquo;s traffic, not only the player&rsquo;s:
+Blackwater traders under Korrathi predation benefit from the same guns.
+Ties into the C4 raid/defense loop and the conflict ecology; a safe route
+is infrastructure with an audience, and NPC traffic surviving because the
+player fortified a gate is the loop working.</p>
+      </div>
+      <nav class="doc-pager" aria-label="Adjacent articles">
+        <a class="doc-pager__link" href="design-faction-art-language.html">← Faction art language — production implementation</a>
+        <a class="doc-pager__link" href="design-fleet.html">Fleet, crew, and role AI — design capture →</a>
+      </nav>
+    </article>
+  </main>
+  <footer class="footer">
+    <span>Built 2026-08-10 from game sources</span>
+    <span><a href="../index.html">Home</a> · <a href="mailto:vincent@vandenbraken.com">Contact</a></span>
+    <span>© Vincent van den Braken</span>
+  </footer>
+</body>
+</html>

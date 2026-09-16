@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weapons — Vindicator</title>
+  <meta name="description" content="Weapon colors now reveal weapon families and variants while bolts and beams demand different responses." />
+  <link rel="stylesheet" href="../vindicator.css" />
+</head>
+<body class="doc-body">
+  <header class="site-nav">
+    <a class="site-nav__brand" href="../index.html">VINDICATOR</a>
+    <nav class="site-nav__links" aria-label="Section">
+      <a href="../index.html">Home</a>
+      <a href="../codex/index.html" class="is-active">Codex</a>
+      <a href="../design/index.html">Design</a>
+      <a href="../design-language.html">UI language</a>
+      <a href="../index.html#devlog">Devlog</a>
+    </nav>
+    <a class="site-nav__ext" href="../../index.html">Vincent van den Braken</a>
+  </header>
+  <main class="doc-main">
+    <article class="doc-article">
+      <header class="doc-article__head">
+        <a class="doc-back" href="index.html">← Codex</a>
+        <span class="vchip">Combat</span>
+        <h1 class="vtitle-display">Weapons</h1>
+        <p class="doc-article__summary">Weapon colors now reveal weapon families and variants while bolts and beams demand different responses.</p>
+        
+      </header>
+      <div class="prose">
+<p>You can read a firefight by its colors before your scanner resolves a
+single hull, but the color now belongs to the weapon, not the faction.
+Learn the families below and tracer fire becomes a language.</p>
+<p>A note on how guns behave out here. Two families. <strong>Bolts</strong> — cannons
+and missiles — are things that fly: they have a bolt speed and a travel
+time, so fast thin ones are pressure and slow fat ones are punishment you
+are allowed to dodge. Missiles now steer, but not perfectly: they track on
+limited control surfaces, so hard lateral breaks can force an overshoot.
+Missiles that miss run out their burn and detonate. <strong>Beams</strong> are lasers: they do not travel and they do
+not pulse. Hold the trigger and a beam stays LIT — a continuous line
+straight down the barrel to the first hull in the way, chewing damage into
+it several times a second for as long as you keep it on target. You do not
+dodge a beam that already has the angle on you — you break its line of
+sight or its aim. It is a weapon of holding, not of timing. Ship guns fire where the hull points, so a pilot&rsquo;s aim is only
+as good as their flying — but an emplacement is another matter (see
+Defensive emplacements below): its barrel slews to track you on its own,
+and a tracking beam is a nasty thing to be lined up by.</p>
+<p>The hardware tells the same story before anything fires. Cannons carry
+compact barrels and throw visible slugs; heavy and rail patterns use longer
+housings and larger rounds. Missile mounts carry racks, with strike missiles
+slimmer than broad torpedoes and cruise bodies. Combat beams share the green,
+blue, yellow, and red family colors but remain continuous lines. Mining
+cutters and salvage arrays keep their industrial shapes and colors: they are
+tools, not recolored guns.</p>
+<p>Your capacitor is one shared budget — engines, shield recharge, and weapon
+fire all pull from it. But the guns do not pull evenly. Point light or plasma
+at a hull — a beam, or the Pulse Cannon&rsquo;s energy bolt — and you spend real
+charge: hold a beam under boost while your shield is climbing and you will
+feel three draws fighting over one pool. The kinetic guns barely register. A
+railgun, a heavy slug, a slug repeater each take only the small kick it costs
+to cycle the mechanism, then throw their mass and let you keep firing on past
+where an energy weapon would be waiting on charge. Energy weapons live or die
+by your capacitor; kinetic weapons lean on it hardly at all.</p>
+<p>Beam families now include a <strong>heavy beam</strong> pattern, and it is a weapon that
+<em>rewards commitment</em>. Tap it and it lands like a thin, calm lance — a clean
+line, barely above an ordinary beam, and honestly a little weak for its size.
+But keep it welded to the SAME hull and it winds up: over about two and a half
+seconds of unbroken contact its bite climbs from that soft opening to half
+again as hard, and the line answers in kind — the calm pencil roughens into a
+hotter core, then a full crackling storm of forked lightning as the damage
+peaks. What you see is exactly what you&rsquo;re dealing. Let the trigger go, or
+swing the beam onto a different target, and the wind-up is gone: the storm
+collapses back to the calm line and the next hull starts you over at the
+bottom. So a heavy beam punishes flinching and switching, and pays out for the
+pilot who picks one throat and holds it. The draw on your capacitor stays flat
+the whole time — the ramp costs contact, not extra power. Railguns sit at the
+other end of the scale: a single superfast slug dragging a thin, bright trail
+with a stack of glowing rings falling away behind it instead of ordinary bolt
+bloom. The overcharged Heavy Railgun pushes that same idea further — a slower,
+costlier coil charge buys a slug fast enough to read as near-hitscan, marked
+by a tighter, denser wake than the base rail&rsquo;s.</p>
+<h2 id="guns-that-make-you-wait">Guns that make you wait</h2>
+<p>Most guns fire the instant you pull. <strong>A railgun does not.</strong> Hold the trigger
+and the coil bank starts filling: rings gather in front of the barrel and
+draw inward, tightening and brightening, and the shot leaves the moment they
+close. It is a beat on the base rail and closer to a full second on the heavy
+one, and the bank is drinking from your capacitor the whole time it fills.</p>
+<p>Let go early and you do not get that power back. The coil bleeds it off as
+heat over about a second — but it bleeds, it does not dump, so a trigger you
+release and re-press picks up near where you left it rather than starting
+cold. Twitch on it and you pay again for ground you already bought. Commit to
+the hold and it costs you exactly once. Run the bank low and the coil does not
+jam, it just fills slower, so a nearly dry ship still gets its shot away
+eventually — later than it wanted to.</p>
+<p>Everyone plays by this. A raider with a rail on the rack telegraphs the same
+gathering rings you do, for the same length of time. Learn to read them and a
+rail duel becomes a question of who is willing to stand still.</p>
+<h2 id="your-hull">Your hull</h2>
+<p>The Vindicator frame now carries three hardpoints. Pilot controls still map
+two triggers in-flight today: the <strong>left</strong> fires weapon set 0 — the
+<strong>Pulse Cannon</strong>, now firing <strong>twin bolts</strong> side by side out of one
+honest, crisp gun. The <strong>right</strong> fires set 1 — the <strong>Energy Beam</strong>, an
+instant-hit lance that strikes the moment you pull it, lighter per tick
+but with no travel and no lead. They fire independently: hold both and you
+put bolts and beam on the same target at once, pressure and punch together.
+Both triggers rebind in settings. (Arena doctrines and NPC brains can drive
+all mounted hardpoints.)</p>
+<p>Keep the fire on target and watch the numbers climb: a beam held on one
+spot, or cannon hits landing close together, stack into one rising
+damage count over the hull instead of a flat stream of hits — proof
+you&rsquo;re not just tagging armor, you&rsquo;re wearing it down.</p>
+<h2 id="korrathi-scavenger-hardware">Korrathi (scavenger) hardware</h2>
+<p>Blood-red and built from whatever survived the last victim.</p>
+<ul>
+<li><strong>Scrap Cannon</strong>: the single blaster every raider carries. Weak,
+cheap, everywhere. One raider is a nuisance; three are a problem.</li>
+<li><strong>Twin Blaster</strong>: two bolts per pull in a shallow fan. Less a lance
+than a wall; bad news in a knife fight, easy to outrange.</li>
+<li><strong>Breach Torpedo</strong>: slow, fat, and rude. You can see it coming and
+you should act on that information. Eating one is how frigates die.</li>
+<li><strong>Reclaimed Cutter</strong>: the capital-grade beam standard on every Warlord
+and Ravager — the same wreck-stripped stock as the Crimson Lance, just
+remounted rougher. A straight, sustained blood-orange line, no
+crackling envelope; that&rsquo;s how you tell it apart from the prize below.</li>
+<li><strong>Crimson Lance</strong>: the red capital laser, and a prize. A belt
+<strong>marauder</strong> carries one bolted to a frigate mount — it hits far above
+its weight, and when it dies the Lance breaks loose as salvage. Kill the
+marauder, fly over the wreck-light it leaves, and the Lance is on your
+mount. A true heavy beam: crackling crimson envelope, long reach, and
+worth the fight it takes to earn.</li>
+</ul>
+<h2 id="teralith-corporate-hardware">Teralith (corporate) hardware</h2>
+<p>Militia service weapons, maintained to spec, fired by people with paperwork.</p>
+<ul>
+<li><strong>Patrol Laser</strong>: the green-bronze service laser on every militia hull,
+matched to the hull&rsquo;s own organic-armored plating. Slightly lighter than
+a good pulse cannon; the shields make up for it.</li>
+<li><strong>Strike Missile</strong>: mid-weight ordnance. Tracks, but turns hard enough
+to be jinked.</li>
+<li><strong>Cruise Missile</strong>: long-reach capital ordnance. Slow enough to dodge,
+heavy enough that you dodge it every single time.</li>
+</ul>
+<h2 id="blackwater-trade-hardware">Blackwater (trade) hardware</h2>
+<p>Green guild kit. Civilians shoot back; they just don&rsquo;t shoot first.</p>
+<ul>
+<li><strong>Guild Laser</strong>: the convoy&rsquo;s defensive standard. Modest, reliable.</li>
+<li><strong>Toxic Missile</strong>: a chemical deterrent with a nasty impact. Tracks on
+a moderate seeker. The
+lingering cloud the guild brochures promise is not in service yet.</li>
+<li><strong>Slug Repeater</strong>: a cheap red kinetic repeater. High cadence, small
+bite, the sidearm of ships that would rather be leaving.</li>
+<li><strong>Railgun</strong>: a long, bright punch — a beam-thin trail with a stack of
+rings falling away behind it. Costs you a held beat to fill the coil
+first. If you see the rings, it is already past where you were.</li>
+<li><strong>Heavy Railgun</strong>: the same coil-gun stretched past sane spec. The bank
+takes the better part of a second to fill and drinks hard doing it, and
+the slug leaves fast enough that there is effectively no flight time left
+to see — you register the shot, then the hit, with nothing readable in
+between. What you DO get is the wake: rings packed tighter and burning
+hotter than the base rail&rsquo;s, dragging longer behind an overcharged core.
+Slower to cycle and heavier on the capacitor than the base rail, and it
+bites hard enough per hit that you will not mind the wait.</li>
+</ul>
+<h2 id="defensive-emplacements">Defensive emplacements</h2>
+<p>Stations do not just sit there. A <strong>defense station</strong> rings its hull with
+turrets, and a turret is patient in a way a pilot cannot be: it does not
+chase, it does not tire, and it swings its barrel straight onto whoever it
+hates most and holds the trigger. Standings decide the hate — a militia
+picket lights up pirates and leaves your convoy alone; a pirate picket
+seized on a frontier belt will open up on you, the militia, and any
+civilian foolish enough to drift into its arc.</p>
+<ul>
+<li><strong>Picket Turret</strong>: the standard emplacement beam. Cold ice-blue-white,
+the same on every station regardless of who is holding it — an
+emplacement&rsquo;s fire reads as an emplacement&rsquo;s, not a faction&rsquo;s. Slow
+cadence, heavy bite, and reach well past what the fighters trying to run
+its line can answer. You do not dodge a picket by out-flying its aim —
+it tracks. You beat it by staying out of its range, killing it, or being
+somewhere else.</li>
+</ul>
+<p>Watch for these on the routes that matter. A hostile picket parked at a
+belt&rsquo;s edge is not scenery; it is a toll gate with teeth, and one day the
+ore you are hauling home will have to run past it.</p>
+<p>But a station is not invincible — it runs on a <strong>shield</strong>, and a shield
+can be broken. Pour enough fire into a defense station and its shield
+falls; the moment it does, the whole picket goes dark and its turrets
+stop dead. That is your window: a disabled station is not destroyed, just
+switched off, and its shield climbs back if you let up. Beat it down and
+run the gap before it wakes, or keep the pressure on to hold it silent.</p>
+<h2 id="prototype-hardware">Prototype hardware</h2>
+<p>Tools, not arms. These mounts are utility prototypes: they deal <strong>no
+damage</strong>, no pilot will fire one in anger, and tagging a bystander with
+one offends nobody.</p>
+<ul>
+<li><strong>Mining Beam (Prototype)</strong>: a Teralith grabber field. Hold it on a belt
+rock and its unsteady grey cutter drains Ferrite into your hold — sometimes
+a Gem rides along. It looks like a vibrating industrial cut, not weapons fire.
+Working a rock is not a tap; expect to sit on target for the better part of
+half a minute, exposed while the beam chews and the progress crawls.</li>
+<li><strong>Salvage Array (Prototype)</strong>: a Blackwater wave scoop. Hold it on a
+derelict hulk and side-on smoky blue hoops pull from the wreck back toward
+your ship, stripping Generic Salvage into your hold — sometimes something
+nobody can date comes with it. Salvage is the same commitment: a long held
+strip, not a quick scoop, which is why wreck-pickers die in dangerous fields.</li>
+<li><strong>Repair Bolt (Prototype)</strong>: a Blackwater packet meant to patch a
+friendly hull at range. <em>(Remote repair: not yet in service.)</em></li>
+</ul>
+<p><em>See also: <a href="ships.html">Ships</a> for what those weapons are bolted to;
+<a href="pilots.html">Pilots</a> for who pulls the trigger and why.</em></p>
+      </div>
+      <nav class="doc-pager" aria-label="Adjacent articles">
+        <a class="doc-pager__link" href="faction-senther.html">← Sen&#x27;Ther</a>
+        <a class="doc-pager__link" href="battle-stations.html">Battle Stations →</a>
+      </nav>
+    </article>
+  </main>
+  <footer class="footer">
+    <span>Built 2026-08-10 from game sources</span>
+    <span><a href="../index.html">Home</a> · <a href="mailto:vincent@vandenbraken.com">Contact</a></span>
+    <span>© Vincent van den Braken</span>
+  </footer>
+</body>
+</html>

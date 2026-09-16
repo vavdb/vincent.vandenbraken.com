@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Battle-station designs — dedicated defensive station identities — Vindicator</title>
+  <meta name="description" content="Captured 2026-07-19. The &quot;[Structures] Battle station designs&quot; card. Stations that fight (pirate pickets, militia defense platforms) were borrowing ship capital-hull art (`Station.…" />
+  <link rel="stylesheet" href="../vindicator.css" />
+</head>
+<body class="doc-body">
+  <header class="site-nav">
+    <a class="site-nav__brand" href="../index.html">VINDICATOR</a>
+    <nav class="site-nav__links" aria-label="Section">
+      <a href="../index.html">Home</a>
+      <a href="../codex/index.html">Codex</a>
+      <a href="../design/index.html" class="is-active">Design</a>
+      <a href="../design-language.html">UI language</a>
+      <a href="../index.html#devlog">Devlog</a>
+    </nav>
+    <a class="site-nav__ext" href="../../index.html">Vincent van den Braken</a>
+  </header>
+  <main class="doc-main">
+    <article class="doc-article">
+      <header class="doc-article__head">
+        <a class="doc-back" href="index.html">← Design</a>
+        <span class="vchip">Design</span>
+        <h1 class="vtitle-display">Battle-station designs — dedicated defensive station identities</h1>
+        <p class="doc-article__summary">Captured 2026-07-19. The &quot;[Structures] Battle station designs&quot; card. Stations that fight (pirate pickets, militia defense platforms) were borrowing ship capital-hull art (`Station.…</p>
+        <p class="banner banner--warn">Design note — systems rationale, not player-facing codex text.</p>
+      </header>
+      <div class="prose">
+<p>Captured 2026-07-19. The &ldquo;[Structures] Battle station designs&rdquo; card. Stations
+that fight (pirate pickets, militia defense platforms) were borrowing ship
+capital-hull art (<code>Station.HullSpriteByFaction</code> — civilian Nautolan
+Dreadnought, militia Nairan Battlecruiser, pirate Kla&rsquo;ed Battlecruiser). A
+fortified position that a raider pack anchors on, or that brackets a contested
+belt, should read like a <strong>structure worth assaulting</strong>, not a big parked ship.
+This card gives the fighting stations their own silhouette language and feeds
+the follow-up conflict-ecology card (a pirate base spawns hunters — so the
+<strong>Kessler Raider Bastion is the priority archetype</strong>).</p>
+<p>The player-owned station work is a separate track (docs/design-stations.md);
+this card is the NPC/enemy side — the emplacements the player flies <em>at</em>.</p>
+<h2 id="what-already-exists-build-on-it-dont-reinvent">What already exists (build on it, don&rsquo;t reinvent)</h2>
+<p>The whole danger-interaction machinery already ships (see
+docs/design-stations.md &ldquo;What already exists&rdquo; for the fuller audit). The two
+levers this card actually needs were both already present:</p>
+<ul>
+<li><strong><code>StationDef.Mounts</code></strong> (<code>features/universe/StarSystemDef.cs</code>) — an optional
+list of explicit <code>[x, y]</code> turret positions in local station space. When
+present, <code>Station.ArmTurrets</code> places one turret per listed coordinate and
+skips the procedural even-ring entirely (<code>ArmTurretsAtMounts</code>). Authored via
+the HardpointEditor tool, or hand-written to its export shape (a JSON array
+of <code>[x, y]</code> pairs). <strong>This is the layout knob.</strong></li>
+<li><strong><code>Station</code> hull pipeline</strong> — a single <code>Sprite2D</code> whose texture is padded
+(<code>SpritePadding.Load</code>), alpha-traced for a collision polygon
+(<code>HullTracer.Trace</code>), cel-outlined (<code>OutlineStyle</code>), and gently multiplied
+toward the owning faction color (0.2 lerp, <code>Station.TintFor</code>). Everything
+downstream — dock zone radius, map intel, the disable-on-shield-down
+behavior — derives from that one traced sprite.</li>
+</ul>
+<h3 id="the-one-gap-art-selection-was-faction-only">The one gap: art selection was faction-only</h3>
+<p><code>Station</code> chose its sprite purely from <code>HullSpriteByFaction[factionId]</code>, so
+every pirate station was the Kla&rsquo;ed Battlecruiser and every militia station the
+Nairan Battlecruiser — ship hulls. There was no way for a <em>specific</em> station to
+declare &ldquo;I am a bastion, here is my structure art.&rdquo;</p>
+<p><strong>The mechanism this card adds</strong> is deliberately tiny: two optional
+<code>StationDef</code> fields, <code>Sprite</code> (a res:// path that overrides the faction hull
+map) and <code>SpriteScale</code> (0 = keep the faction 2× default). <code>Station._Ready</code>
+picks <code>Def.Sprite</code> over the faction hull when set, and uses <code>Def.SpriteScale</code>
+for both the sprite scale and the collision trace. Nothing else in the hull
+pipeline changes — a dedicated-art station traces, outlines, tints, docks, and
+disables exactly like a capital-hull one. That keeps collision/outline/dock
+math untouched and puts the whole archetype in <em>content</em> (JSON + a baked PNG).</p>
+<h2 id="the-art-problem-and-the-answer">The art problem, and the answer</h2>
+<p><strong>No dedicated station/structure art exists in any vendored pack</strong> (audited
+docs/assets.md + the asset tree): every Foozle/Kenney/Tiny-Ships PNG is a ship
+hull, a projectile, or UI. The card anticipated this (&ldquo;procedural composition
+of existing structure parts is acceptable if it reads well&rdquo;).</p>
+<p>The owned <em>structural</em> (non-ship) art that DOES exist:</p>
+<ul>
+<li><strong><code>assets/sprites/vindicator/stargate_parts.png</code></strong> (owned, 384×384, 3×3 @
+128) — ring segments (chevron-marked C-rings, cells 0,0 / 2,0), a heavy
+bilateral <strong>connector block</strong> (cell 1,0 — an industrial reactor/dock spine,
+no thrust axis), and a compact <strong>reactor pod</strong> module (cell 1,2). These are
+the strongest &ldquo;reads STRUCTURE not ship&rdquo; parts in the repo: symmetry, mass,
+mechanical bristle, and crucially <strong>no engine flare / no pointed prow</strong>.</li>
+<li><strong><code>assets/backgrounds/foozle_void_env/Asteroids/PNGs/Asteroid 01 - Base.png</code></strong>
+(CC0, 96×96) — an irregular rock: pure mass, no thrust, no bilateral &ldquo;front.&rdquo;</li>
+</ul>
+<p><strong>Decision:</strong> bake dedicated station sprites by compositing these owned parts
+(ImageMagick, <code>scripts/</code> one-off) into standalone PNGs under
+<code>assets/sprites/vindicator/stations/</code>, so the single-sprite <code>Station</code> pipeline
+consumes them unchanged. This is &ldquo;dedicated station art&rdquo; (owned, derived from
+owned parts) rather than &ldquo;ship-hull reuse&rdquo; — exactly the card&rsquo;s intent — and it
+sidesteps runtime multi-sprite composition, which would have fractured the
+single-file collision trace + outline the station relies on. See
+docs/decisions.md for the alternatives (runtime child-sprite composition;
+single raw connector cell; raw asteroid) and why they were rejected.</p>
+<h2 id="silhouette-language-what-makes-each-read-structure">Silhouette language — what makes each read STRUCTURE</h2>
+<p>The shared rules across all three: <strong>bilateral or radial symmetry</strong> (a ship has
+a prow and a stern; a structure is symmetric about a point or an axis), <strong>no
+thrust axis</strong> (no engine flare, so nothing implies it wants to move), <strong>visible
+mass</strong> (chunky mechanical or rock body), and <strong>guns that ring the body</strong> rather
+than face forward. The self-rotation <code>Station</code> already applies reads as a slow
+station spin on a symmetric body, where on a ship hull it looked like a
+drifting derelict.</p>
+<h2 id="the-three-archetypes">The three archetypes</h2>
+<table>
+<thead>
+<tr>
+<th>Archetype</th>
+<th>Faction</th>
+<th>Type</th>
+<th>Sprite (baked)</th>
+<th>Scale</th>
+<th>Shield / Regen / Hull</th>
+<th>Guns (mounts)</th>
+<th>Where it appears</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Kessler Raider Bastion</strong></td>
+<td>pirates</td>
+<td>Defense</td>
+<td><code>raider_bastion.png</code> (208²)</td>
+<td>1.5</td>
+<td>400 / 22 / 900</td>
+<td>5, bristled</td>
+<td>Karda belt (<code>karda.thornpicket</code>), Marches belt (<code>marches.gibbet</code>)</td>
+</tr>
+<tr>
+<td><strong>Militia Bulwark Platform</strong></td>
+<td>militia</td>
+<td>Defense</td>
+<td><code>militia_bulwark.png</code> (224²)</td>
+<td>1.5</td>
+<td>500 / 26 / 1100</td>
+<td>6, ring-even</td>
+<td>Eos (<code>eos.relay</code>), Marches inner planet (<code>marches.warden</code>)</td>
+</tr>
+<tr>
+<td><strong>Independent Claim-Guard</strong></td>
+<td>independent</td>
+<td>Defense</td>
+<td><code>claim_guard.png</code> (148²)</td>
+<td>1.5</td>
+<td>140 / 14 / 360</td>
+<td>2, flank</td>
+<td>Karda belt (<code>karda.claimguard</code>, new)</td>
+</tr>
+</tbody>
+</table>
+<p>Stats are calibrated against the existing station defaults (Shield 250 / Regen
+18 / Hull 600) and against ship hulls (a Kla&rsquo;ed Battlecruiser ship is Hull 320 /
+Shield 60 — stations already dwarf ships, which is correct: a station tanks).
+Shield is the <strong>disable</strong> threshold (beat it flat → turrets go dark until it
+regenerates — <code>Station.Disabled</code>), not a kill bar, so the tiers read as &ldquo;how
+long can it hold its guns up under fire.&rdquo;</p>
+<h3 id="1-kessler-raider-bastion-priority">1. Kessler Raider Bastion (PRIORITY)</h3>
+<ul>
+<li><strong>Role.</strong> A pirate strongpoint dug into a belt&rsquo;s edge — the frontier&rsquo;s teeth
+on an ore-haul route, and the anchor the conflict-ecology card will spawn a
+raider pack from.</li>
+<li><strong>Silhouette.</strong> A hollowed <strong>asteroid</strong> (irregular rock mass) welded with a
+scavenged <strong>connector-block reactor spine</strong> across its face. Asymmetric rock
+<ul>
+<li>bilateral metal core = unmistakably an improvised fort, nothing like a
+hull. Amber pirate tint (<code>#B45309</code>).</li>
+</ul>
+</li>
+<li><strong>Layout philosophy.</strong> Five guns bristled <em>around</em> the rock, not evenly — two
+on the spine flanks, two low, one high (<code>[[-150,-20],[150,-20],[-95,95], [95,95],[0,-150]]</code>). Bristle-over-symmetry sells &ldquo;scavenged and up-gunned.&rdquo;</li>
+<li><strong>Stats.</strong> Tough: Shield 400, Regen 22, Hull 900 — you have to work to punch
+a window in it. Above a stock picket, below the militia bulwark.</li>
+<li><strong>Reward.</strong> Salvage/loot is deferred to the conflict-ecology card (a disabled
+bastion is where the pirate-hunter loop and any base-loot hook will live);
+today it is a hard, hostile emplacement.</li>
+</ul>
+<h3 id="2-militia-bulwark-platform">2. Militia Bulwark Platform</h3>
+<ul>
+<li><strong>Role.</strong> A purpose-built, disciplined system-defense emplacement. Where the
+bastion is improvised, the bulwark is engineered.</li>
+<li><strong>Silhouette.</strong> A <strong>radial double-ring</strong> (two chevron-marked ring segments
+closed into a full armored torus) around a central <strong>connector hub</strong>. Full
+radial symmetry, guns on the ring — the cleanest &ldquo;battle platform&rdquo; read.
+Green militia tint (<code>#00843D</code>).</li>
+<li><strong>Layout philosophy.</strong> Six guns evenly on the ring
+(<code>[[150,0],[75,-130],[-75,-130],[-150,0],[-75,130],[75,130]]</code>) — even
+spacing reads as designed doctrine, the opposite of the bastion&rsquo;s bristle.</li>
+<li><strong>Stats.</strong> Toughest: Shield 500, Regen 26, Hull 1100 — the militia holds
+ground.</li>
+</ul>
+<h3 id="3-independent-claim-guard">3. Independent Claim-Guard</h3>
+<ul>
+<li><strong>Role.</strong> A cheap, improvised picket the unaligned Independents throw up to
+hold a belt claim against raiders. The soft end of the ladder.</li>
+<li><strong>Silhouette.</strong> A compact <strong>reactor pod</strong> on a short <strong>connector spine</strong> — a
+small cross/anchor of mechanical mass, two gun stubs. Reads as a minimal
+emplacement, not a warship. Gold independent tint (<code>#D4A017</code>); neutral to the
+player.</li>
+<li><strong>Layout philosophy.</strong> Two flank guns only (<code>[[-95,0],[95,0]]</code>) — token
+defense, matching a faction that &ldquo;isn&rsquo;t built to fight&rdquo; (codex:
+independents).</li>
+<li><strong>Stats.</strong> Soft: Shield 140, Regen 14, Hull 360 — below the stock default; a
+claim-guard is a speed bump, not a wall.</li>
+</ul>
+<h2 id="placement-verification-fiction">Placement (verification + fiction)</h2>
+<p>Existing fighting stations were <strong>retrofitted in place</strong> to their archetype
+(sprite + scale + mounts + stats), keeping every spawn intact — this directly
+retires the ship-hull reuse the card exists to end, with zero new-content
+balance risk:</p>
+<ul>
+<li><code>karda.thornpicket</code> → <strong>Thorn Bastion</strong> (pirate, Frontier Karda — one hop
+from Eos, reachable for verification).</li>
+<li><code>marches.gibbet</code> → <strong>The Gibbet</strong> (pirate, contested Marches).</li>
+<li><code>eos.relay</code> → <strong>Eos Relay</strong> bulwark (militia, Safe Eos).</li>
+<li><code>marches.warden</code> → <strong>Warden Bulwark</strong> (militia, contested Marches).</li>
+</ul>
+<p>One genuinely <strong>new</strong> station places the third archetype: <code>karda.claimguard</code>
+(<strong>Belt Claim-Guard</strong>, independent) free-floating past the Karda belt, opposite
+the pirate bastion — Independents holding their frontier claim against the
+raiders, thematically. Karda is not asserted by any test&rsquo;s station count (Eos&rsquo;
+count-of-3 test is untouched), and a neutral soft picket does not perturb the
+Eos economy demo.</p>
+<h2 id="capture-verification">Capture / verification</h2>
+<p>A narrow <code>-Station &lt;id&gt;</code> capture flag was added (<code>scripts/capture.ps1</code> +
+<code>CaptureRig</code>, following the existing <code>-Flag</code> pattern): it centers the camera on
+a station by id, hides the camera-anchor ship, and drops that anchor out of the
+target pool (so a hostile bastion&rsquo;s turrets don&rsquo;t bury the structure under
+point-blank beams). Proofs in <code>capture-out/battle-station-{bastion,bulwark, guard}.png</code>.</p>
+<h2 id="alternatives-considered-rejected">Alternatives considered + rejected</h2>
+<ul>
+<li><strong>Keep reusing capital ship hulls.</strong> Rejected — it is the exact problem the
+card names; a battlecruiser hull parked in an orbit reads as a ship, not a
+fort.</li>
+<li><strong>Runtime multi-sprite composition</strong> (compose the body from child sprites at
+load, like <code>StarlaneGate</code> does). Rejected: it fractures the single-file
+collision trace, outline material, and tint the whole <code>Station</code> pipeline
+assumes, for no visual gain over a pre-baked composite. Baking keeps the
+archetype entirely in content.</li>
+<li><strong>A single raw stargate connector cell as the body.</strong> Rejected: reads too
+much like a piece of a gate. The asteroid + spine composite is distinct and
+unmistakably a base.</li>
+<li><strong>A bare scaled-up asteroid.</strong> Rejected: plain, and &ldquo;big rock&rdquo; doesn&rsquo;t say
+&ldquo;fortified emplacement with guns.&rdquo; The embedded reactor spine is what makes
+it a bastion.</li>
+<li><strong>New per-archetype hulls as first-class ship-style templates.</strong> Rejected as
+over-built: a station is a <code>StationDef</code> + a sprite, not a ship template with
+engine/shield/weapon sheets. Two optional fields on <code>StationDef</code> carry the
+whole feature.</li>
+<li><strong>New bespoke turret art per faction.</strong> Out of scope: turrets already skin
+per faction (<code>Turret.BarrelSheetByFaction</code>); the card is about station
+<em>bodies</em>.</li>
+</ul>
+<h2 id="follow-ups-not-this-card">Follow-ups (not this card)</h2>
+<ul>
+<li><strong>Conflict ecology</strong> (its own card): the Kessler Raider Bastion spawns a
+raider/hunter pack anchored on it; base-loot/salvage on disable lives there.</li>
+<li><strong>Player-station art</strong>: <code>docs/design-stations.md</code> step 2 notes a dedicated
+<code>faction.player</code> station silhouette is a nice-to-have; the <code>Sprite</code> field
+this card adds is exactly the hook it would use.</li>
+</ul>
+      </div>
+      <nav class="doc-pager" aria-label="Adjacent articles">
+        <a class="doc-pager__link" href="design-stations.html">← Player-owned stations — design capture</a>
+        <a class="doc-pager__link" href="design-conflict.html">Conflict ecology — the economy fights back (MVP) →</a>
+      </nav>
+    </article>
+  </main>
+  <footer class="footer">
+    <span>Built 2026-08-10 from game sources</span>
+    <span><a href="../index.html">Home</a> · <a href="mailto:vincent@vandenbraken.com">Contact</a></span>
+    <span>© Vincent van den Braken</span>
+  </footer>
+</body>
+</html>

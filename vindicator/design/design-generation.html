@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Universe generation: building blocks — design capture — Vindicator</title>
+  <meta name="description" content="Captured 2026-07-10 from owner spec. Universes assemble from BLOCKS, so every galaxy is random yet always carries its [markers]." />
+  <link rel="stylesheet" href="../vindicator.css" />
+</head>
+<body class="doc-body">
+  <header class="site-nav">
+    <a class="site-nav__brand" href="../index.html">VINDICATOR</a>
+    <nav class="site-nav__links" aria-label="Section">
+      <a href="../index.html">Home</a>
+      <a href="../codex/index.html">Codex</a>
+      <a href="../design/index.html" class="is-active">Design</a>
+      <a href="../design-language.html">UI language</a>
+      <a href="../index.html#devlog">Devlog</a>
+    </nav>
+    <a class="site-nav__ext" href="../../index.html">Vincent van den Braken</a>
+  </header>
+  <main class="doc-main">
+    <article class="doc-article">
+      <header class="doc-article__head">
+        <a class="doc-back" href="index.html">← Design</a>
+        <span class="vchip">Design</span>
+        <h1 class="vtitle-display">Universe generation: building blocks — design capture</h1>
+        <p class="doc-article__summary">Captured 2026-07-10 from owner spec. Universes assemble from BLOCKS, so every galaxy is random yet always carries its [markers].</p>
+        <p class="banner banner--warn">Design note — systems rationale, not player-facing codex text.</p>
+      </header>
+      <div class="prose">
+<p>Captured 2026-07-10 from owner spec. Universes assemble from BLOCKS, so
+every galaxy is random yet always carries its [markers].</p>
+<h2 id="blocks">Blocks</h2>
+<p>A block = a group of systems with internal lanes and relative galaxy
+positions, plus placement rules. Three kinds:</p>
+<ol>
+<li><strong>Handcrafted anchors</strong> — the tutorial block is Eos/Karda/Veil exactly
+as authored today (safe loop + fold-gated Veil, see design-universe.md
+§5). Always present, always the start.</li>
+<li><strong>Pre-setup set pieces</strong> — themed multi-system chunks dropped whole:
+pirate haven cluster, mining-rush belt chain, militia fortress line,
+black-hole research site, dead/ruined system pocket. Authored once,
+reused across universes; internal lanes/spawns/stations designed.</li>
+<li><strong>Generated filler</strong> — single systems from the existing schema&rsquo;s
+vocabulary (physical stellar classes + separate multiplicity, system
+features such as nebulae, planet classes, orbits, belts w/ dominant+trace minerals,
+danger tier, traffic), parameterized by position (danger rises with
+distance from the tutorial block; mineral tiers follow the economy
+ladder).</li>
+</ol>
+<h2 id="generator-sketch">Generator sketch</h2>
+<p>Seeded (universe seed = reproducible):</p>
+<ol>
+<li>Place the tutorial block at origin.</li>
+<li>Place required marker blocks under constraints (min/max distance from
+start, min spacing, danger-band eligibility) — every universe
+GUARANTEES its markers: &gt;=1 shipyard hub, &gt;=1 voidite source (black
+hole), &gt;=1 pirate haven, etc.</li>
+<li>Fill remaining space with generated systems along a rough density map.</li>
+<li>Wire lanes: intra-block lanes come with the block; inter-block/filler
+lanes generated (nearest-neighbor + a few long skips), all respecting
+the paired-endpoint model — generation may deliberately place dormant
+endpoints as discoverable content.</li>
+<li>Stamp danger tiers + market ledger seeds (design-economy.md).</li>
+</ol>
+<h2 id="schema-direction">Schema direction</h2>
+<ul>
+<li>Block manifest JSON (id prefix &quot;block.&quot;): member system ids (or inline
+defs), relative positions, internal lanes, placement rules (rarity,
+distance band, uniqueness), marker tags it satisfies.</li>
+<li>Existing system JSON stays THE unit of content — a block references
+systems; generated systems emit the same shape at runtime.</li>
+<li>ContentDatabase learns &ldquo;block.&rdquo; routing; the generator becomes the
+thing that turns (seed, block library) -&gt; a galaxy&rsquo;s worth of
+StarSystemDefs + galaxyPositions + lanes.</li>
+</ul>
+<p><strong>SHIPPED (schema) 2026-07-11</strong> — <code>BlockDef</code> (<code>features/universe/ BlockDef.cs</code>, prefix <code>block.</code> -&gt; <code>ContentDatabase.Blocks</code> with member/lane/
+placement validation), <code>block.tutorial</code> (<code>features/universe/data/ tutorial_block.json</code>), lane endpoint states (<code>StarlaneDef.state</code> +
+<code>LaneRules</code>), and <code>GalaxyScale</code> (200,000 px/unit). No runtime behavior yet;
+the generator itself is a later phase. See the decisions.md entry of the
+same date.</p>
+<h2 id="ordering">Ordering</h2>
+<p>Depends on the continuous universe (batch 7) for placement to feel real,
+but the SCHEMA (blocks, marker tags, endpoint states) should land WITH
+batch 7 so the refactor builds against the final shape. Full generator +
+set-piece library = its own later phase.</p>
+<h2 id="story-grafts-over-a-random-universe-owner-spec-2026-07-24">Story grafts over a random universe (owner spec, 2026-07-24)</h2>
+<p>Randomness stays. Each new game generates a fresh random universe from its
+seed; the authored content is a small set of STORY GRAFTS replaced into it
+afterwards, not a designed map with random filler.</p>
+<p><strong>The authored set</strong> (a graft = one authored system, sometimes with 1-2
+authored neighbours that must stay adjacent to it):</p>
+<ul>
+<li>each alien home system + 1-2 systems around it</li>
+<li>Sol + two neighbours</li>
+<li>Eos, Veil, Marches</li>
+</ul>
+<p><strong>Graft model.</strong> Generate the full random graph first, then replace selected
+generated nodes with the authored systems, keeping the surrounding edges so
+the topology stays the generator&rsquo;s. Multi-system grafts (a home system plus
+its neighbours) replace a connected patch. Placement obeys per-graft
+constraints — distance bands from the start, story-order reachability
+(Trine before Sol before Veil in practical route terms), and no two grafts
+overlapping — but WHERE a graft lands within its band is the seed&rsquo;s choice.</p>
+<p><strong>Consequences the rest of the design must absorb:</strong></p>
+<ul>
+<li>Routes and distances differ per save: economy and difficulty tune by
+band/role, never by absolute coordinates; the codex never names a
+generated system; travel guidance is expressed relative to grafts.</li>
+<li>The §11 namer and §12 discovery rules (design-universe.md) apply
+unchanged: generated systems carry catalog designations, authored ones
+carry proper names — except Sol, which hides its designation among
+thousands of honest ones.</li>
+<li>Persistence stores the seed plus graft placement (and later, per-system
+state on top — the C5 world-state card); generation must be reproducible
+from that pair.</li>
+<li>Generated systems draw from a small role deck (salvage ground with
+standing wreck spawns, ice field, dead system, minor colony, sparse
+Sen&rsquo;Ther-claimed volume) so randomness arranges roles rather than
+inventing content.</li>
+</ul>
+      </div>
+      <nav class="doc-pager" aria-label="Adjacent articles">
+        <a class="doc-pager__link" href="design-combat-heat.html">← Hardpoint heat + overmount — design capture</a>
+        <a class="doc-pager__link" href="design-universe.html">Continuous universe + travel feel + planet art — design capture →</a>
+      </nav>
+    </article>
+  </main>
+  <footer class="footer">
+    <span>Built 2026-08-10 from game sources</span>
+    <span><a href="../index.html">Home</a> · <a href="mailto:vincent@vandenbraken.com">Contact</a></span>
+    <span>© Vincent van den Braken</span>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vindicator — Wake up. The gates are dark. Fold anyway.</title>
+  <meta name="description" content="Vindicator: explore, fight, and fold through a dying star system. A cognitive overlay, not a HUD." />
+  <meta property="og:title" content="Vindicator" />
+  <meta property="og:description" content="Wake up. The gates are dark. Fold anyway." />
+  <meta property="og:image" content="/vindicator/images/hero-og.jpg" />
+  <meta property="og:type" content="website" />
+  <link rel="stylesheet" href="vindicator.css" />
+  <link rel="preload" as="image" href="images/hero-teralith-capital.webp" fetchpriority="high" />
+</head>
+<body>
+
+  <header class="site-nav">
+    <a class="site-nav__brand" href="index.html">VINDICATOR</a>
+    <nav class="site-nav__links" aria-label="Section">
+      <a href="index.html" class="is-active">Home</a>
+      <a href="codex/index.html">Codex</a>
+      <a href="design/index.html">Design</a>
+      <a href="design-language.html">UI language</a>
+      <a href="#devlog">Devlog</a>
+    </nav>
+    <a class="site-nav__ext" href="../index.html">Vincent van den Braken</a>
+  </header>
+
+  <section class="hero">
+    <img class="hero__bg" src="images/hero-teralith-capital.webp" fetchpriority="high" alt="Teralith capital city: black ziggurats flanking a gold processional boulevard, seen from orbit height" />
+    <div class="hero__scrim"></div>
+    <div class="hero__scanlines"></div>
+
+    <span class="vchip">SYS // VINDICATOR</span>
+    <h1 class="hero__title vtitle-display">VINDICATOR</h1>
+    <p class="hero__pitch">Wake up. The gates are dark. Fold anyway.</p>
+    <div class="hero__actions">
+      <!-- TODO: swap the primary for the real wishlist/store link once it exists -->
+      <a class="vbtn go" href="#devlog">Follow development</a>
+      <a class="vbtn" href="codex/index.html">Codex</a>
+      <a class="vbtn" href="design/index.html">Design notes</a>
+    </div>
+  </section>
+
+  <section class="section" id="what-is-it">
+    <span class="vchip">What is it</span>
+    <div class="panel-grid">
+      <article class="panel-grid__item vframe">
+        <div class="vpanel wide">
+          <img src="images/panel-modules.png" alt="Modular skin and arena configuration" loading="lazy" />
+          <h3 class="vtitle">Explore / Fold</h3>
+          <p>Jump gate to gate through a system that's collapsing behind you.</p>
+        </div>
+      </article>
+      <article class="panel-grid__item vframe">
+        <div class="vpanel wide">
+          <img src="images/panel-weapons.png" alt="Weapon identity close-up" loading="lazy" />
+          <h3 class="vtitle">Fight / Modules</h3>
+          <p>Build your ship module by module — every weapon has its own signature.</p>
+        </div>
+      </article>
+      <article class="panel-grid__item vframe">
+        <div class="vpanel wide">
+          <img src="images/panel-economy.png" alt="Economy tracker interface" loading="lazy" />
+          <h3 class="vtitle">Economy</h3>
+          <p>Every fold has a price — track the cost live.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="manual">
+    <span class="vchip">Manual &amp; notes</span>
+    <div class="manual-split">
+      <article class="panel-grid__item manual-split__main vframe">
+        <div class="vpanel wide">
+          <h3 class="vtitle">Codex</h3>
+          <p>The player-facing in-game manual — what the systems are, written for the pilot in the seat. Articles unlock through discovery; the site mirror is always fully open.</p>
+          <p class="manual-split__action"><a class="vbtn" href="codex/index.html">Open codex</a></p>
+        </div>
+      </article>
+      <article class="panel-grid__item vframe">
+        <div class="vpanel wide">
+          <h3 class="vtitle">Design notes</h3>
+          <p>Curated systems design docs — the WHY behind economy, fleet, combat, and production art language. Story spoilers stay offline.</p>
+          <p class="manual-split__action"><a class="vbtn" href="design/index.html">Open design</a></p>
+        </div>
+      </article>
+    </div>
+    <p class="manual-note">Living sources — the codex ships in the game PCK; design notes are curated from the repo. Site pages regenerate when those files move.</p>
+  </section>
+
+  <section class="section" id="devlog">
+    <span class="vchip">Devlog</span>
+    <p class="devlog-intro">What landed <time datetime="2026-07-16">2026-07-16</time> → <time datetime="2026-07-25">2026-07-25</time>, by area.</p>
+
+    <div class="devlog-group">
+      <div class="devlog-group__head">
+        <h3 class="vtitle">Art &amp; Worldbuilding</h3>
+        <span class="devlog-group__range">07-17 → 07-25</span>
+      </div>
+      <ul class="devlog-list">
+        <li><span>Nine races, one visual language each — hulls, stations, and cities settled in a full taste pass.</span></li>
+        <li><span>First complete ship-and-station catalog rendered for every race; the Kithar picked their hull from a four-way sheet — the scarab won.</span></li>
+        <li><span>Homeworlds now read from orbit: per-race terrain shaders with coast-following pinpoint city lights.</span></li>
+        <li><span>Black hole rebuilt with gravitational lensing and doppler shading; the fold reads as suction instead of a whirlpool.</span></li>
+      </ul>
+      <div class="devlog-figures">
+        <figure class="devlog-figure">
+          <img src="images/devlog/teralith-capital.webp" alt="Teralith capital city: black stepped ziggurats flanking a gold processional boulevard" width="388" height="386" loading="lazy" />
+          <figcaption>Teralith capital — ziggurats on a gold processional</figcaption>
+        </figure>
+        <figure class="devlog-figure">
+          <img src="images/devlog/kithar-scarab.webp" alt="Kithar scarab hull: iridescent green-gold beetle carapace with a single glowing eye" width="804" height="385" loading="lazy" />
+          <figcaption>Kithar hull — the winning scarab carapace</figcaption>
+        </figure>
+      </div>
+      <div class="devlog-tiles">
+        <figure class="devlog-figure">
+          <img src="images/devlog/city-gorrath.webp" alt="Gorrath city: shingled stilt halls over dark fodder pits" width="388" height="380" loading="lazy" />
+          <figcaption>Gorrath — stilt halls</figcaption>
+        </figure>
+        <figure class="devlog-figure">
+          <img src="images/devlog/city-teralith.webp" alt="Teralith city: dark pyramid masses along a gold avenue" width="388" height="380" loading="lazy" />
+          <figcaption>Teralith — processional city</figcaption>
+        </figure>
+        <figure class="devlog-figure">
+          <img src="images/devlog/city-trine.webp" alt="Trine city: pale nacre bubble domes on a dark sea, lit coral from within" width="388" height="392" loading="lazy" />
+          <figcaption>Trine — nacre domes on the sea</figcaption>
+        </figure>
+      </div>
+      <figure class="devlog-figure devlog-strip">
+        <div class="devlog-strip__scroll">
+          <img src="images/devlog/catalog-trine.webp" alt="Trine ship and station catalog: white machined rings around coral-lit water cores" width="2048" height="291" loading="lazy" />
+        </div>
+        <figcaption>Trine catalog — nacre rings, coral-lit water cores · scroll →</figcaption>
+      </figure>
+      <figure class="devlog-figure devlog-strip">
+        <div class="devlog-strip__scroll">
+          <img src="images/devlog/catalog-teralith.webp" alt="Teralith ship and station catalog: navy faceted plate with matte gold chevrons" width="2048" height="291" loading="lazy" />
+        </div>
+        <figcaption>Teralith catalog — navy plate, matte gold chevrons</figcaption>
+      </figure>
+      <figure class="devlog-figure devlog-strip">
+        <div class="devlog-strip__scroll">
+          <img src="images/devlog/catalog-ancient.webp" alt="Ancient ship and station catalog: slate wedge hulls with a cyan centreline, including the Vindicator" width="2048" height="388" loading="lazy" />
+        </div>
+        <figcaption>Ancient catalog — including the Vindicator itself</figcaption>
+      </figure>
+    </div>
+
+    <div class="devlog-group">
+      <div class="devlog-group__head">
+        <h3 class="vtitle">Combat</h3>
+        <span class="devlog-group__range">07-19 → 07-22</span>
+      </div>
+      <ul class="devlog-list">
+        <li><span>Heavy Railgun readability: the tracer wake now drags behind the round; an Overcharged variant joins the family.</span></li>
+        <li><span>Energy weapons share one capacitor per weapon family, and a weapon can be authored to wind up before it fires.</span></li>
+        <li><span>A closing doctrine can boost into reach of a retreating gun.</span></li>
+      </ul>
+    </div>
+
+    <div class="devlog-group">
+      <div class="devlog-group__head">
+        <h3 class="vtitle">Economy &amp; Stations</h3>
+        <span class="devlog-group__range">07-19 → 07-25</span>
+      </div>
+      <ul class="devlog-list">
+        <li><span>Mining stations you own: place one on a belt, it fills a hold with ore — haul it to market and watch the economy move.</span></li>
+        <li><span>Stations burn Power Cells to stay lit, and can be emptied but never destroyed.</span></li>
+        <li><span>Danger maps to richness in every belt; remote market data sits behind subscription tiers; haulers keep their cargo through gates.</span></li>
+      </ul>
+    </div>
+
+    <div class="devlog-group">
+      <div class="devlog-group__head">
+        <h3 class="vtitle">Fleet &amp; Command</h3>
+        <span class="devlog-group__range">07-19 → 07-25</span>
+      </div>
+      <ul class="devlog-list">
+        <li><span>Crew &amp; officers: a slot ladder and three officer types with real effects, run from the dock's FLEET screen — recruits fly hauler and trader routes themselves.</span></li>
+        <li><span>Shift+click and Tab select flights; dock and hail collapse into one interact verb; F9 opens a perfect-scanner inspector.</span></li>
+      </ul>
+    </div>
+
+    <div class="devlog-group">
+      <div class="devlog-group__head">
+        <h3 class="vtitle">Universe &amp; Travel</h3>
+        <span class="devlog-group__range">07-21 → 07-25</span>
+      </div>
+      <ul class="devlog-list">
+        <li><span>Every race got an authored home system — starting with Ennead, the Trine ocean home — and the territory-holders now field their own factions.</span></li>
+        <li><span>Six new planet types, survey designations for unnamed bodies, and The Verge: a frontier system built around the mining loop.</span></li>
+      </ul>
+    </div>
+
+    <div class="devlog-group">
+      <div class="devlog-group__head">
+        <h3 class="vtitle">Interface &amp; Sound</h3>
+        <span class="devlog-group__range">07-16 → 07-22</span>
+      </div>
+      <ul class="devlog-list">
+        <li><span>Map selection panel and pause menu rebuilt as proper scenes; codex articles now unlock through discovery.</span></li>
+        <li><span>Weapon SFX rebuilt from sourced samples, plus two new retro tracker tracks.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span><!-- TODO: show version from the same source as the in-game menu once wired -->in development</span>
+    <span><a href="codex/credits.html">Credits</a> · <a href="mailto:vincent@vandenbraken.com">Contact</a></span>
+    <span>© Vincent van den Braken</span>
+  </footer>
+
+</body>
+</html>

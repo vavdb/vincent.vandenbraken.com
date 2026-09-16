@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fleet, crew, and role AI — design capture — Vindicator</title>
+  <meta name="description" content="Captured 2026-07-10 from the owner&#x27;s spec (Star Valor inspiration). Not yet scheduled; depends on the economy foundation. This closes the loop on the original vision: the ship-clas…" />
+  <link rel="stylesheet" href="../vindicator.css" />
+</head>
+<body class="doc-body">
+  <header class="site-nav">
+    <a class="site-nav__brand" href="../index.html">VINDICATOR</a>
+    <nav class="site-nav__links" aria-label="Section">
+      <a href="../index.html">Home</a>
+      <a href="../codex/index.html">Codex</a>
+      <a href="../design/index.html" class="is-active">Design</a>
+      <a href="../design-language.html">UI language</a>
+      <a href="../index.html#devlog">Devlog</a>
+    </nav>
+    <a class="site-nav__ext" href="../../index.html">Vincent van den Braken</a>
+  </header>
+  <main class="doc-main">
+    <article class="doc-article">
+      <header class="doc-article__head">
+        <a class="doc-back" href="index.html">← Design</a>
+        <span class="vchip">Design</span>
+        <h1 class="vtitle-display">Fleet, crew, and role AI — design capture</h1>
+        <p class="doc-article__summary">Captured 2026-07-10 from the owner&#x27;s spec (Star Valor inspiration). Not yet scheduled; depends on the economy foundation. This closes the loop on the original vision: the ship-clas…</p>
+        <p class="banner banner--warn">Design note — systems rationale, not player-facing codex text.</p>
+      </header>
+      <div class="prose">
+<p>Captured 2026-07-10 from the owner&rsquo;s spec (Star Valor inspiration). Not yet
+scheduled; depends on the economy foundation. This closes the loop on the
+original vision: the ship-class taxonomy (Miner/Salvager/Freighter/Trader)
+and the drones-inherit-roles decision have waited for this since day one.</p>
+<h2 id="fleet">Fleet</h2>
+<h3 id="the-vindicator-is-the-permanent-prime-hull-owner-spec-2026-07-13">The Vindicator is the permanent prime hull (owner spec, 2026-07-13)</h3>
+<p>Vann&rsquo;s progression does NOT discard the namesake fighter when a larger hull
+becomes available. Vann is the substrate core; the Vindicator is his durable
+primary body and remains with him for the whole game. A compatible larger
+ship is a <strong>host</strong> with a Vindicator cradle: the fighter contracts/nests into
+the host and links its core to the host engines, weapon grid, cargo, and crew.
+It can deploy again without losing its own upgrades, silhouette, or damage
+history.</p>
+<p>This creates two upgrade tracks: Vindicator upgrades are personal/deployed
+capability; host upgrades are fleet-scale endurance, capacity, and firepower.
+The desired failure rule is emergency deployment/ejection if a host is lost,
+subject to later balance and implementation design. A host left behind needs
+crew or a fork to operate independently. None of the host-cradle mechanics are
+implemented yet; keep them as a separate progression slice rather than folding
+them invisibly into ordinary docking.</p>
+<p>Player recruits/buys ships and assigns each a role. Fleet panel docked on the
+RIGHT side of the screen, grouped by role:</p>
+<ul>
+<li><strong>[Fighters]</strong> — escort the player (follow + engage hostiles near the player)</li>
+<li><strong>[Miners]</strong> — mine asteroids in the current system, return ore</li>
+<li><strong>[Salvagers]</strong> — salvage ship wrecks (requires: destroyed ships leave
+wrecks instead of vanishing — wreck entities also feed the pixel-destruction
+idea)</li>
+<li><strong>[Haulers]</strong> — keep player-station stock at set levels (requires player
+stations + commodities)</li>
+<li><strong>[Traders]</strong> — buy/sell from/to player stations for profit (requires
+trading economy + price differentials)</li>
+</ul>
+<p>Role AI = compositions of existing brain behaviors (ShipBrain combat,
+TrafficBrain travel/dock patterns). Escort is buildable first; the rest
+unlock as economy slices land.</p>
+<h3 id="escort-is-one-primitive-with-an-anchor-leash-owner-spec-2026-07-11">Escort is ONE primitive with an anchor + leash (owner spec, 2026-07-11)</h3>
+<p>Escort — &ldquo;hold formation on an ANCHOR and engage hostiles near it&rdquo; — is a
+single behavior reused everywhere by swapping just the anchor and the leash
+radius; do NOT write it three times:</p>
+<ul>
+<li><strong>Player-fleet fighter</strong>: anchor = the player, medium leash.</li>
+<li><strong>Drone</strong> (any role): anchor = its carrier, TIGHT leash (launch, act
+locally, return). Drones ARE escorts with a small leash — same code.</li>
+<li><strong>Raider pack</strong>: a spawned group elects a LEADER (e.g. the toughest/first
+hull, or the marauder if present); the rest escort the leader. The pack
+moves and fights as a unit instead of a scatter of loners, and killing the
+leader breaks it. This is emergent from the same escort primitive — the
+anchor is just another ship, not the player.</li>
+</ul>
+<p>So the build order is: escort(anchor, leash) first, then it powers fleet
+fighters, drones, and pirate packs alike. A miner/salvager drone is escort +
+its work behavior on the tight leash.</p>
+<h3 id="combat-ships-roam-when-idle-owner-spec-2026-07-11-built">Combat ships ROAM when idle (owner spec, 2026-07-11) — BUILT</h3>
+<p>DONE: <code>ShipBrain</code> now patrols with no target — a slow loop (PatrolThrottle
+0.5, PatrolRadius 2500) around the spawn anchor, re-picking a point on
+arrival, whiskers keeping it off hulls, trigger cold. Aggro interrupts to
+pursue; patrol resumes when the fight ends. Future refinement: weight the
+roam points to purpose (belt for raiders, lanes for militia) instead of a
+plain circle around spawn.</p>
+<h2 id="crew-officers">Crew / officers</h2>
+<p>Ships carry crew slots scaling with ShipSize (xs = pilot only; s = +1;
+m = +2; l/xl = bridge crew). Officer types modify the ship they&rsquo;re assigned
+to, e.g.:</p>
+<ul>
+<li><strong>Co-pilot</strong> — unlocks autopilot conveniences (auto-dock, auto-follow lane)</li>
+<li><strong>Gunner</strong> — fire rate / extra weapon mount usable</li>
+<li><strong>Navigation officer</strong> — speed/fold charge bonuses</li>
+<li>(mining/salvage specialists for yield later)</li>
+</ul>
+<p>People are assigned to ships; an assigned+crewed ship can join the fleet.
+Officers are the progression glue: finding/hiring better crew upgrades the
+fleet without new hulls.</p>
+<h2 id="drones">Drones</h2>
+<p>Drones inherit Fighter/Miner/Salvager role behaviors but operate in a small
+radius around the player ship (carrier-style: launch, act locally,
+return). Same brain compositions, tighter leash parameter. Drone bay =
+weapon-slot item (WeaponType.Drone reserved since the taxonomy was created).</p>
+<h2 id="dependency-order">Dependency order</h2>
+<ol>
+<li>Economy foundation: commodities, station trading, cargo holds, mineable
+asteroids, wrecks-on-death</li>
+<li>Player stations (buildable orbital platforms — see
+docs/design-stations.md)</li>
+<li>Fleet: recruit/assign UI (right-side panel), escort AI first, then
+miner/salvager/hauler/trader roles as their economy hooks exist</li>
+<li>Crew officers layer</li>
+<li>Drones inherit roles</li>
+</ol>
+      </div>
+      <nav class="doc-pager" aria-label="Adjacent articles">
+        <a class="doc-pager__link" href="design-economy.html">← Mining → trading → construction → modules — design capture</a>
+        <a class="doc-pager__link" href="design-fleets-content.html">Fleet content — runtime IDs, hull ladder, and default loadouts →</a>
+      </nav>
+    </article>
+  </main>
+  <footer class="footer">
+    <span>Built 2026-08-10 from game sources</span>
+    <span><a href="../index.html">Home</a> · <a href="mailto:vincent@vandenbraken.com">Contact</a></span>
+    <span>© Vincent van den Braken</span>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trade Data — Vindicator</title>
+  <meta name="description" content="Buy a trade-data subscription to see prices in systems you&#x27;re not standing in." />
+  <link rel="stylesheet" href="../vindicator.css" />
+</head>
+<body class="doc-body">
+  <header class="site-nav">
+    <a class="site-nav__brand" href="../index.html">VINDICATOR</a>
+    <nav class="site-nav__links" aria-label="Section">
+      <a href="../index.html">Home</a>
+      <a href="../codex/index.html" class="is-active">Codex</a>
+      <a href="../design/index.html">Design</a>
+      <a href="../design-language.html">UI language</a>
+      <a href="../index.html#devlog">Devlog</a>
+    </nav>
+    <a class="site-nav__ext" href="../../index.html">Vincent van den Braken</a>
+  </header>
+  <main class="doc-main">
+    <article class="doc-article">
+      <header class="doc-article__head">
+        <a class="doc-back" href="index.html">← Codex</a>
+        <span class="vchip">Economy</span>
+        <h1 class="vtitle-display">Trade Data</h1>
+        <p class="doc-article__summary">Buy a trade-data subscription to see prices in systems you&#x27;re not standing in.</p>
+        
+      </header>
+      <div class="prose">
+<p>You can always see the prices at the station you&rsquo;re docked at — you&rsquo;re
+standing in it. Seeing prices anywhere ELSE is a service you subscribe to,
+and there&rsquo;s exactly one company selling it.</p>
+<h2 id="the-monopoly">The monopoly</h2>
+<p>Every trade terminal in the galaxy runs the same commercial software, owned
+by a single outfit. Their whole business is distance: the further away you
+want to read a market, the higher the tier you pay for. Dock at any Trade
+station and the MARKET slot shows what your current interface can see and
+what the next tier up would cost — the price sheet is the same everywhere,
+because it&rsquo;s the same company everywhere.</p>
+<p>The reach is measured in starlane hops from wherever you are — the same
+jumps the autopilot counts when it plots you a route:</p>
+<ul>
+<li><strong>None</strong> — no subscription. Only your current system&rsquo;s markets.</li>
+<li><strong>Local</strong> — everything one hop away (the systems your lanes connect to).</li>
+<li><strong>Regional</strong> — out several hops, a whole neighbourhood of systems.</li>
+<li><strong>Galaxy</strong> — every system the lane network reaches, however far.</li>
+</ul>
+<p>A system with no working lane to you — somewhere you can only reach by
+folding — is off the network entirely. No tier shows its prices; that&rsquo;s part
+of why goods from a fold-only system are worth chasing. Nobody can price
+what nobody can see.</p>
+<h2 id="the-cracked-client">The cracked client</h2>
+<p>There&rsquo;s another option, and it isn&rsquo;t sold by the monopoly. Somewhere
+shadier you can pick up a pirated trade client — free, and it ignores the
+range limits completely: it&rsquo;ll read markets clear across the galaxy. The
+catch is it&rsquo;s incomplete. It only ever cracked SOME of the commodity feeds,
+so half your price rows come up as <code>???</code> — you can see far, but not
+everything.</p>
+<p>That&rsquo;s the real early choice: pay the monopoly for a narrow view that&rsquo;s
+complete as far as it reaches, or run the cracked client for a galaxy-wide
+view full of holes. And running unlicensed software isn&rsquo;t free of
+consequence — militia and civilian authorities take a dim view of it if
+they ever catch you with it installed.</p>
+<h2 id="reading-the-market-slot">Reading the market slot</h2>
+<p>At a Trade station the MARKET section lists every station within your tier&rsquo;s
+range, nearest first, with the danger tier of its system and how many hops
+away it is. Under each station are its commodity prices — the same
+danger-and-supply prices you&rsquo;d sell into if you hauled your cargo there
+(see <a href="trading.html">Trading</a>). A pirated feed shows the same layout with the
+gaps it can&rsquo;t read blanked out. Use it to decide where a full hold is worth
+carrying before you burn the fuel to get there.</p>
+      </div>
+      <nav class="doc-pager" aria-label="Adjacent articles">
+        <a class="doc-pager__link" href="trading.html">← Trading</a>
+        <a class="doc-pager__link" href="independents.html">Independents →</a>
+      </nav>
+    </article>
+  </main>
+  <footer class="footer">
+    <span>Built 2026-08-10 from game sources</span>
+    <span><a href="../index.html">Home</a> · <a href="mailto:vincent@vandenbraken.com">Contact</a></span>
+    <span>© Vincent van den Braken</span>
+  </footer>
+</body>
+</html>

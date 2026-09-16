@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Navigation — Vindicator</title>
+  <meta name="description" content="Switch between a close flight view and a free, zoomable navigation chart." />
+  <link rel="stylesheet" href="../vindicator.css" />
+</head>
+<body class="doc-body">
+  <header class="site-nav">
+    <a class="site-nav__brand" href="../index.html">VINDICATOR</a>
+    <nav class="site-nav__links" aria-label="Section">
+      <a href="../index.html">Home</a>
+      <a href="../codex/index.html" class="is-active">Codex</a>
+      <a href="../design/index.html">Design</a>
+      <a href="../design-language.html">UI language</a>
+      <a href="../index.html#devlog">Devlog</a>
+    </nav>
+    <a class="site-nav__ext" href="../../index.html">Vincent van den Braken</a>
+  </header>
+  <main class="doc-main">
+    <article class="doc-article">
+      <header class="doc-article__head">
+        <a class="doc-back" href="index.html">← Codex</a>
+        <span class="vchip">Flight</span>
+        <h1 class="vtitle-display">Navigation</h1>
+        <p class="doc-article__summary">Switch between a close flight view and a free, zoomable navigation chart.</p>
+        
+      </header>
+      <div class="prose">
+<p>Your helm has two views of the same live sky. Flight view stays close enough
+to read the Vindicator at combat scale. The chart is its own navigation view:
+orbit rings, names, lanes, and whole systems laid over the world while it
+keeps moving underneath.</p>
+<ul>
+<li><strong>Zoom</strong> (mouse wheel, or +/-) changes scale inside the view you are using.
+Flight zoom stays in its close combat band; chart zoom runs from system
+detail out to the whole known galaxy.</li>
+<li><strong>The map key</strong> (M) switches views. Press it once to open the chart;
+press it again to close the chart, discard its pan, restore your flight
+zoom, and focus the camera on your ship.</li>
+<li><strong>Hold right mouse and drag</strong> to move the chart camera freely. Let go and
+the chart remains where you placed it, ready for inspection or selection.</li>
+<li><strong>Lane lines</strong> trace the paired, organic currents the gates actually fling
+ships along—one outward, one home. A lit lane runs both ways; a dulled
+one means an endpoint is dormant or broken: the lane is charted, not
+crossable. See <a href="travel-starlanes.html">Starlanes &amp; Stargates</a>.</li>
+<li><strong>Select, then act.</strong> In the chart, <strong>left-click</strong> a marked planet, station,
+gate, star, or a whole system — and it lights up as your selection. A right-edge
+<strong>selection panel</strong> shows who you marked, whether a lane route or fold is
+available, and an <strong>autopilot ETA</strong> (cruise estimate; multi-hop legs add a
+rough per-lane budget). The Autopilot and Fold buttons stay on the panel
+whether or not they apply to the current mark — one that cannot fire is
+disabled, not hidden, so the door is always visible. You can press the
+buttons or the bound keys (both live in settings). Economy / scanner
+intel on that panel is reserved for later hardware. While the chart is open
+your manual helm and both mouse buttons belong to navigation: held thrust,
+strafe, brake, boost, and weapons stay neutral, so inspection never flies or
+fires the ship behind your back. Close it and every held flight control resumes
+immediately. An engaged autopilot still flies its order while you study the
+route. Fold charge and readiness remain in the lower flight instrument.
+Pressing Fold from the chart drops you straight back to flight view — the
+charge and the wormhole throat happen around your own hull, not hidden under
+the map. Autopilot leaves the chart open, since watching the route is the point.</li>
+</ul>
+<p>Every world, station, and gate flips from its real tiny render to a
+schematic icon at the same moment — one shared zoom band, not a size
+contest where a gas giant outlasts a moonlet. The chart draws names
+and rings for planets and stations while a system fills your view. Stations
+use a clean playing-card diamond; a stargate is the related diamond with a
+circle inside, so the two never masquerade as each other.
+At galaxy range only the systems themselves keep their names. Stars
+never draw an orbit ring of their own — even a binary pair reads as
+two points of light, not a traced path. Hover anything marked for the
+details.</p>
+<p>A system you have never entered shows even less: only its star. The
+light has been crossing the void for years — position, class, whether
+it is one sun or several — but planets, moons, gates and stations do not
+announce themselves across light-years, and the chart refuses to invent
+them. Fly in once and the whole system fills in for good; hover an
+unvisited star and the card says so plainly: <strong>UNVISITED · STAR CHART
+ONLY</strong>. A lane line draws as soon as you have stood at either end of it,
+because your own gate names its destination — but where that lane lands,
+beyond the star itself, stays unwritten until you go. Travel always buys
+you something: the map fills in first, and only then do the rules below
+start deciding what you can currently see of it.</p>
+<p>Systems with none of your ships in them draw as dark silhouettes
+(charted, not watched), and ships or stations beyond your scanner&rsquo;s
+reach are simply not on the plot. The chart shows what your hardware
+can vouch for; see <a href="scanners.html">Scanners</a>.</p>
+<p>The corner radar is a different instrument: close contacts, real time,
+always on. Its subtle square backing is the whole plotting surface—orbits and
+contacts use the space right out to its edge. A thin highlight on the right
+mirrors the identity block&rsquo;s left accent; a fine four-sided border contains the
+plot, without a second little radar circle or title bar stealing room from the sky.</p>
+<p>Flight, pause, and chart are contexts inside the same <strong>VINDICATOR //
+COGNITIVE OVERLAY</strong>. Blue-grey rails, pale cyan marks, and compact technical
+labels show which part of your cognition has focus. The same dense, quiet blue
+grid lives inside every cognitive surface—status blocks, chart plates, menus,
+the square radar, and the low flight console—without washing across the free
+space where you fly. Flight itself stays sparse:
+three small lines at upper left name your ship, local system, and credits, while
+one low centered trapezoid rising from the bottom baseline reports
+<strong>shield / armor / hull</strong> and <strong>speed / energy / fold</strong> from the live hull in
+two compact rows. Fold says READY, CHARGING, or a
+dash; it never invents ammunition or crystal counts. The
+pause surface suspends flight but keeps local input and calibration available:
+<strong>Key Bindings</strong> rebinds every helm and weapon key, <strong>Audio Settings</strong> sets
+<strong>VOLUME</strong>, <strong>MUSIC</strong>, and <strong>SFX</strong> levels that persist between sessions and
+mute themselves the instant the window loses focus. The chart uses one quiet
+navigation header, adds selection status, and prints its live controls along
+the lower edge—there is no staged scan/route menu to operate. Those rails
+never catch the pointer: LMB selection and RMB pan still belong directly to
+the chart beneath them.</p>
+<p>Soft amber text is different on purpose. A line headed <strong>CASSIUS // EXTERNAL</strong>
+is received chatter or warning, never a helm command, a communication menu, or
+the owner of the surface. There is no permanent standby panel during ordinary
+flight: the annotation appears only when CASSIUS actually has something to say.
+When it disappears, every Vindicator control and route remains available.</p>
+<h2 id="whose-overlay-is-this">Whose overlay is this?</h2>
+<p>Yours. The interface is the readable edge of your own substrate, shaped by
+the hull currently housing it. In the medical shuttle it wakes as a bare
+<strong>Continuity recovery interface</strong>. Once you enter the Vindicator, the same
+mind opens through the <strong>Vindicator cognitive overlay</strong>: helm, weapons,
+chart, damage, and memory presented as one continuous sense rather than a
+pile of cockpit screens.</p>
+<p>CASSIUS can speak through it, mark a target, append a warning, or turn a
+life-threatening situation into an invoice. He does not own the overlay.
+He is an external contact on your comms — a very persistent one — and his
+voice sits inside your interface because that is where you receive him. There
+is no hail or communications-action system yet; no dormant action menu is
+pretending otherwise.
+The overlay marks that boundary in its visual grammar: cool blue-grey/cyan
+substrate rails and readouts are yours; amber <strong>CASSIUS // EXTERNAL COMMS</strong>
+annotations are received traffic. If the amber channel goes quiet, your helm
+and senses remain your own. The faint grid and flowing edge rails are substrate
+orientation marks, not physical cockpit glass; they stay behind every readout
+and never take the pointer away from helm or weapons.
+When the Vindicator eventually nests in a larger compatible host, the same
+overlay gains a host link; you remain Vann, housed in the Vindicator, with
+another ship wrapped around it.</p>
+<h2 id="how-your-hull-flies">How your hull flies</h2>
+<p>Space does not slow you down. Thrust builds speed and the speed STAYS —
+cut the engine and you coast on the same heading, as far as you like, for
+free. Spin the nose while you drift and your momentum keeps carrying you
+the old way: you can fly sideways, or backward, guns pointed one direction
+and travelling another. Nothing halts you but a wall or your own retros.
+The <strong>space brake</strong> is your stop: hold it and the ship burns hard against
+its own velocity until it hangs still in the void. Tap thrust, coast, line
+up a shot as you slide past, brake when you want to plant your feet — that
+is the whole of flying out here. (It is also why parking by a planet,
+below, is a thing: with the brake off you never truly come to rest, so you
+settle into the world&rsquo;s own drift instead.)</p>
+<h2 id="handing-over-the-helm">Handing over the helm</h2>
+<p>Select a world — in your own system or a distant one — and press your
+<strong>Autopilot</strong> key: the helm takes the stick, and the ship turns, burns,
+and eases off on its own to arrive near-stopped at the mark. A green ring
+on the chart shows where the errand ends.</p>
+<p>The helm does something better than chase a moving target: it leads it.
+Planets, moons, and stations do not wait — so the autopilot meets them
+where they WILL be, not where they are, and aims to arrive slow and
+close enough that the parking drift (see below) takes over the moment it
+lets go. You coast in beside the world and settle into its orbit without
+touching a thing.</p>
+<p>Pick a target in another system and the autopilot will TRAVEL there —
+not across the empty void, but the sane way: it flies you to the right
+stargate, holds you in the ring until it flings you down the lane, and
+picks up again on the far side, hop after hop, until it sets you down at
+the mark. It is hands-off long-haul travel along the lanes you already
+know. What it cannot do is reach a system no lane touches — a fold-only
+place like Veil. For those, and whenever you would rather skip the trip,
+select the system and press your <strong>Fold</strong> key instead; see
+<a href="travel-folding.html">Folding</a>. The chart only shows the Autopilot chip when
+a lane route exists, so you always know which door is open.</p>
+<p>The helm is always yours. Touch the stick — thrust, strafe, or the
+brake — and the autopilot yields instantly, mid-burn, no argument, and
+the whole voyage is cancelled. It does NOT quit when a gate flings you
+down a lane, though: that transit is part of the plan, so it simply waits
+out the crossing and resumes on the far side. Only your own hand on the
+stick ends the trip. Your aim stays free the whole way: the cursor still
+points your nose the instant you take the helm, and the trigger never
+stops working.</p>
+<h2 id="parking-by-a-planet">Parking by a planet</h2>
+<p>Space is not still, and neither is the ground you park over. Coast to a
+near stop close to a planet, ease off the stick, and the hull settles
+into the world&rsquo;s own motion: you drift along with the planet&rsquo;s orbit
+instead of watching it slide out from under you. It is a soft pull, not
+a tractor beam — a few hull-lengths of the body&rsquo;s own size is as far as
+it reaches, it only takes hold once you have shed most of your speed,
+and the first touch of thrust or strafe hands the controls straight back
+to you. A ship merely passing through at speed feels nothing.</p>
+<p>Want to hold your mark against the sky instead? Hit the space brake. The
+brake kills your motion relative to space itself, so the planet resumes
+its slow crawl past your canopy while you sit fixed where you stopped.
+Brake to hold the void; let go to ride the orbit.</p>
+      </div>
+      <nav class="doc-pager" aria-label="Adjacent articles">
+        
+        <a class="doc-pager__link" href="scanners.html">Scanners →</a>
+      </nav>
+    </article>
+  </main>
+  <footer class="footer">
+    <span>Built 2026-08-10 from game sources</span>
+    <span><a href="../index.html">Home</a> · <a href="mailto:vincent@vandenbraken.com">Contact</a></span>
+    <span>© Vincent van den Braken</span>
+  </footer>
+</body>
+</html>

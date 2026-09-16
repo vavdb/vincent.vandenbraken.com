@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Player-owned stations — design capture — Vindicator</title>
+  <meta name="description" content="Captured 2026-07-19. The &quot;stations design&quot; cross-referenced by docs/design-fleet.md (&quot;[Haulers]&quot;/&quot;[Traders]&quot; require player stations) and docs/design-economy.md. Sequenced **step 2…" />
+  <link rel="stylesheet" href="../vindicator.css" />
+</head>
+<body class="doc-body">
+  <header class="site-nav">
+    <a class="site-nav__brand" href="../index.html">VINDICATOR</a>
+    <nav class="site-nav__links" aria-label="Section">
+      <a href="../index.html">Home</a>
+      <a href="../codex/index.html">Codex</a>
+      <a href="../design/index.html" class="is-active">Design</a>
+      <a href="../design-language.html">UI language</a>
+      <a href="../index.html#devlog">Devlog</a>
+    </nav>
+    <a class="site-nav__ext" href="../../index.html">Vincent van den Braken</a>
+  </header>
+  <main class="doc-main">
+    <article class="doc-article">
+      <header class="doc-article__head">
+        <a class="doc-back" href="index.html">← Design</a>
+        <span class="vchip">Design</span>
+        <h1 class="vtitle-display">Player-owned stations — design capture</h1>
+        <p class="doc-article__summary">Captured 2026-07-19. The &quot;stations design&quot; cross-referenced by docs/design-fleet.md (&quot;[Haulers]&quot;/&quot;[Traders]&quot; require player stations) and docs/design-economy.md. Sequenced **step 2…</p>
+        <p class="banner banner--warn">Design note — systems rationale, not player-facing codex text.</p>
+      </header>
+      <div class="prose">
+<p>Captured 2026-07-19. The &ldquo;stations design&rdquo; cross-referenced by
+docs/design-fleet.md (&quot;[Haulers]&quot;/&quot;[Traders]&quot; require player stations) and
+docs/design-economy.md. Sequenced <strong>step 2</strong> in both dependency orders: it
+lands after the economy foundation (commodities, cargo, mining/salvage,
+station trading — Econ E0–E4) and <strong>before</strong> the fleet roles that buy and
+sell against it. Not yet scheduled.</p>
+<p>The one-line fantasy is already in the story bible
+(docs/story-outline.md:190): <em>&quot;Player stations | Waypoints. Vann builds
+&lsquo;home&rsquo; because he can&rsquo;t go back to his original one.&quot;</em> A player station is
+the first thing in the game the player MAKES rather than finds — a fixed
+point of their own in a one-way galaxy.</p>
+<h2 id="what-already-exists-2026-07-19-audit-build-on-it-dont-reinvent">What already exists (2026-07-19 audit — build on it, don&rsquo;t reinvent)</h2>
+<p>A <code>Station</code> is a live, shootable, dockable entity today; the gap is that
+every station is <strong>content-authored at boot</strong>, never built at runtime. The
+pieces a player station needs, that already ship:</p>
+<ul>
+<li><strong><code>Station</code> (features/stations/Station.cs)</strong> — an <code>Area2D</code> spawned from a
+<code>StationDef</code>, with a traced hull collision polygon, a dock zone
+(<code>DockRadius = VisualRadius + DockBuffer</code>), a <code>Health</code> shield/hull that
+when beaten down sets <code>Disabled</code> (turrets go dark, hull dims — &ldquo;a
+disabled picket is a window, not a kill&rdquo;), map-intel fog-of-war meta, and
+<code>ArmTurrets()</code> — procedural ring OR author-defined <code>Mounts</code> painted by the
+HardpointEditor. <strong>All of the danger-interaction machinery is already
+here.</strong></li>
+<li><strong><code>StationDef</code> (features/universe/StarSystemDef.cs)</strong> — <code>Id</code>, <code>Name</code>,
+<code>Type</code> (<code>Trade</code>/<code>Defense</code>/<code>Shipyard</code>/<code>Refinery</code>, common/Taxonomy.cs),
+<code>OrbitRadius</code>, <code>Angle</code>, <code>FactionId</code>, turret fields (<code>Weapon</code>, <code>Turrets</code>,
+<code>Mounts</code>), <code>Shield</code>/<code>ShieldRegen</code>/<code>Hull</code> (defaults 250/18/600), and
+<code>SupplySkew</code>. Stations are placed either as <code>OrbitDef.Stations</code> (child of
+a planet, orbits it) or a free-floating orbit entry of <code>Kind == &quot;station&quot;</code>
+(orbits the star).</li>
+<li><strong><code>DockScreen</code> (features/stations/DockScreen.cs)</strong> — the docked UI:
+REPAIR, REFUEL, SELL (one row per held commodity), REFINE (Refinery
+stations only), DEPART. Sell/refine already read the player&rsquo;s ship
+<code>CargoHold</code>. <strong>The deposit/withdraw UI is a fourth section in this same
+screen, not a new screen.</strong></li>
+<li><strong><code>GatherBrain</code> (features/ai/GatherBrain.cs)</strong> — independent miners and
+salvagers fly a full hold to the nearest station and <code>Cargo.Clear()</code> it:
+<em>&quot;NPCs bank no ledger — the cargo just clears.&quot;</em> A player station is
+exactly the place that ledger should start existing.</li>
+<li><strong><code>EconomySnapshot</code> (features/debug/EconomySnapshot.cs)</strong> — the F8
+read-model already has the plug points wired to zero:
+<code>Quantity</code> is hardcoded <code>0</code> (&ldquo;stations hold no per-commodity stock yet …
+the day stock ships it is a one-line wire-up&rdquo;), and <code>Outgoing</code> is <code>0</code>
+with <code>InboundCargo</code> as the documented outbound plug point (&ldquo;an outbound
+source feeds the same shape once haulers land&rdquo;). <strong>A player station&rsquo;s
+stored stock is that <code>Quantity</code> field; a hauler draining it is that
+<code>Outgoing</code> field.</strong></li>
+<li><strong><code>FactionState</code> (features/factions/FactionState.cs)</strong> — <code>PlayerId = &quot;faction.player&quot;</code> already exists (it is the collision-layer owner the
+dock zone wakes on). Turrets inherit their station&rsquo;s faction, so a
+<code>faction.player</code> station&rsquo;s guns shoot whoever the player is at war with,
+for free.</li>
+</ul>
+<h3 id="what-does-not-exist-yet-the-genuinely-new-work">What does NOT exist yet (the genuinely new work)</h3>
+<ol>
+<li><strong>Runtime station spawn.</strong> Nothing builds a <code>Station</code> into the live tree
+after boot; <code>StarSystem</code> instances them from JSON once. A player station
+must be constructed on demand and parented into the current
+<code>StarSystem</code>.</li>
+<li><strong>World-state persistence.</strong> The only things that persist today are
+input bindings and audio settings (<code>user://</code>); there is <strong>no save of
+runtime-created world objects.</strong> A &ldquo;home&rdquo; that vanishes on reload is not
+a home — persistence is a hard prerequisite, and it does not exist. This
+is the single biggest dependency this design surfaces.</li>
+<li><strong>Station-side storage.</strong> <code>CargoHold</code> lives on the ship and is emptied,
+not banked. A delivery-hold platform needs a persistent hold <em>on the
+station</em> that the player deposits into and withdraws from.</li>
+<li><strong>Player hull art.</strong> <code>Station.HullSpriteByFaction</code> covers civilian /
+militia / pirate only; a <code>faction.player</code> station falls back to the
+civilian dreadnought today. A dedicated player-station silhouette is a
+nice-to-have, not a blocker.</li>
+</ol>
+<h2 id="mvp-the-delivery-hold-platform">MVP — the delivery-hold platform</h2>
+<p>Per docs/design-universe.md&rsquo;s repair-supply-chain framing (the buildable
+MVP is a <strong>manual haul</strong>, &ldquo;automation slots in later without changing the
+delivery interaction itself, since &lsquo;cargo arrives at the gate&rsquo; doesn&rsquo;t care
+whether a player or a drone carried it&rdquo;), the first player station is a
+<strong>dumb, persistent locker in space</strong> — no market, no automation.</p>
+<ul>
+<li><strong>What it stores.</strong> One persistent <code>CargoHold</code> on the station (the same
+<code>CargoHold</code> type the ship uses — a capacity in units holding commodity
+stacks), sized generously (a few multiples of the ship hold, tune to
+~500–1000 units) so it is a stockpile, not a second backpack. It stores
+any commodity: raw ore, salvage, refined components alike.</li>
+<li><strong>Who can deliver.</strong>
+<ul>
+<li><strong>The player</strong>, by docking: the <code>DockScreen</code> gains a STORAGE section
+below CARGO — one DEPOSIT row per held commodity (hold → station) and
+one WITHDRAW row per stored commodity (station → hold, capped by ship
+free capacity). This is the MVP retrieval path: <strong>you dock and pull
+your stuff out.</strong></li>
+<li><strong>Own-fleet gather ships</strong>, immediately and for free: <code>GatherBrain</code>
+already runs a full hold to the nearest station and clears it. For an
+<strong>owned</strong> target station, bank the hold into the station&rsquo;s <code>CargoHold</code>
+instead of <code>Clear()</code>ing it (respecting free capacity; overflow stays in
+the ship hold and it loiters or re-routes). This is what makes a
+forward mining station worth building — your miners fill it while you
+are elsewhere.</li>
+<li><strong>Independents</strong> keep clearing to the void as they do now (they bank no
+ledger); depositing into a <em>player&rsquo;s</em> hold is an own-fleet behavior, not
+a gift from unaligned NPCs.</li>
+</ul>
+</li>
+<li><strong>How the player retrieves.</strong> Dock → STORAGE → WITHDRAW (or SELL straight
+from the ship hold at a Trade-type station as today). No teleport, no
+remote access in the MVP — the waypoint is a real place you fly back to.</li>
+</ul>
+<h2 id="cost-build-flow">Cost + build flow</h2>
+<p><strong>Cost model — reuse the mineral chain, don&rsquo;t invent a build currency.</strong>
+Mirroring design-universe.md&rsquo;s gate-repair rule (&ldquo;reuse an existing
+commodity … rather than invent a single-purpose item — no new drop table&rdquo;),
+a station is bought with a <strong>structural-material cost + a credits fee</strong>:</p>
+<ul>
+<li><strong>Materials:</strong> a batch of the T1 structure commodity — raw <strong>Ferrite</strong>
+(<code>baseWorth</code> 4) or its refined <strong>Alloy Plate</strong> (<code>baseWorth</code> 11), which is
+literally described in commodities.json as <em>&quot;banked into hull and
+structure stock.&quot;</em> A delivery-hold platform on the order of <strong>~150–250
+Alloy Plate</strong> (or a larger raw-Ferrite equivalent) is a meaningful sink
+for a player who has run the mine→refine loop a few times, without being
+an endgame wall. Higher station types (defense, refinery) cost more and
+add a higher-tier component (Armor Plating / Weapon Core).</li>
+<li><strong>Credits:</strong> a flat fee on top, paid from <code>PlayerWallet</code>, in the low
+thousands — the same wallet that pays for repairs, so it competes with
+the existing credit sinks for pacing.</li>
+<li><strong>Where the materials come from:</strong> the ship hold at build time (you haul
+the plates to the build site), consumed on confirm — the same
+consume-cargo interaction the gate-repair MVP uses.</li>
+</ul>
+<p><strong>Where placement is legal.</strong> Reuse the existing orbit-slot model rather
+than free placement anywhere:</p>
+<ul>
+<li>Placement is into an <strong>orbital slot in the current system</strong> — a
+free-floating station orbit (<code>Kind == &quot;station&quot;</code>, orbits the star) or a
+slot around an existing planet (<code>OrbitDef.Stations</code>). The build UI offers
+the legal slots; the player is not dropping a station into a star or on
+top of a belt rock.</li>
+<li><strong>Separation rule:</strong> a candidate slot is legal only if it clears existing
+stations and bodies by more than the sum of their <code>VisualRadius</code> +
+<code>DockBuffer</code> (the same radii the hull collision and dock zone already
+use) — no overlapping dock zones.</li>
+<li><strong>Belt/graveyard proximity matters for support stations:</strong> a station
+built near a belt is where your assigned miners will dump (they pick
+<code>NearestStation</code>), so &ldquo;build near the ore&rdquo; is an emergent placement
+incentive, not a special rule.</li>
+<li><strong>One per system (MVP limit).</strong> The fantasy is a <em>waypoint</em> — a home per
+system, not a wall of stations. One player station per <code>StarSystem</code> for
+the MVP; lift the cap later if fleet logistics want relay chains. This
+also sidesteps station-spam pathologies in the presence-gated sim before
+they can start.</li>
+</ul>
+<p><strong>Build time.</strong> Instant-spawn is the simplest MVP and is acceptable
+(consume cost → station appears). The recommended small step up is a
+<strong>short build timer</strong> (a construction state on the placed <code>Station</code>, hull
+dimmed / turrets inert until complete) — this creates the natural
+danger window (below) without new systems: it is just the existing
+<code>Disabled</code> dimming reused as an &ldquo;under construction&rdquo; look.</p>
+<h2 id="what-it-does-staged">What it DOES, staged</h2>
+<p>The delivery-hold platform is deliberately the floor; each later stage
+wires a plug point that already exists.</p>
+<ol>
+<li><strong>Hold (MVP).</strong> Persistent storage; deposit/withdraw at the dock;
+own-fleet miners bank into it. No prices, no automation.</li>
+<li><strong>Buy/sell (stage 1).</strong> The station posts a market: it stocks
+commodities and buys/sells them, wiring the <code>EconomySnapshot.Quantity</code>
+plug (currently hardcoded <code>0</code>) to the station&rsquo;s real stored stock, and
+giving <code>DockScreen</code> SELL/BUY rows a player-station counterpart. Now the
+station is a market node your traders can arbitrage against, not just a
+locker. Supply/demand rides the existing <code>SupplySkew</code> field until real
+per-commodity stock pricing ships.</li>
+<li><strong>Automation slots (stage 2).</strong> Station modules: a <strong>refinery module</strong>
+(flips the station to expose the existing Refinery REFINE rows), a
+<strong>defense module</strong> (arms turrets via the existing <code>ArmTurrets</code> — see
+Danger), a <strong>drone bay</strong> (own miners/salvagers/haulers based here on a
+tight leash — the escort primitive&rsquo;s carrier anchor, docs/design-fleet.md).
+Modules are the &ldquo;automation slots in later&rdquo; half of the universe-doc
+promise: the hold and delivery interaction never change, the station
+just starts doing work while you are away.</li>
+</ol>
+<h2 id="fleet-interlock-why-this-is-step-2-before-roles">Fleet interlock (why this is step 2, before roles)</h2>
+<p>docs/design-fleet.md&rsquo;s role list makes the dependency explicit — two roles
+<strong>cannot exist until player stations do</strong>:</p>
+<ul>
+<li><strong>[Haulers]</strong> &ldquo;keep player-station stock at set levels&rdquo; — a hauler&rsquo;s
+order is <em>(source station, target station, commodity, target level)</em>; it
+moves stock between player stations (or from a market to a player
+station). It wires the <code>EconomySnapshot.Outgoing</code> plug (a station-
+departure feeding the same <code>InboundCargo</code> shape in reverse).</li>
+<li><strong>[Traders]</strong> &ldquo;buy/sell from/to player stations for profit&rdquo; — a trader
+arbitrages price differentials (the danger/supply skew already in
+<code>SellMath</code>) between a player station and remote markets.</li>
+</ul>
+<p>Both need a player station as an endpoint, which is why the platform lands
+first. <strong>Recruit/assign UI implication:</strong> the right-side fleet panel
+(design-fleet.md) role assignment for a hauler/trader must let the player
+pick a <em>player-station endpoint</em> from a list of their own stations — so the
+station registry (which stations the player owns, per system) that
+persistence produces is also the data source the assign UI reads.</p>
+<h2 id="danger-interaction">Danger interaction</h2>
+<p>The danger=richness rule (docs/design-economy.md) gets teeth for stations:
+a stockpile in a deadly system is a target, and almost all of the mechanism
+already exists.</p>
+<ul>
+<li><strong>Pirates raid.</strong> A raider pack (the escort primitive with the station as
+its anchor target, design-fleet.md) can attack a player station. The
+station&rsquo;s <code>Health</code> shield already models this: beaten down → <code>Disabled</code>
+(turrets dark, hull dimmed). <strong>New consequence:</strong> while a player station
+is <code>Disabled</code>, raiders can loot its delivery hold — a disabled station is
+a window on your <em>stockpile</em>, not just its guns. This makes an
+undefended forward station in Karda/Veil a real risk, not free storage.</li>
+<li><strong>Defense is the existing turret system.</strong> <code>ArmTurrets</code> already rings a
+hull with turrets (procedural or author-mounted) that inherit faction and
+shoot by standings. A player <strong>Defense-type</strong> station, or a defense
+module (stage 2), arms the platform; turrets suppress while the shield is
+down and resume when it regenerates — shipped behavior. A player station
+defends itself the moment it is armed, with zero new combat code.</li>
+<li><strong>The knobs are content, not hardcode:</strong> shield pool, regen, turret count
+and mounts are all <code>StationDef</code> fields — a cheap hold platform ships
+soft, an expensive fortified one ships hard.</li>
+</ul>
+<h2 id="sequencing-implementation-card-dependency-list">Sequencing — implementation card dependency list</h2>
+<p>Ordered; each card is independently shippable and moves the board one step.</p>
+<ol>
+<li><strong>World-state persistence (prerequisite, may predate this feature).</strong>
+Save/load of runtime-created world objects to <code>user://</code>. Nothing like it
+exists today (only input/audio settings persist). If a save system is
+already planned for other runtime state (fleet, wallet, discovered
+lanes), player stations ride it; if not, this card scopes the minimal
+version: persist the set of player-built <code>StationDef</code>s + their stored
+<code>CargoHold</code> contents, per system, and re-spawn them on load. <strong>Hard
+blocker for the &ldquo;home&rdquo; fantasy — do not ship a station that vanishes on
+reload.</strong></li>
+<li><strong>Runtime station spawn + player ownership.</strong> Build a <code>Station</code> from a
+<code>StationDef</code> into the live current <code>StarSystem</code> after boot; add
+<code>faction.player</code> to <code>HullSpriteByFaction</code> (or accept the civilian
+fallback); a player-station registry (owned stations per system) that
+the fleet assign UI and persistence both read.</li>
+<li><strong>Station-side storage hold + dock deposit/withdraw.</strong> A persistent
+<code>CargoHold</code> on owned stations; <code>DockScreen</code> STORAGE section
+(deposit/withdraw rows, mirroring the SELL/REFINE row pattern);
+<code>GatherBrain</code> banks an owned target station&rsquo;s hold instead of clearing.</li>
+<li><strong>Build UI + placement validation.</strong> Orbit-slot picker in the current
+system, legality checks (free slot, separation via <code>VisualRadius + DockBuffer</code>, one-per-system), cost check + consume (Ferrite/Alloy Plate
+from hold + credits from wallet), optional build timer reusing the
+<code>Disabled</code> dimming.</li>
+<li><strong>Buy/sell stock (stage 1).</strong> Wire <code>EconomySnapshot.Quantity</code> to real
+station stock; player-station market rows.</li>
+<li><strong>Fleet haulers/traders (design-fleet.md step 3).</strong> Consume the above;
+wire <code>EconomySnapshot.Outgoing</code>. Depends on 3 + 5.</li>
+<li><strong>Automation modules (stage 2).</strong> Refinery / defense / drone-bay modules.
+Depend on 2 (station entity) + the drone/escort primitive.</li>
+</ol>
+<p>Steps 1–4 are the MVP delivery-hold platform. 5–7 are the layered depth.</p>
+<h2 id="alternatives-considered-rejected">Alternatives considered + rejected</h2>
+<ul>
+<li><strong>Mobile base / station-as-ship.</strong> Rejected: <code>Station</code> is a static,
+orbit-anchored <code>Area2D</code> with a traced hull; mobility belongs to the
+Vindicator host-cradle progression (design-fleet.md &ldquo;permanent prime
+hull&rdquo;), not to stations. A station is a <em>fixed point</em> by design — that is
+the whole &ldquo;waypoint / home&rdquo; fantasy.</li>
+<li><strong>Free placement anywhere in space.</strong> Rejected: breaks the orbit-slot
+content model every existing station uses and invites station spam in the
+presence-gated one-world-space sim. Orbit slots + separation keep
+placement legible and collision-safe for free.</li>
+<li><strong>Ship-hold storage reused verbatim, no persistence.</strong> Rejected: a home
+that does not survive reload is not a home. Persistence is the point, not
+a polish pass — hence it leads the sequencing.</li>
+<li><strong>A bespoke &ldquo;Station Kit&rdquo; build item.</strong> Rejected for the same reason
+design-universe.md rejected a bespoke &ldquo;Gate Repair Kit&rdquo;: reuse
+Ferrite/Alloy Plate (already in commodities.json, already mineable and
+refinable) so building a station is a <em>sink for the economy that exists</em>,
+with no new drop table or shop entry.</li>
+<li><strong>Resources-only, no credit fee.</strong> Rejected: credits are the established
+pacing sink (wallet, repair costs); a pure-materials price would decouple
+station-building from the credit economy the rest of the dock screen
+runs on.</li>
+<li><strong>Instant remote access to station storage.</strong> Rejected for the MVP:
+remote withdrawal deletes the reason to fly back, collapsing the waypoint
+into a menu. Retrieval-by-docking keeps stations <em>places</em>. (Remote
+read-only <em>stock visibility</em> via the trade-data tiers is a fine later
+perk — that is information, not teleporting cargo.)</li>
+</ul>
+<h2 id="codex-draft-player-voiced-article-goes-to-assetscodex-when-the-mvp-ships">Codex-draft — player-voiced article (goes to assets/codex/ WHEN the MVP ships)</h2>
+<p>Per the Codex rule (CLAUDE.md), the codex directory stays
+implementation-accurate — this draft lives here until the mechanic ships,
+then lands as <code>assets/codex/stations-player.md</code> in the same change,
+trimmed to what actually shipped.</p>
+<blockquote>
+<h1 id="building-a-home">Building a Home</h1>
+<p>You can&rsquo;t go back to the station you woke up in. So build another.</p>
+<p>A platform of your own is the first thing out here that&rsquo;s <em>yours</em> — not
+salvaged, not captured, made. Haul the plating to an empty orbit, pay the
+yard fee, and a hull unfolds into a fixed point you can always fly back
+to.</p>
+<p><strong>What it does at first.</strong> It holds things. Dock, and you can leave cargo
+in the station&rsquo;s hold instead of carrying it — a stockpile that stays put
+while you range out for more. Miners you&rsquo;ve assigned will dump their runs
+here too, so a platform parked by a rich belt fills its hold on its own
+while you&rsquo;re three jumps away.</p>
+<p><strong>Where you can put one.</strong> In an open orbit, clear of other hulls — one
+to a system. The yard won&rsquo;t let you wedge it into a star or bury it in a
+belt. Build it near your ore and your fleet&rsquo;s runs get short; build it on
+a frontier and you&rsquo;ve got a forward base one jump from the danger.</p>
+<p><strong>What it costs.</strong> Structural plate and a credits fee — the same Ferrite
+and Alloy Plate you&rsquo;ve been selling. A basic hold platform is cheap
+enough to throw up early; a fortified one with guns costs more and eats
+higher-grade stock.</p>
+<p><strong>It can be hit.</strong> A station isn&rsquo;t safe just because it doesn&rsquo;t move.
+Beat its shield down and its guns go dark — and if you left a stockpile
+inside, raiders will help themselves while it&rsquo;s cold. Out where the ore
+is richest, an undefended hold is bait. Arm it, or don&rsquo;t leave anything
+in it you&rsquo;d miss.</p>
+<p>Later, a platform becomes more than a locker — a market that buys and
+sells, a refinery, a drone bay, a link in a supply line your haulers run
+without you. But that starts here: an empty orbit, and something of yours
+in it.</p>
+</blockquote>
+      </div>
+      <nav class="doc-pager" aria-label="Adjacent articles">
+        <a class="doc-pager__link" href="design-fleets-content.html">← Fleet content — runtime IDs, hull ladder, and default loadouts</a>
+        <a class="doc-pager__link" href="design-battle-stations.html">Battle-station designs — dedicated defensive station identities →</a>
+      </nav>
+    </article>
+  </main>
+  <footer class="footer">
+    <span>Built 2026-08-10 from game sources</span>
+    <span><a href="../index.html">Home</a> · <a href="mailto:vincent@vandenbraken.com">Contact</a></span>
+    <span>© Vincent van den Braken</span>
+  </footer>
+</body>
+</html>

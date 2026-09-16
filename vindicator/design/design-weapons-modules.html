@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modular weapons and modules — Vindicator</title>
+  <meta name="description" content="&gt; Start at the [visual combat system spine](design-visual-combat-spine.md)." />
+  <link rel="stylesheet" href="../vindicator.css" />
+</head>
+<body class="doc-body">
+  <header class="site-nav">
+    <a class="site-nav__brand" href="../index.html">VINDICATOR</a>
+    <nav class="site-nav__links" aria-label="Section">
+      <a href="../index.html">Home</a>
+      <a href="../codex/index.html">Codex</a>
+      <a href="../design/index.html" class="is-active">Design</a>
+      <a href="../design-language.html">UI language</a>
+      <a href="../index.html#devlog">Devlog</a>
+    </nav>
+    <a class="site-nav__ext" href="../../index.html">Vincent van den Braken</a>
+  </header>
+  <main class="doc-main">
+    <article class="doc-article">
+      <header class="doc-article__head">
+        <a class="doc-back" href="index.html">← Design</a>
+        <span class="vchip">Design</span>
+        <h1 class="vtitle-display">Modular weapons and modules</h1>
+        <p class="doc-article__summary">&gt; Start at the [visual combat system spine](design-visual-combat-spine.md).</p>
+        <p class="banner banner--warn">Design note — systems rationale, not player-facing codex text.</p>
+      </header>
+      <div class="prose">
+<blockquote>
+<p>Start at the <a href="design-visual-combat-spine.html">visual combat system spine</a>.</p>
+</blockquote>
+<p>This document owns weapons as modular retrofit items, authored hardpoints,
+reusable FX families, and the mapping between art, <code>WeaponTemplate</code>, and an
+optional <code>ModuleTemplate</code> wrapper. It does <strong>not</strong> own lore prose, damage/DPS
+balance, or ammunition economy; those belong to faction/codex content,
+runtime content tuning, and <a href="design-munitions.html">munitions</a> respectively.</p>
+<h2 id="the-modular-contract">The modular contract</h2>
+<p>A weapon is a modular retrofit item: the same mechanical <code>WeaponTemplate</code> may
+ship built into a hull or be equipped through a <code>ModuleCategory.Weapon</code>
+wrapper. Hull art must never bake a permanent unique gun as the only way to
+read that faction. A visible role graft is allowed—for example, one oversized
+Korrathi launcher may shape a chassis—but its functional weapon and FX remain
+attachable at an authored hardpoint. Hardpoints are neutral scene-authored
+anchors; runtime attaches the mount sprite and firing FX. NPC default loadouts
+are content choices, not a second art pipeline. Loot, salvage, and shops may
+move the same visual kit across factions: ownership reads from hull and
+markings, never from a claim that only one faction can fire a particular bolt.</p>
+<h2 id="current-implementation-versus-forward-contract">Current implementation versus forward contract</h2>
+<h3 id="current-shipped-foundations">Current, shipped foundations</h3>
+<ul>
+<li><code>WeaponTemplate</code> is the JSON-loaded mechanical definition. It carries
+<code>Type</code>, tint keys, beam/trail style, projectile presentation, and firing
+values.</li>
+<li>A ship template&rsquo;s <code>weapons</code> list loads those IDs directly into three
+scene-authored <code>WeaponMount</code> nodes. Those nodes, not hull pixels, own muzzle
+position and orientation.</li>
+<li><code>ModuleTemplate</code> with <code>Category = Weapon</code> wraps a <code>WeaponId</code> and may override
+<code>WeaponColorHex</code>. <code>ModuleEquipping</code> clears the mounts and loads weapon-module
+instances into open mounts in order, applying rolled weapon values.</li>
+<li><code>WeaponMount.Load</code> calls <code>ConstructorWeaponArt.ApplyMount</code>; mount art is a
+child of the anchor. Beams, projectiles, trails, and impacts are separate
+runtime presentations.</li>
+<li>Module inventory/drag previews currently use one procedural glyph selected by
+<code>ModuleTemplate.Icon</code>; that glyph and its module tint are shared by palette,
+grid, and drag preview.</li>
+<li>The Arena applies real module instances through <code>ModuleEquipping</code> before its
+duel. It is the retrofit/loadout laboratory before the dock outfitting shop
+exists, not a separate combat-content format.</li>
+</ul>
+<h3 id="forward-contract-not-yet-runtime-truth">Forward contract, not yet runtime truth</h3>
+<ul>
+<li><code>WeaponTemplate</code> has no live munition discriminator today. All live firing
+uses capacitor fields when authored; a zero-cost missile is not yet consuming
+cargo. <code>MunitionId</code>, cargo consumption, REARM, and player-only ammo logistics
+remain the design in <a href="design-munitions.html">Munitions</a>.</li>
+<li>When munitions land, equipping an explicitly ammo-fed kinetic or missile
+module must surface its REARM family and expected stock. An energy-only module
+or capacitor-only rail hybrid shows capacitor/heat, not a fake ammo
+requirement. NPC ammo remains unmetered; this logistics decision belongs to
+the player. Heat remains a separate per-hardpoint axis in
+<a href="design-combat-heat.html">Combat heat</a>.</li>
+<li>Fabrication produces reusable module items, including weapon wrappers. It
+does not manufacture hull-exclusive guns; see <a href="design-economy.html">Economy</a>.</li>
+</ul>
+<h2 id="art-package-and-runtime-mapping">Art package and runtime mapping</h2>
+<p>Author one reusable package per <strong>weapon item family</strong>, with tintable regions
+where readability survives recoloring. A package may include:</p>
+<ol>
+<li><strong>Mount sprite</strong> — emitter, barrel, rack, or tool face attached to the
+hardpoint. It must read at gameplay scale without merging into the hull.</li>
+<li><strong>Muzzle/charge</strong> — a separate transient at the anchor; never painted into
+the idle hull or permanent mount sprite.</li>
+<li><strong>Shot body</strong> — beam, plasma/energy bolt, physical projectile, or missile.</li>
+<li><strong>Trail and impact</strong> — separate from the shot body so speed, lifetime, and
+hit feedback can vary without cloning the projectile.</li>
+<li><strong>Inventory glyph</strong> — a compact family silhouette for module palette,
+inventory, compare view, loot, and later shops. It represents the item, not
+the faction currently holding it.</li>
+</ol>
+<h3 id="fx-acceptance">FX acceptance</h3>
+<ul>
+<li><strong>Energy:</strong> use a narrow white-hot core with a controlled soft halo. Keep
+charge/muzzle, beam or projectile, and impact as three separable stages so
+timing and scale can change independently. Pink/orange comet treatments are
+exotic-only; large starbursts are heavy-impact-only, not the default hit.</li>
+<li><strong>Kinetic, missile, and rail:</strong> retain a readable solid body (or rail slug)
+plus a separate trail. They are never glow-only silhouettes.</li>
+<li>No sprite or FX sheet bakes in a black background. Faction color and visual
+verbs belong to the <a href="design-faction-art-language.html">faction art language</a>,
+not a duplicate palette table here.</li>
+</ul>
+<p><code>WeaponTemplate</code> selects the mechanical and base presentation family.
+<code>ModuleTemplate.WeaponId</code> selects that template; <code>WeaponColorHex</code> may recolor
+the shared family for the physical module instance. Do not create a unique
+mount/projectile/impact sheet for every hull-loadout pair. Faction visual verbs
+in the <a href="design-faction-art-language.html">faction art language</a> may tune restraint,
+heat, geometry, or corruption around the shared family without changing its
+mechanical identity.</p>
+<h2 id="weapon-type-resources-and-art-family">Weapon type, resources, and art family</h2>
+<p>The <code>WeaponType</code> enum is a runtime firing-path taxonomy, <strong>not</strong> an ammo or art
+ownership boundary. In particular, <code>Cannon</code> already includes both energy bolts
+and kinetic-looking rail shots.</p>
+<table>
+<thead>
+<tr>
+<th>Runtime type / family</th>
+<th>Current resource gate</th>
+<th>Intended resource story</th>
+<th>Art family</th>
+<th>Current example IDs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Beam</code> combat</td>
+<td>Capacitor via <code>energyPerSecond</code> (for example 10 or 16/s)</td>
+<td>Capacitor only; heat when that system lands</td>
+<td>Soft core beam, charge, restrained muzzle, separate impact</td>
+<td><code>weapon.energy_beam</code>, <code>weapon.heavy_beam_xs</code></td>
+</tr>
+<tr>
+<td><code>Cannon</code> energy bolt</td>
+<td>Capacitor via <code>energyPerShot</code> (Pulse Cannon currently uses 2)</td>
+<td>Energy-only when explicitly authored as plasma/energy</td>
+<td>Soft-glow bolt plus bloom/trail; a <code>Cannon</code> is not automatically a metal shell</td>
+<td><code>weapon.pulse_cannon_xs</code></td>
+</tr>
+<tr>
+<td><code>Cannon</code> heavy slug</td>
+<td>Capacitor via <code>energyPerShot</code> (Heavy Cannon currently uses 2)</td>
+<td>Planned <code>munition.shell</code> kinetic ammo; remove its per-shot capacitor cost when that content lands</td>
+<td>Solid, slow heavy slug plus a restrained trail and weighty impact</td>
+<td><code>weapon.heavy_cannon_xs</code></td>
+</tr>
+<tr>
+<td><code>Cannon</code> rail / kinetic read</td>
+<td>Capacitor via <code>energyPerShot</code> (Railgun 3; Heavy Railgun 25)</td>
+<td>Rail stays a kinetic-looking projectile with a capacitor/coil story now; add ammo later only when an explicit munition is authored</td>
+<td>Solid fast slug plus thin rail trail/helix, separate impact</td>
+<td><code>weapon.railgun_xs</code>, <code>weapon.heavy_railgun_xs</code></td>
+</tr>
+<tr>
+<td><code>Missile</code></td>
+<td>No live capacitor or cargo gate in current JSON</td>
+<td>Discrete cargo ordnance via the planned munition family</td>
+<td>Solid missile body plus engine trail; never force soft-glow plasma language onto it</td>
+<td><code>weapon.klaed_torpedo_m</code>, <code>weapon.nairan_missile_s</code></td>
+</tr>
+<tr>
+<td><code>Beam</code> / <code>Cannon</code> utility</td>
+<td><code>Utility = true</code>; zero damage; current prototypes have no firing energy cost</td>
+<td>No combat ammo; tool costs stay with the utility/economy design</td>
+<td>Industrial mining, salvage, or repair tool face and work effect</td>
+<td><code>weapon.nairan_mining_beam</code>, <code>weapon.nautolan_salvage_array</code>, <code>weapon.nautolan_repair_bolt</code></td>
+</tr>
+<tr>
+<td><code>Drone</code></td>
+<td>Enum exists, but current module drones use <code>ModuleCategory.Drone</code> and a <code>DroneWeaponId</code> rather than direct drone-type weapon JSON</td>
+<td>Carrier upkeep and drone design, not gun ammunition</td>
+<td>Drone body, link/readout, then its referenced beam/cannon family</td>
+<td>No direct <code>WeaponType.Drone</code> JSON currently</td>
+</tr>
+</tbody>
+</table>
+<p>Energy and kinetic therefore describe two resource <strong>and</strong> presentation
+families, while wrapper modules use the same equip path for both. A future
+kinetic gate must key from explicit weapon content, never from
+<code>WeaponType.Cannon</code>. Rail is intentionally hybrid-readable: solid accelerated
+mass in the art, capacitor/coil draw in the present mechanics, and cargo ammo
+only if later content says so.</p>
+<h2 id="utility-tools-are-a-separate-kit">Utility tools are a separate kit</h2>
+<p>Mining, salvage, and repair use hardpoints and some shared firing machinery,
+but their art language is work equipment, not hero combat glow. Give them
+industrial faces, progress/transfer motion, and clear non-damaging impacts.
+Civilian and Ancient tool styling may change the housing; it must not turn a
+mining beam into a player lance or imply that a repair bolt is ordnance.</p>
+<h2 id="content-and-documentation-handoff">Content and documentation handoff</h2>
+<ul>
+<li><a href="design-faction-art-language.html">Faction art language</a> owns faction bodies,
+markings, and short weapon/VFX verbs.</li>
+<li><a href="design-fleets-content.html">Fleet content</a> owns hull IDs and default lists of
+modular weapon IDs; proxy packs are not final faction-exclusive art.</li>
+<li><a href="design-munitions.html">Munitions</a> and <a href="design-combat-heat.html">combat heat</a> own
+firing resources and gate order.</li>
+<li><a href="design-economy.html">Economy</a> owns construction, salvage/shop distribution,
+and when retrofit items enter the campaign.</li>
+<li><a href="../codex/weapons.html">Weapons</a>, <a href="../codex/ship-modules.html">Ship Modules</a>,
+and <a href="../codex/ships.html">Ships</a> state only player-visible shipped truth.</li>
+</ul>
+<p>When implementation changes any of those player-visible rules, update its
+codex article in the same change. Design-only forward contracts stay here.</p>
+      </div>
+      <nav class="doc-pager" aria-label="Adjacent articles">
+        <a class="doc-pager__link" href="design-visual-combat-spine.html">← Visual combat system spine</a>
+        <a class="doc-pager__link" href="design-faction-art-language.html">Faction art language — production implementation →</a>
+      </nav>
+    </article>
+  </main>
+  <footer class="footer">
+    <span>Built 2026-08-10 from game sources</span>
+    <span><a href="../index.html">Home</a> · <a href="mailto:vincent@vandenbraken.com">Contact</a></span>
+    <span>© Vincent van den Braken</span>
+  </footer>
+</body>
+</html>

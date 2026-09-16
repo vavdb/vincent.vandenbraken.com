@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Continuous universe + travel feel + planet art — design capture — Vindicator</title>
+  <meta name="description" content="Captured 2026-07-10 from owner feedback. Three connected shifts." />
+  <link rel="stylesheet" href="../vindicator.css" />
+</head>
+<body class="doc-body">
+  <header class="site-nav">
+    <a class="site-nav__brand" href="../index.html">VINDICATOR</a>
+    <nav class="site-nav__links" aria-label="Section">
+      <a href="../index.html">Home</a>
+      <a href="../codex/index.html">Codex</a>
+      <a href="../design/index.html" class="is-active">Design</a>
+      <a href="../design-language.html">UI language</a>
+      <a href="../index.html#devlog">Devlog</a>
+    </nav>
+    <a class="site-nav__ext" href="../../index.html">Vincent van den Braken</a>
+  </header>
+  <main class="doc-main">
+    <article class="doc-article">
+      <header class="doc-article__head">
+        <a class="doc-back" href="index.html">← Design</a>
+        <span class="vchip">Design</span>
+        <h1 class="vtitle-display">Continuous universe + travel feel + planet art — design capture</h1>
+        <p class="doc-article__summary">Captured 2026-07-10 from owner feedback. Three connected shifts.</p>
+        <p class="banner banner--warn">Design note — systems rationale, not player-facing codex text.</p>
+      </header>
+      <div class="prose">
+<p>Captured 2026-07-10 from owner feedback. Three connected shifts.</p>
+<h2 id="1-planet-art-smooth-cel-shaded-not-pixel">1. Planet art: smooth cel-shaded, not pixel</h2>
+<p>Reference: hand-painted/cartoon planets — smooth banded terrain colors,
+cel-shaded cloud layer with offset drop-shadows, bright atmosphere rim,
+big soft star surfaces with flowing bands. The pixel look STAYS for
+ships/stations/UI; celestial bodies (and the nebula, already smooth) go
+smooth+cel. Rationale: big background elements smooth, gameplay elements
+pixel — same philosophy as the smooth-nebula decision.</p>
+<p>Implementation direction: custom canvas shaders per body type (terrain
+bands via posterized noise, cloud layer with offset shadow pass,
+fresnel-style rim glow, star = flowing warped noise). Deep-Fold pixel
+planet shaders retire for in-world bodies (stay for any pixel needs).
+Same CelestialBody node + map mini-view mechanism; light_origin and
+orbital-motion tasks apply to the NEW shader.</p>
+<p><strong>SHIPPED 2026-07-10</strong> — <code>assets/shaders/celestial/</code> (planet/star/
+blackhole), wired via <code>CelestialStyles</code>; asteroid rocks deliberately keep
+the Deep-Fold pixel look. See the decisions.md entry of the same date.</p>
+<p><strong>Mixed fidelity is deliberate (owner + assistant, 2026-07-10):</strong> no
+smoothing/upscale filter over ships — crisp pixel actors against smooth
+scenery is the style, and the outline pass reinforces it. If the mix
+ever needs unifying, the tool is a subtle full-screen grain/CRT post
+pass over everything, never ship-blurring.</p>
+<p><strong>CLASSIFICATION/VISUAL PASS 2026-07-11:</strong> physical stellar class is now
+separate from single/binary/tetrinary topology, and nebula is a system
+feature. Rock is strictly airless (one coherently rotating crust coordinate,
+craters included); the independently moving upper layers survive as the
+explicit ToxicWorld class. Atmosphere-bearing limbs blend their composition
+color with restrained local-starlight tint. Close stellar pairs may show at
+most two deterministic, slow-duty coronal bridges. Neutron stars use a
+dedicated compact opposed-beam shader.</p>
+<p><strong>SYSTEM-AUTHORED SKY PASS 2026-07-13:</strong> <code>BackgroundDef</code> now owns a nested
+<code>nebula</code> profile (brightness, detail, density, distortion, turbulence, drift,
+opacity) in addition to tint and deterministic seed. This makes each system&rsquo;s
+weather deliberate content instead of one global shader tuning with a color
+wash. Profiles normalize at the shader boundary (including null legacy data),
+and unsafe distortion cannot reach the flow singularity. Stellar corona and
+prominence reach is broader; a transparent counter-scaled carrier gives the
+new reach room without changing body/gameplay radius. A single star may carry
+an authored <code>flareTint</code> without changing its physical class, while Karda&rsquo;s
+donor-to-accretor bridge begins in the yellow star&rsquo;s outer corona, converges
+smoothly, and continues beneath the blue-white recipient. The Marches is the
+charted neutron-star / pulsar frontier (not an orange main-sequence sun).</p>
+<p>Close suns also receive a restrained screen-space optical response. A HUD
+underlay projects each current-system sun through the live camera, gates it by
+distance and viewport relevance, and draws only low-opacity bloom/ghost discs.
+Contributors share a hard combined cap; black holes, suns beyond the soft
+outside-screen margin, and all map-mode views contribute nothing. This
+preserves the effect as a spatial flight cue without covering the cognitive
+overlay or becoming cinematic streak furniture.</p>
+<h2 id="2-continuous-universe-systemgalaxy-is-one">2. Continuous universe (&ldquo;system/galaxy is one&rdquo;)</h2>
+<p>Systems stop being swapped scenes: all systems instantiate in ONE world
+space at galaxyPosition * GALAXY_SCALE. Flight and chart inspect that same
+continuous world through distinct camera contexts; there is no separately
+simulated galaxy scene.</p>
+<p><strong>SHIPPED 2026-07-11</strong> — <code>SystemHost</code> builds every system at boot at
+<code>galaxyPosition * GalaxyScale.Scale</code>; the swapped Main.tscn StarSystem
+node retires and travel becomes displacement across the real void. See
+the decisions.md entry of the same date.</p>
+<ul>
+<li><p>LOD: only the system containing the player simulates fully (ships,
+traffic, combat); distant systems render bodies only (they are cheap:
+shader rects). Cull/pause far ships.</p>
+<p><strong>SHIPPED 2026-07-11</strong> — presence (pure <code>PresenceRule</code>/<code>SystemPresence</code>,
+the same rule fog of war reads) gates the sim tier via
+<code>ProcessMode.Disabled</code>; celestial bodies render and orbit everywhere.</p>
+</li>
+<li><p>Float precision: galaxy offsets in the ~1e6 px range are safe for
+float32; keep GALAXY_SCALE as small as visually acceptable.</p>
+</li>
+<li><p><strong>The separate rendered map scene stays gone</strong> (owner, 2026-07-10): the
+chart remains a schematic over the live continuous world rather than a
+second simulated space.</p>
+<p><strong>REVISED 2026-07-13</strong> — flight and chart are now explicit input/camera
+modes. Tab enters a separately zoomable, freely pannable chart; Tab again
+restores the saved close flight zoom and ship focus. The world still renders
+and simulates underneath. <code>CameraController.IsMapMode</code> is the single source
+for overlay visibility, left-click selection/right-drag pan, and weapon
+suppression; zoom level is presentation only. Codex:
+<code>assets/codex/navigation.md</code>.</p>
+</li>
+<li><p>Minimap stays (cockpit radar).</p>
+<p><strong>SHIPPED 2026-07-11</strong> — untouched by the map retirement; still serves
+as the always-on cockpit radar.</p>
+</li>
+</ul>
+<h2 id="2b-interstellar-scale-hazards-owner-2026-07-10">2b. Interstellar scale + hazards (owner, 2026-07-10)</h2>
+<ul>
+<li><p>In the continuous world, the VOID between systems is vast relative to
+system size — manually flying to another system is technically possible
+but practically absurd (minutes of empty nothing at max boost). Lanes
+and folding are mandatory by scale, not by wall.</p>
+<p><strong>SHIPPED 2026-07-11</strong> — <code>GalaxyScale.Scale</code> = 200,000 px/unit (~3.8 min
+of empty void at player boost between neighbors; both design bounds
+pinned by tests — see the schema entry in decisions.md).</p>
+</li>
+<li><p><strong>Black hole gravity well (Veil)</strong>: approaching the hole drags ships to
+a crawl (speed scales down hard with proximity — time-dilation flavor);
+flying INTO it is impossible, you stall against the well. Also doubles
+as a soft arena hazard. Ships-slow-near-hole can land before the
+continuous refactor (it is a local mechanic).</p>
+<p><strong>SHIPPED 2026-07-10</strong> — <code>features/universe/GravityWell.cs</code> (Area2D, 3x
+star radius, max speed eases to 5% at the horizon via
+<code>ShipMovement.WellFactor</code>; thrust unaffected so escape is a crawl, not a
+dead engine). Codex: <code>assets/codex/black-holes.md</code>; see the decisions.md
+entry of the same date.</p>
+</li>
+</ul>
+<h2 id="3-travel-feel">3. Travel feel</h2>
+<ul>
+<li><p><strong>Starlanes (StarDrive-style)</strong>: no tunnel overlay. Entering a gate
+autopilots the ship onto the lane and it VISIBLY flies to the other
+system across the continuous world — heavy acceleration, streak
+effects, camera pulls back, arrives decelerating at the far gate.
+Time-compressed (a few seconds), interruptible? (no — committed once
+entered, like today).</p>
+<p><strong>SHIPPED 2026-07-11</strong> — <code>LaneFlightProfile</code> (pure accel/cruise/decel,
+duration ∝ distance^0.25, ~4.5s tutorial pair / 3–8s bounds) driven by
+SystemHost through <code>ShipMovement.VelocityOverride</code>; camera pulls back
+with speed via <code>CameraController.SetTransitVisualZoom</code> (a temporary visual
+override that does not open or mutate the map), <code>LaneRushEffect</code> speed-lines on the hull,
+collision mask off for the crossing. The covered lane tunnel is
+deleted; folds keep a short fade cover until the spiral (below) lands.
+Codex: <code>travel-starlanes.md</code>; see the decisions.md entry of the same
+date.</p>
+<p><strong>SHIPPED 2026-07-13</strong> — <code>LanePath</code> replaces the straight chord with one
+deterministic, bounded directional current shared by the chart, its gate&rsquo;s
+departure filaments, and <code>SystemHost</code>'s real flight. The reciprocal gate has
+a close-running return current between its separate sender/receiver apertures;
+the ship continuously faces the local tangent while the existing
+accel/cruise/decel timing, collision lock, camera pull-back, explicit catcher
+trigger, and exact touchdown remain.
+Gate structure stays rigid; only its sparse sender/receiver energy lines
+flow. The sender&rsquo;s physical capture field extends beyond its 48px charge
+throat: pure <code>GateSuction</code> math eases radial acceleration from zero at the
+96px edge to a hard inward bite near center. This stays clear of the same
+assembly&rsquo;s receiver throat. Only an operational, usable
+pair owns that field. The broader overlap never broadens the charge rule;
+leaving the inner throat clears dwell immediately. Gate, departure-wisp,
+and hull-rush shaders stay continuous and unquantized while their carrier
+geometry fades before every edge.</p>
+</li>
+<li><p><strong>Warp gate VISUAL (current owner spec, 2026-07-20)</strong>: a free-floating,
+station-scale <strong>ring-on-ring</strong> assembly with no ground, foot, or support
+pedestal. The large sender ring and smaller receiver ring are independent
+structures that overlap in screen space. The receiver sits at the
+lower-right; its centre lands on the middle of the sender&rsquo;s structural band,
+not on the band&rsquo;s outer edge and not inside the sender aperture. Each ring uses
+complete-ring atlas phases with identical physical structure. Active phases
+add surface energy, but power never adds/removes physical pieces or substitutes
+damaged geometry.</p>
+<p>The gate is also the reference Ancient monumental-infrastructure asset:
+thick segmented gunmetal/slate bands, deep charcoal recesses, restrained warm
+ceramic faces, exactly eight disciplined radial anchors per ring, and medium-low detail
+density. Large engineered modules must read before seams or inset channels.
+No ground support, connector spine, mystical filigree, decorative glyph belt,
+gold trim, spikes, disconnected ornaments, or random greeble fog.</p>
+<p>Sender and receiver power are independent, so the gate must read in all four
+combinations: <strong>on/on, on/off, off/on, off/off</strong>. “On” advances that ring&rsquo;s
+complete-ring energy atlas and enables its separate aperture shader; “off” uses
+the dormant atlas phase and a dark aperture while preserving the same structure.
+Both energy fields share one deep-space cyan language rather than green and
+violet endpoint colours. Sender energy streams inward from its eight emitters
+into the aperture; receiver energy streams outward from its aperture toward its
+eight emitters. The metal sender and receiver rings slowly counter-rotate while
+their aperture fields remain stationary. The lane wisp and <code>LaneRushEffect</code>
+retain the fast-travel motion language around the moving ring assembly.</p>
+<p>Dormant and Broken endpoints remain physically intact because both are
+repairable power/system states. They go dark and still and use the existing
+DORMANT/OFFLINE/&ldquo;FAR ENDPOINT DORMANT&rdquo; hints; cracks, missing segments,
+permanent rubble, and damage-only shell variants are forbidden as state
+reads. Endpoint state still drives charge refusal through pure <code>GateVisual</code>.
+Codex: <code>travel-starlanes.md</code>; see the 2026-07-20 decisions.md entry.</p>
+</li>
+<li><p><strong>Fold</strong>: a SPIRAL renders from the ship&rsquo;s position toward the
+destination (wormhole mouth), the ship falls INTO the spiral
+(shrink/rotate), pops out of a matching spiral at the destination.
+With the continuous world both ends can exist simultaneously; at
+galaxy zoom the spiral pair reads as a bridge.</p>
+<p><strong>SHIPPED 2026-07-11</strong> — <code>FoldSpiralEffect</code> (cel <code>_Draw()</code> wormhole
+mouth, no shader) spawns a pair simultaneously — one at the ship, one
+at the arrival point — when a fold charge completes; the ship
+shrinks+spins into the origin mouth over 0.65s (pure easing in
+<code>FoldSpiralMath</code>), relocates in one tick, then grows+spins back out
+of the destination mouth over another 0.65s, controls locked the
+whole time. Both mouths counter-scale against camera zoom (the
+<code>LaneRushEffect</code> trick) so the pair still reads at galaxy scale, then
+linger and fade. Replaces the placeholder fade-cover swap. Codex:
+<code>travel-folding.md</code>; see the decisions.md entry of the same date.</p>
+<p><strong>REWORKED 2026-07-17</strong> — the mouth read as a spinning whirlpool, not
+suction. <code>fold_spiral.gdshader</code> (winding arms) is now
+<code>fold_suction.gdshader</code> (fixed-angle streaks pulled inward, accelerating
+and stretching toward the throat, plus inward lensing of the backdrop);
+rotation is a small rigid spin only. See the decisions.md entry of the
+same date.</p>
+<p><strong>REWORKED 2026-07-18</strong> — the mouth spawned NEAR the ship and stayed put
+while the ship animated separately; the ship itself only shrank uniformly.
+Owner call: ANCHOR the mouth on the hull and CONSUME the ship visibly.
+<code>SystemHost</code> re-pins the origin mouth&rsquo;s position to the ship every tick of
+the fall-in (never drifts), zeroes the ship&rsquo;s velocity at fold start (no
+residual-momentum drift for the mouth to chase), and replaces the uniform
+shrink with a spaghettification: <code>FoldSpiralMath.StretchAlong</code>/
+<code>StretchAcross</code> scale the hull&rsquo;s own nose-tail/beam axes non-uniformly (a
+mid-fall hump elongates then both collapse to zero together at the
+horizon), plus a late <code>FallDarken</code> alpha fade in the last quarter. Pop-out
+mirrors the same three curves at <code>1 - progress</code> — cheap, same math, reads
+as a quick stretch-settle instead of a plain grow. <code>CaptureRig</code> gained
+<code>--vindicator-capture-fold-consume=&lt;targetSystemId&gt;</code> (<code>-FoldConsume</code>):
+times off <code>Engine.GetPhysicsFrames()</code> (fixed-step, immune to the same
+render-frame race <code>-FoldMouth</code> exists for) and pauses the tree at the
+fall-in&rsquo;s physics-time halfway point for a deterministic mid-consume
+shot. Codex: <code>travel-folding.md</code>; see the decisions.md entry of the same
+date.</p>
+</li>
+</ul>
+<h2 id="4-fog-of-war-presence-scanners-owner-spec">4. Fog of war: presence + scanners (owner spec)</h2>
+<ul>
+<li><p>Visibility is limited to systems where the player HAS A SHIP (pre-fleet:
+the player ship; post-fleet: any owned ship keeps its system live —
+a parked miner is also a watchtower).</p>
+<p><strong>SHIPPED 2026-07-11</strong> — pure <code>PresenceRule</code> (live set = union of every
+owned ship&rsquo;s system) fed by SystemHost resolving all of group
+<code>player_owned</code> per tick through <code>SystemPresence</code>; <code>StarSystem.SetCurrent</code>
+split from <code>SetPresent</code> so a fleet never puts two systems in the
+current-system group. Codex: <code>assets/codex/scanners.md</code>; see the
+decisions.md entry of the same date.</p>
+</li>
+<li><p>Ships carry a <strong>scanner</strong> with a strength in parsecs: live intel radius
+around each owned ship (ships, stations, hazards in range). Scanner =
+template stat, upgradeable later via modules (tetris grid) / officers.</p>
+<p><strong>SHIPPED 2026-07-11</strong> — <code>scannerRange</code> ShipTemplate stat (world px, not
+parsecs — the world has no parsec unit; default 4000, player 15000 ≈ a
+whole system). Ships/stations carry a <code>map_intel</code> meta; minimap and zoom
+overlay drop intel contacts outside every owned scanner (pure
+<code>ScannerRule</code>). Modules/officers still future.</p>
+</li>
+<li><p>Systems without presence show as dark silhouettes or the LAST-KNOWN
+snapshot (StarDrive memory style) at galaxy zoom and on the map.</p>
+<p><strong>SHIPPED (silhouette) 2026-07-11</strong> — no-presence systems dim on the
+galaxy chart (rings/labels/dots x <code>FogStyle.DarkFactor</code>, hover gains
+&ldquo;CHARTED · NOT WATCHED&rdquo;; lanes stay lit while either end is watched).
+Last-known-snapshot memory is deliberately NOT built this batch —
+<code>FogStyle</code>'s header marks it as the upgrade path.</p>
+</li>
+<li><p>Orthogonal to trade-data tiers (design-economy.md): scanner = physical
+intel, trade subscription = market intel. You can see a system without
+knowing its prices, and know prices (pirated feed) where you cannot see.</p>
+</li>
+<li><p>Design synergy: &ldquo;visible&rdquo; and &ldquo;simulated&rdquo; share the same presence rule —
+the fog IS the LOD gate for the continuous world.</p>
+</li>
+</ul>
+<h3 id="simulation-model-abstract-everywhere-full-where-present">Simulation model: abstract everywhere, full where present</h3>
+<p>Decided (owner + assistant, 2026-07-10): NOT &ldquo;simulate everything, render
+less&rdquo;, NOT a +N-connected ring (arbitrary boundary, churn artifacts).
+Instead two tiers:</p>
+<ul>
+<li><strong>Abstract tier (galaxy-wide, always on)</strong>: market ledger ticks in every
+system — stock/price evolution, &ldquo;invisible cheap haulers&rdquo; moving goods as
+ledger ops, pirate pressure as dice rolls against stocks/standings, fleet
+ships in absent systems resolving their role statistically.</li>
+<li><strong>Full tier (presence only)</strong>: real ships, physics, combat, traffic in
+systems holding a player ship.</li>
+<li><strong>Materialization</strong>: entering a system spawns concrete ships/state
+consistent with its current ledger values, so the seam is invisible.</li>
+</ul>
+<h3 id="ship-scanning-tiers-owner-spec">Ship scanning tiers (owner spec)</h3>
+<p>Target-info panel on ships, gated by scanner hardware:</p>
+<ul>
+<li><p><strong>Free</strong> (any ship): Faction, Pilot (NPC pilot name gen needed), Class.</p>
+<p><strong>SHIPPED (partial) 2026-07-11</strong> — the map hover tooltip on any
+intel-visible ship reads &ldquo;Name / FACTION · CLASS&rdquo; (<code>Ship.ApplyTemplate</code>
+map_name). Pilot names wait on the name gen; cargo/battle tiers wait on
+the module system.</p>
+</li>
+<li><p><strong>Cargo scanner</strong> module: + cargo contents.</p>
+</li>
+<li><p><strong>Battle scanner</strong> module: + tetris module layout and stats.</p>
+</li>
+<li><p>Symmetric later: pirate AI with cargo scanners picks victims by cargo
+value; player counter-play = hauling decoys / masking modules.</p>
+</li>
+<li><p>&ldquo;Pilot&rdquo; field pre-wires the crew/officer system (design-fleet.md).</p>
+</li>
+</ul>
+<h2 id="5-starting-knowledge-tutorial-arc-owner-spec-2026-07-10">5. Starting knowledge + tutorial arc (owner spec, 2026-07-10)</h2>
+<ul>
+<li><p>New game: all three systems VISIBLE (charted) from the start; fog rules
+govern live contents, not existence.</p>
+</li>
+<li><p>Eos–Karda starlane operational both ways (the safe loop = tutorial space).</p>
+</li>
+<li><p><strong>Tutorial exit</strong>: Veil is fold-only — leaving the starter pair requires
+learning the fold drive.</p>
+</li>
+<li><p><strong>Gates are PAIRED ENDPOINTS with individual state</strong> (operational /
+dormant / broken): Eos hosts an operational gate pointing at Veil from
+day one, but the lane is unusable while Veil&rsquo;s endpoint is dormant.
+Folding to Veil and activating its gate completes the tutorial and opens
+the Eos↔Veil lane permanently — fold taught by necessity, rewarded with
+a shortcut.</p>
+</li>
+<li><p>Consequence: ContentDatabase&rsquo;s strict lane-reciprocity validation
+becomes endpoint-state-aware (a dormant far end is content, not a bug).</p>
+<p><strong>SHIPPED (schema) 2026-07-11</strong> — <code>StarlaneDef.state</code>
+(operational/dormant/broken, each side&rsquo;s entry carries its own gate&rsquo;s
+state) + pure <code>features/universe/LaneRules.cs</code> (usable = both endpoints
+operational); validation stays structural-pair-only. All shipped lanes
+default operational — the dormant Eos↔Veil lane itself lands with the
+tutorial-arc stage.</p>
+<p><strong>SHIPPED (tutorial arc) 2026-07-11</strong> — <code>eos.json</code> ships an operational
+gate at Veil, <code>veil.json</code> the reciprocal dormant entry (structurally
+reciprocal, unusable until woken). <code>features/universe/LaneStateService.cs</code>
+(autoload) holds the runtime activation overlay over the immutable defs;
+<code>StarlaneGate.Activate()</code> (interact while parked in a dormant ring, public
+so tests skip the input layer like <code>Station.Dock</code>) permanently flips the
+endpoint for the session, replaying stage 5&rsquo;s dormant→operational visual
+mapping and clearing the far gate&rsquo;s stale hint live via a plain C# event
+(reaches a frozen/absent system same as any delegate would). The
+Eos-side gate — operational, pointing at a still-dormant Veil — refuses
+the charge dwell and swaps its hint to &ldquo;FAR ENDPOINT DORMANT&rdquo;, the
+breadcrumb that sends the player looking for the fold drive. Codex:
+<code>travel-starlanes.md</code>, <code>travel-folding.md</code>, <code>black-holes.md</code>; see the
+decisions.md entry of the same date.</p>
+</li>
+<li><p><strong>Future</strong>: dynamic lanes on this same foundation — constructable
+(build both endpoints), event-breakable (storms/sabotage kill one end),
+maybe pirate-controlled toll gates.</p>
+</li>
+</ul>
+<h2 id="6-gate-repair-chain-fork-based-vs-materials-based-captured-2026-07-12">6. Gate repair chain — fork-based vs materials-based (captured 2026-07-12)</h2>
+<p>Two repair paths, matched to the two kinds of broken gate the fiction
+already distinguishes (docs/design-bible.md:39: &quot;Some gates merely need
+an AI handshake recalibrated — a fork can run the sub-process. Some need
+physical repair materials.&quot;). Both states keep the same intact exterior;
+their difference is internal work and power behavior, not visible structural
+destruction. The good news: the data model already
+splits this way. <code>LaneState</code> (<code>common/Taxonomy.cs</code>) has three values, and
+two of them are exactly the two repair tiers:</p>
+<ul>
+<li><strong><code>Dormant</code></strong> — structurally intact, handshake only. This is the
+<strong>fork-based</strong> path. Already partly shipped: <code>StarlaneGate.Activate()</code>
+(dwell + interact) flips a dormant endpoint to <code>Operational</code> — that&rsquo;s
+the Eos↔Veil tutorial beat, fictionally &ldquo;Vann runs the calibration
+himself&rdquo; because no fork exists yet at that point in the story.</li>
+<li><strong><code>Broken</code></strong> — materially failed internals behind an intact shell. Its
+energy layer is dark and still, and <code>GateVisual.AcceptsCharge</code> refuses the
+charge dwell entirely, but there
+is <strong>no repair verb wired to it at all</strong> yet — a broken gate is
+currently a dead end. This is the <strong>materials-based</strong> path.</li>
+</ul>
+<p>No new <code>LaneState</code> value is needed. What&rsquo;s missing is the <em>actions</em> that
+move a gate from <code>Broken</code> → <code>Dormant</code> and <code>Dormant</code> → <code>Operational</code>.</p>
+<h3 id="fork-based-dormant-operational">Fork-based (Dormant → Operational)</h3>
+<p>Blocked on a system that doesn&rsquo;t exist yet: <strong>there is no Fork mechanic
+in the backlog.</strong> <code>Plan/</code> has no card for &ldquo;AI core copy into another
+hull&rdquo; — it&rsquo;s fiction only (docs/design-bible.md §&ldquo;Forks: A Fleet of Me&rdquo;)
+plus the crew/officer card (<code>[AI] Crew / officers layer</code>), which is
+adjacent but not the same thing (a crew slot vs. a full Vann-copy pilot).
+Two viable scopings, in order of how soon they can ship:</p>
+<ul>
+<li><strong>MVP (no new prerequisites).</strong> Keep today&rsquo;s dwell+interact
+<code>Activate()</code> flow verbatim for every <code>Dormant</code> gate, not just the
+tutorial one. &ldquo;A fork ran the calibration&rdquo; stays flavor text/UI copy
+(destination label, a codex line, maybe a log/VO barked on completion)
+rather than an enforced gameplay gate. This is honest about where the
+narrative currently is: post-tutorial, before forks exist as a system,
+Vann is <em>still the one flying to the gate</em>, so the fiction and the
+mechanic already agree. Ships with zero new dependencies — it&rsquo;s the
+existing <code>LaneStateService.Activate()</code> path applied to more gates.</li>
+<li><strong>Full version (post-Forks card).</strong> Once a Fork system lands (needs its
+own PLAN card — this doc doesn&rsquo;t scope it, only flags the gap), gate
+<code>Activate()</code> behind &ldquo;a Fork is assigned/aboard&rdquo; and move it from a
+manual dwell to a <strong>dispatch</strong>: pick a dormant gate from the map, assign
+an available fork, the fork autonomously travels there and completes
+calibration after a fixed timer while the player is free to do other
+things. This is the version that actually delivers the &ldquo;fleet of me as
+workforce&rdquo; fantasy — a dwell-and-wait re-skin doesn&rsquo;t. It depends on
+autonomous fork travel, which in turn wants the <code>[AI] Escort primitive</code>
+card (or an equivalent point-to-point AI travel order) as its movement
+substrate.</li>
+</ul>
+<p>Recommendation: ship the MVP now against every <code>Dormant</code> gate the content
+adds; track the full dispatch version as a follow-up card once a Forks
+system is actually scoped, not as a blocker on this card.</p>
+<h3 id="materials-based-broken-dormant">Materials-based (Broken → Dormant)</h3>
+<p>Depends on the mineral/commodity chain: <code>[Econ E0] Cargo hold + Commodity model</code>, and at least one of <code>[Econ E1] Mining</code> / <code>[Econ E2] Salvage</code> to have something haulable. Concretely:</p>
+<ul>
+<li><strong>Requirement.</strong> A broken gate needs N units of a repair commodity
+delivered. Cheapest to ship: reuse an existing commodity (Ferrite, the
+T1 baseline from docs/design-economy.md) rather than invent a
+single-purpose &ldquo;Gate Repair Kit&rdquo; item — no new drop table, no new shop
+entry, and it gives early Ferrite mining a second sink besides selling.
+A dedicated refined component (<code>[Econ depth] Refining at stations</code>) is
+a fine later upgrade once refining exists, not a prerequisite.</li>
+<li><strong>Delivery interaction.</strong> Extend the existing charge-dwell trigger
+(<code>StarlaneGate._PhysicsProcess</code>, currently <code>Input.IsActionJustPressed (&quot;interact&quot;)</code> while <code>State == Dormant</code>) with a parallel check for
+<code>State == Broken</code>: dwelling with the required cargo aboard consumes it
+from the hold on completion and flips the endpoint to <code>Dormant</code> (not
+straight to <code>Operational</code> — the handshake still needs the fork-based
+step above, matching &ldquo;some gates need BOTH&rdquo; as the natural hard case
+and keeping the two paths compositional instead of redundant).</li>
+<li><strong>Automation is explicitly a stretch, not part of the MVP.</strong>
+design-bible.md&rsquo;s own post-game example — &ldquo;the Karda route —
+materials-based repair, mining station in Veil, drone automation,
+trader logistics&rdquo; — describes a supply-chain minigame (mine → refine →
+drone-haul → deliver), not a single manual haul. That whole chain
+stacks on <code>[Econ E4] faction.independent + salvage/mining stations + drones</code> and the Escort primitive, both already unchecked and already
+sequenced after E0–E3 in the backlog. Building materials-based repair
+against a manual haul first (player personally carries Ferrite in
+their own hold) is the buildable MVP; automation slots in later without
+changing the delivery interaction itself, since &ldquo;cargo arrives at the
+gate&rdquo; doesn&rsquo;t care whether a player or a drone carried it.</li>
+</ul>
+<h3 id="sequencing-against-the-current-backlog">Sequencing against the current backlog</h3>
+<ol>
+<li><code>[Econ E0] Cargo hold + Commodity model</code> — hard prerequisite for
+materials-based; also the excuse to give the player any commodity to
+haul.</li>
+<li>Materials-based MVP (Broken → Dormant) — ships once (1) lands, no
+other new systems required.</li>
+<li>Fork-based MVP (Dormant → Operational, flavor-text-only &ldquo;fork&rdquo;) —
+ships independently of (1)/(2), zero new dependencies; can land first
+if it&rsquo;s wanted sooner.</li>
+<li>Fork-based full version (dispatch, real Fork requirement) — needs a
+Forks system card (not yet scoped) + <code>[AI] Escort primitive</code> for
+autonomous travel.</li>
+<li>Materials-based automation (drones/traders) — needs <code>[Econ E4]</code> +
+Escort primitive.</li>
+</ol>
+<p>Open question for the owner: whether a <code>Broken</code> gate should require BOTH
+the materials delivery and a subsequent fork calibration before it&rsquo;s
+usable (two-step, matches &ldquo;some gates need physical repair AND a
+handshake&rdquo;), or whether materials delivery alone should be allowed to
+jump straight to <code>Operational</code> for gates that were never dormant-only.
+This doc assumes the two-step compositional reading above; flag if the
+owner wants the shortcut instead.</p>
+<h2 id="7-verid-encounters-presence-provocation-scan-resistance-captured-2026-07-12">7. Verid encounters — presence, provocation, scan resistance (captured 2026-07-12)</h2>
+<p>The Verid Consortium (assets/codex/faction-verid.md) are the &ldquo;watchers&rdquo; faction:
+rare, unarmed-looking, present only where something worth watching is
+happening. Encounter design has to make that read mechanically, not just
+in flavour text, without inventing a parallel spawn/behaviour system.</p>
+<ul>
+<li><strong>Spawn hook, not a new system.</strong> Verid ships loiter at whatever the
+scene already flags as significant — a black hole, an Ancient ruin/wreck
+site, a fold-signature event, a gate mid-repair (docs/design-universe.md
+§6). They ride the same presence/event hooks those sites already fire;
+a Verid contact is a spawn table entry keyed to &ldquo;site is active AND
+player is present,&rdquo; not a bespoke patrol AI.</li>
+<li><strong>Default state: OBSERVE, not IDLE.</strong> A Verid ship never opens comms
+first and never fires first, but it does not behave like empty-space
+filler either — it holds position near the thing it&rsquo;s watching and
+tracks the player&rsquo;s approach. The codex line &ldquo;do not assume neutrality
+equals safety&rdquo; has to be legible from behaviour, not just text: an
+OBSERVE-state Verid ship reads as <em>alert</em>, not <em>asleep</em>.</li>
+<li><strong>Escalation is a cliff, not a curve.</strong> Provoking one (weapons fire, or
+a Battle-scanner lock — see below) flips it to a HOSTILE state built
+from a stat profile well outside the normal difficulty curve for its
+visual size class. This is deliberately not a farmable fight: the
+&ldquo;centuries of preparation&rdquo; line means losing decisively is the intended
+outcome for provoking a Verid ship early, and the design goal is to
+teach that lesson once, hard, rather than balance it as a fair
+encounter.</li>
+<li><strong>Scan resistance reinforces the mystery, mechanically.</strong> Ship scanning
+tiers (§4 above): a Verid contact returns <code>UNKNOWN — NO TRANSPONDER</code> at
+the Free tier even after the story has told the player who they are,
+and returns nothing at all at Cargo/Battle tiers — the scan simply
+fails silently. This is the one faction where scanner hardware upgrades
+don&rsquo;t buy more information; that refusal IS the information.</li>
+<li><strong>Player-initiated hail is the only door in.</strong> A HAIL interaction (radar
+contact -&gt; comms window, of the kind CASSIUS uses in the tutorial) is how a
+Verid data-trade offer opens. <strong>Correction 2026-07-25: this was written as
+&ldquo;the existing HAIL interaction&rdquo; and no such interaction exists</strong> — there is
+no hail anywhere in the code, so the Verid data trade rests on an unbuilt
+prerequisite. Carded on Plan/flight-selection-and-verb-rail.md — see docs/design-economy.md
+&ldquo;Verid data trade&rdquo; below. Reuse that prompt; do not add a second contact
+verb for one faction.</li>
+</ul>
+<h2 id="8-unbound-encounters-core-cluster-analytical-escalation-no-negotiation-captured-2026-07-12">8. Unbound encounters — core + cluster, analytical escalation, no negotiation (captured 2026-07-12)</h2>
+<p>The Unbound (assets/codex/faction-unbound.md) are the &ldquo;optimizer&rdquo; antagonist:
+a single AI core commanding a small cluster of drone hulls, treating every
+encounter as an assessment rather than a fight or a conversation. Encounter
+design has to make &ldquo;no middle ground, no negotiation&rdquo; read mechanically,
+reusing the existing ship/AI/weapon systems (features/ai/ShipBrain.cs,
+features/weapons, features/combat/Health.cs) rather than inventing a
+parallel drone/swarm framework.</p>
+<ul>
+<li><strong>Composition, not a new unit type.</strong> An Unbound contact is one <em>core</em>
+hull (Torpedo/Frigate-class stats or above) plus 2-6 <em>drone</em> hulls
+(Scout/Fighter-class stats), spawned together as a single spawn-table
+entry — same hull ladder every other faction uses (docs/assets.md),
+reskinned as <strong>melded victim chassis</strong> (militia / Korrathi / industrial /
+Ancient frames with Melding deformation — no native Unbound hull line).
+Growth is primarily wreck-seeding and derelict occupation; live SALVAGEABLE
+capture is the high-value path. There is no bespoke &ldquo;swarm&rdquo; unit; a cluster
+is just several Ship nodes whose brains share one coordinator.</li>
+<li><strong>Default state: ANALYZE, not idle and not Verid&rsquo;s OBSERVE.</strong> Verid
+ships loiter near a fixed point of interest (§7). Unbound clusters
+instead close to scanning range of anything they detect and hold there,
+cycling a scan on the contact — active assessment, not passive
+watching. This is the behavioural tell that separates &ldquo;watcher&rdquo; from
+&ldquo;optimizer&rdquo; without needing new UI: a Verid contact sits still, an
+Unbound cluster visibly maneuvers to keep its scan arc on you.</li>
+<li><strong>The assessment branches, it doesn&rsquo;t escalate on a single axis.</strong>
+Where a Verid contact has one trigger (provoke -&gt; HOSTILE), an Unbound
+cluster&rsquo;s scan resolves to one of two outcomes baked into the
+&ldquo;efficient, not malevolent&rdquo; codex line:
+<ul>
+<li><strong>THREAT -&gt; hostile, overwhelming, a cliff fight</strong> exactly like the
+Verid pattern (§7): stat profile well outside the normal curve for
+the cluster&rsquo;s visual size, precise weapons fire (Beam/Cannon
+WeaponType, not spray), the core and every drone focus-fire through
+shared targeting the instant the branch resolves. Losing decisively
+is the intended outcome for tripping this branch underleveled.</li>
+<li><strong>SALVAGEABLE -&gt; capture, not kill.</strong> Drones switch to disabling fire:
+same weapon templates, but only ever bring a target to the edge of
+hull failure through shield/armor before holding — engine and weapon
+hardpoints are the priority targets once armor is breached, using the
+existing Health three-pool model rather than a new &ldquo;disable&rdquo; damage
+type. The core closes to grapple range and begins a processing timer.
+Full stop of the target (drive disabled) is what starts the timer;
+the timer, not damage, is the fail condition for this branch.</li>
+<li>What sorts THREAT from SALVAGEABLE is deliberately opaque to the
+player up front — armed and aggressive reads as THREAT, but so does
+a Continuity fork core running exposed; the codex line &ldquo;Vann reads as
+corruption in the substrate&rdquo; means a fork-flagged player can trip
+THREAT even passively. This is content for a later scan-tag pass, not
+something to hardcode as &ldquo;player has weapons drawn.&rdquo;</li>
+</ul>
+</li>
+<li><strong>Kill the core to break the cluster.</strong> The coordinator lives on the
+core hull only. While the core is alive, every drone in the cluster
+shares its target and its branch decision (all THREAT or all
+SALVAGEABLE together — an Unbound cluster never negotiates with itself
+either). Destroying the core does not make the drones flee or go
+neutral: it strips the shared decision, and each drone reverts to
+vanilla ShipBrain (features/ai/ShipBrain.cs) Attack-state behaviour —
+still hostile if THREAT was already resolved, but no longer
+synchronized, no longer precise, no longer able to start or continue a
+capture timer. This gives &ldquo;kill the core&rdquo; a real, discoverable payoff
+without adding a morale/rout system.</li>
+<li><strong>Scan tier reads analytical, not secretive.</strong> Unlike Verid&rsquo;s refusal
+(§7), an Unbound contact returns full transponder data at every scanner
+tier — hull count, core designation, THREAT/SALVAGEABLE lean if the
+branch has already resolved. They are not hiding what they are; the
+codex line &ldquo;every interaction is an optimization problem&rdquo; means they
+have nothing to gain from obscurity. The dread is in the read being
+total, not partial.</li>
+<li><strong>Hail is a dead end by design.</strong> The HAIL interaction (reused for
+Verid&rsquo;s data trade, §7) exists for Unbound contacts but returns a
+scan-flavour response only — no trade window, no standings shift, no
+door in. This is the one faction where hailing exists purely to let
+the player <em>confirm</em> there is no negotiation, matching &ldquo;there is no
+middle ground, no negotiation, and no surrender protocol&rdquo; verbatim
+from the codex.</li>
+</ul>
+<h2 id="9-senther-fold-hunter-chase-mechanics-captured-2026-07-12">9. Sen&rsquo;Ther fold-hunter chase mechanics (captured 2026-07-12)</h2>
+<p>The Sen&rsquo;Ther (assets/codex/faction-senther.md) hunt with a crude fold drive
+that &ldquo;skips rather than steers.&rdquo; Encounter design has to make a Sen&rsquo;Ther
+fight feel like a chase — erratic, close-range, single-target — using the
+fold system and combat AI that already exist (travel-folding.md,
+features/ai/ShipBrain.cs) rather than a bespoke teleport-combat framework.</p>
+<p><strong>The crystal buys precision and survival, not the fold</strong> (canon fix, found
+while designing the siege arc). Read literally, three sources contradicted each
+other: design-bible said the drive consumes a Fold Crystal per jump and only
+the prime can fold, design-economy said crystals are pre-Collapse human
+artifacts no living faction can manufacture, and the Sen&rsquo;Ther codex has an
+entire species folding routinely. Under those three the Sen&rsquo;Ther cannot exist.</p>
+<p>They resolve without a retcon, because both documents already describe the
+distinction if read together. Vindicator folding is crystal-mediated: aimed,
+any charted system, survivable. Sen&rsquo;Ther folding is raw geometry with no
+medium — a few thousand units, random scatter around the aim point, and it
+kills most pilots who attempt it. They pay in pilots what Vann pays in
+crystals, which is exactly why &ldquo;those who survive become the Sen&rsquo;Ther elite.&rdquo;</p>
+<p>This also explains two things the codex asserts but never justified: why a
+species that folds at will never scaled the technique to gates or to long
+range, and why they look down on species that need infrastructure to travel.
+They are not better at folding. They are willing to lose people to it.</p>
+<ul>
+<li><strong>The hop is the travel fold, not a new ability.</strong> A Sen&rsquo;Ther combat
+ship&rsquo;s HUNT state can trigger the same charge/spiral/relocate sequence
+covered in travel-folding.md, mid-fight, at short range (a few thousand
+units — reposition, not system travel). Same capacitor drain, same
+charge-up vulnerability window, same spiral tell (FoldSpiralEffect).
+There is no separate &ldquo;combat teleport&rdquo; stat or cooldown to design or
+balance: the existing energy-capacitor economy already rations it, and
+an alert player already knows to watch for a spiral because that&rsquo;s the
+same read a travelling ship gives.</li>
+<li><strong>Imprecise on purpose.</strong> Where a player&rsquo;s fold lands exactly on the
+selected chart target, a Sen&rsquo;Ther hop resolves to a random point inside
+a radius around the ship&rsquo;s aim point — it reappears near the target,
+not on it. This is the mechanical expression of &ldquo;skips rather than
+steers&rdquo; and &ldquo;high risk&rdquo;: the counter-play is that a hop can put the
+hunter somewhere worse for it (behind an obstacle, at bad range) as
+often as somewhere better. Do not make the hop a guaranteed flank.</li>
+<li><strong>One hunter closes, the rest hold.</strong> A Sen&rsquo;Ther clan pack reuses the
+escort/leader primitive (docs/design-fleet.md &ldquo;Escort is ONE
+primitive&rdquo;): the pack elects a leader, and only the leader enters HUNT
+and hops. The rest hold formation on the leader the way any escort
+group does. This keeps &ldquo;prefer one-on-one engagements&rdquo; true even when
+a pack is present — the player is never hopped at by three ships at
+once, only stalked by several while one closes.</li>
+<li><strong>HUNT is a ShipBrain state, gated on target count.</strong> A Sen&rsquo;Ther brain
+enters HUNT against a single, isolated contact and drops back to
+vanilla Attack-state (no hopping) once the player&rsquo;s side has more than
+one active combatant nearby — fighting alongside fleet or allies
+suppresses the chase behaviour rather than triggering a bigger fight.
+This reads as the codex&rsquo;s territorial-but-not-expansionist restraint
+without a standings or morale system.</li>
+<li><strong>Vann-tracking is a future hook, not built now.</strong> The codex line about
+Sen&rsquo;Ther fold signatures tracking Vann (a Continuity fork) implies HUNT
+should get bonus detection range or an unbreakable lock against a
+fork-flagged player. That depends on the same scan-tag work flagged as
+future content in §8 (Unbound); until fork-flagging exists, Sen&rsquo;Ther
+HUNT uses the same detection range as any other faction and does not
+hardcode a Vann-specific bonus.</li>
+</ul>
+<h2 id="10-fog-last-known-snapshot-full-memory-model-captured-2026-07-12">10. Fog last-known snapshot: full memory model (captured 2026-07-12)</h2>
+<p>§4 shipped two tiers of fog of war — the bare <strong>silhouette</strong> (dark system
+schema, existence always visible) and a partial <strong>ghost</strong> tier for
+station positions (marked <code>map_discovered</code> once scanned, drawn dimly at
+<code>FogStyle.GhostFactor</code> after the system goes dark). The upgrade path is
+the <em>full</em> last-known-snapshot memory: every intel contact (stations,
+ships, hazards) carries a snapshot that the galaxy chart and minimap
+render when the source system is absent, not just a boolean &ldquo;was
+discovered.&rdquo;</p>
+<h3 id="what-ships-today">What ships today</h3>
+<ul>
+<li><strong>Station ghost</strong> (shipped): <code>SystemHost.MarkDiscoveredIntel</code> sets
+<code>map_discovered = true</code> once a station enters an owned scanner. The map
+overlay draws the ghost dot at its <em>live</em> world position (stations
+never move) with <code>FogStyle.GhostFactor</code> on top of the system&rsquo;s dark
+fog and the label appends &ldquo;LAST KNOWN POSITION.&rdquo;</li>
+<li><strong>FogStyle constants</strong> (shipped): <code>DarkFactor</code> (0.35) for dark systems,
+<code>GhostFactor</code> (0.5) for remembered contacts (effective alpha = dark ×
+ghost = 0.175), <code>Factor(bool live)</code> and <code>LaneFactor(bool, bool)</code>.</li>
+<li><strong>Scanner gating</strong> (shipped): <code>ScannerRule.InRange</code> gates what the map
+overlay shows live; <code>map_discovered</code> lifts the gate permanently for the
+ghost.</li>
+</ul>
+<h3 id="what-the-full-snapshot-adds">What the full snapshot adds</h3>
+<p>The shipped ghost is correct for stations but incomplete in three ways:</p>
+<ol>
+<li><strong>Ships move.</strong> A discovered pirate contact drifts, patrols, or
+docks after the player leaves. The boolean <code>map_discovered</code> is useless
+for mobile contacts — the map needs the <em>position at last scan</em>, not
+&ldquo;was seen once.&rdquo;</li>
+<li><strong>No staleness signal.</strong> A station ghost is drawn at the same alpha
+whether the player left three seconds ago or three hours ago. A
+time-decay (or mission-count) staleness tells the player how stale
+the data is — a core StarDrive memory feel.</li>
+<li><strong>No persistence across sessions.</strong> Ghost state lives in node meta
+(runtime only). Reloading a save loses every discovery. The full model
+persists the snapshot alongside the save.</li>
+</ol>
+<h3 id="snapshot-model">Snapshot model</h3>
+<p>A <strong>snapshot</strong> is a per-entity record: <code>last_seen_position</code> (world px),
+<code>last_seen_tick</code> (physics tick when last scanned), and an optional
+<code>last_seen_state</code> (faction, class, hull integrity — whatever the scanner
+tier revealed at that moment). Snapshots live in an autoload
+(<code>SnapshotService</code>) keyed by entity instance path (stable across
+scene-tree rebuilds because SystemHost rebuilds at the same def every
+boot).</p>
+<p><strong>Capture:</strong> every physics tick, <code>MarkDiscoveredIntel</code> already iterates
+scannable entities. The upgrade writes the snapshot when an entity
+transitions from <em>in-range</em> to <em>out-of-range</em> (a contact that was live
+last tick and gone this tick) and periodically refreshes while the
+contact stays in range (rolling update — the snapshot is always the most
+recent scan).</p>
+<p><strong>Render:</strong> the map overlay and minimap read the snapshot instead of the
+entity&rsquo;s live node when the system is dark. A contact with a snapshot
+draws at <code>last_seen_position × GhostFactor</code> and the staleness label reads
+time-since-last-scan (round to human-friendly buckets: &ldquo;RECENT,&rdquo; &ldquo;MINUTES
+AGO,&rdquo; &ldquo;HOURS AGO,&rdquo; &ldquo;STALE&rdquo;). Contacts without a snapshot (never scanned)
+do not draw — same as today.</p>
+<p><strong>Staleness decay:</strong> <code>GhostFactor</code> gets a time component. Instead of a flat
+0.5, ghost alpha decays toward a floor (0.1 — a ghost never vanishes)
+over a configurable window (default: 300 game-seconds, ~5 minutes of
+real play). A <code>GhostFactor(float ageSeconds)</code> function replaces the
+constant; the map overlay passes the snapshot&rsquo;s age. This makes fresh
+departures visibly brighter than old memories.</p>
+<p><strong>Persistence:</strong> the snapshot dictionary serializes as part of the save
+file (JSON alongside the existing save payload). On load, <code>SnapshotService</code>
+rehydrates the map. Entity instance paths are deterministic from the
+content def (same boot = same paths), so a loaded snapshot maps back to
+the correct entity node even after a full scene rebuild.</p>
+<h3 id="what-does-not-change">What does NOT change</h3>
+<ul>
+<li><strong>Station behavior</strong> — stations already ghost correctly because they
+never move. The snapshot upgrade is a superset: station ghosts switch
+from the boolean meta to the snapshot record, gaining staleness decay
+for free. The <code>map_discovered</code> meta can retire once all consumers read
+from <code>SnapshotService</code>.</li>
+<li><strong>Silhouette tier</strong> — dark systems without any discovered contacts
+still show the bare schematic at <code>DarkFactor</code>. The snapshot only adds
+dots on top of the silhouette, never replaces it.</li>
+<li><strong>Scanner gating</strong> — live intel still requires scanner range. The
+snapshot is what <em>replaces</em> live intel when the system goes dark, not
+an alternative to scanning.</li>
+<li><strong>Presence rule</strong> — the snapshot is purely a rendering/memory concern.
+<code>PresenceRule</code> still gates full simulation; a ghost system is still
+frozen. The snapshot does not unlock simulation or spawn AI in absent
+systems.</li>
+</ul>
+<h3 id="scope-boundary">Scope boundary</h3>
+<p>This design does NOT cover:</p>
+<ul>
+<li><strong>Predictive intel</strong> (&ldquo;this trade route probably still runs here&rdquo;) —
+that belongs to the abstract simulation model (§4 &ldquo;Simulation model&rdquo;),
+not the snapshot layer.</li>
+<li><strong>Fog discovery gating</strong> (&ldquo;you don&rsquo;t know this system EXISTS until you
+chart it&rdquo;) — the owner decided every system is always charted (§5).
+The snapshot is about <em>contents</em>, not <em>existence</em>.</li>
+<li><strong>Codex integration</strong> — discovered contacts feeding codex entries is a
+separate data flow (the codex gate on the <code>Plan/</code> backlog).</li>
+</ul>
+<h3 id="upgrade-path-from-shipped-code">Upgrade path from shipped code</h3>
+<ol>
+<li>Add <code>SnapshotService</code> autoload (empty dict, singleton).</li>
+<li>Extend <code>SystemHost.MarkDiscoveredIntel</code> to write/update snapshots on
+range transitions and rolling refresh.</li>
+<li>Extend <code>FogStyle</code> with <code>GhostFactor(float ageSeconds)</code> (decay curve).</li>
+<li>Update <code>MapOverlay.DrawTrackedSchematic</code> to read from
+<code>SnapshotService</code> for dark-system entities instead of the node&rsquo;s live
+position. Replace the <code>map_discovered</code> boolean check with a
+<code>SnapshotService.TryGet</code> call.</li>
+<li>Wire save/load serialization.</li>
+<li>Delete the <code>map_discovered</code> meta path once all consumers migrate.</li>
+</ol>
+<h2 id="11-stellar-planet-designation-namer-owner-spec-2026-07-24">11. Stellar + planet designation namer (owner spec, 2026-07-24)</h2>
+<p>Unnamed and unvisited bodies carry systematic catalog designations produced by
+one shared namer, not hand-authored placeholders. Proposed format, owner to
+tune at implementation: stars as <code>&lt;spectral letter&gt;-&lt;catalog number&gt;</code> (the
+spectral letter from the body&rsquo;s actual class — a red giant reads <code>M-…</code> or
+<code>K-…</code>), planets as the star designation plus a lowercase orbit-order suffix
+(<code>M-4471 b</code>, innermost first), following real survey convention closely enough
+that the designations feel mundane.</p>
+<p><strong>Sol ships under its designation.</strong> The homeworld system is authored with
+only a catalog name — star and planets alike — and nothing in data or codex
+carries the real names pre-unlock. Completing the &ldquo;Access Research Station&rdquo;
+research (see design-economy.md, research chain) is the unlock moment; the
+rename to Sol/Earth/Mars is a hardcoded swap and is OPTIONAL polish — v1 may
+keep the catalog designation after the unlock and let the reveal live in the
+research payoff itself. No general alias layer is needed for v1.</p>
+<p>Canon pinned with it: Sol is the outline v0.5 red giant; Mercury and Venus
+are swallowed, so <strong>Earth is the first planet</strong> — charred, with the Research
+Station in orbit. A first planet implausibly close to a red giant is the
+quiet pre-reveal clue the designation hides in plain sight.</p>
+<h2 id="12-discovery-visibility-stars-first-systems-on-arrival-owner-spec-2026-07-24">12. Discovery visibility — stars first, systems on arrival (owner spec, 2026-07-24)</h2>
+<p>The chart must be able to show objects the player has not visited without
+giving them away. Confinement rule: an unvisited system exposes only its
+STAR (position + designation per §11); planets, moons, stargates and
+stations inside it become chart-visible on first arrival in-system.</p>
+<p>This is chart knowledge, a static layer beneath the §4 presence/scanner fog
+and the §10 last-known snapshot — those govern live contacts and continue to
+apply after a system is discovered. Travel to a system therefore always buys
+something: the map fills in, and only then does the tactical fog start doing
+its work. The Trine fold coordinates (see the Sol arc card) resolve to a
+star the player can already see but has no reason to visit — a catalog
+number like every other.</p>
+<h2 id="dependency-order">Dependency order</h2>
+<ol>
+<li>Cel planet shaders (independent, immediate visual win) — SHIPPED
+2026-07-10</li>
+<li>Continuous-world refactor (SystemHost/StarSystem: instantiate all,
+LOD/sim gating, camera zoom range, background pan continuity) —
+SHIPPED 2026-07-11</li>
+<li>Lane flight replaces tunnel (needs 2) — SHIPPED 2026-07-11</li>
+<li>Fold spiral (needs 2; effect work) — SHIPPED 2026-07-11</li>
+<li>Galaxy-zoom polish: labels/fade rules at far zoom (needs 2) — SHIPPED
+2026-07-11 (overlay labels + fog silhouette styling)</li>
+</ol>
+      </div>
+      <nav class="doc-pager" aria-label="Adjacent articles">
+        <a class="doc-pager__link" href="design-generation.html">← Universe generation: building blocks — design capture</a>
+        
+      </nav>
+    </article>
+  </main>
+  <footer class="footer">
+    <span>Built 2026-08-10 from game sources</span>
+    <span><a href="../index.html">Home</a> · <a href="mailto:vincent@vandenbraken.com">Contact</a></span>
+    <span>© Vincent van den Braken</span>
+  </footer>
+</body>
+</html>

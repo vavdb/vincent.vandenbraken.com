@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conflict ecology — the economy fights back (MVP) — Vindicator</title>
+  <meta name="description" content="Captured 2026-07-19. The &quot;[Combat/AI] Conflict ecology MVP + fleet combat test&quot; card. The codex states what IS (`assets/codex/conflict-ecology.md`); this states WHY, and where the…" />
+  <link rel="stylesheet" href="../vindicator.css" />
+</head>
+<body class="doc-body">
+  <header class="site-nav">
+    <a class="site-nav__brand" href="../index.html">VINDICATOR</a>
+    <nav class="site-nav__links" aria-label="Section">
+      <a href="../index.html">Home</a>
+      <a href="../codex/index.html">Codex</a>
+      <a href="../design/index.html" class="is-active">Design</a>
+      <a href="../design-language.html">UI language</a>
+      <a href="../index.html#devlog">Devlog</a>
+    </nav>
+    <a class="site-nav__ext" href="../../index.html">Vincent van den Braken</a>
+  </header>
+  <main class="doc-main">
+    <article class="doc-article">
+      <header class="doc-article__head">
+        <a class="doc-back" href="index.html">← Design</a>
+        <span class="vchip">Design</span>
+        <h1 class="vtitle-display">Conflict ecology — the economy fights back (MVP)</h1>
+        <p class="doc-article__summary">Captured 2026-07-19. The &quot;[Combat/AI] Conflict ecology MVP + fleet combat test&quot; card. The codex states what IS (`assets/codex/conflict-ecology.md`); this states WHY, and where the…</p>
+        <p class="banner banner--warn">Design note — systems rationale, not player-facing codex text.</p>
+      </header>
+      <div class="prose">
+<p>Captured 2026-07-19. The &ldquo;[Combat/AI] Conflict ecology MVP + fleet combat test&rdquo;
+card. The codex states what IS (<code>assets/codex/conflict-ecology.md</code>); this states
+WHY, and where the seams are.</p>
+<h2 id="the-chain">The chain</h2>
+<p>A closed loop that makes a belt a contested place instead of a still life:</p>
+<ol>
+<li><strong>Distress.</strong> A gather ship&rsquo;s brain (<code>GatherBrain</code>) subscribes to its own
+<code>Health.Damaged</code> and raises <code>EventBus.Distress(FactionDistress)</code> when it takes
+fire — the economy calling for help. Debounced per ship
+(<code>DistressDebounce</code>, sim-time) so a sustained skirmish is one call per window,
+not one per bullet.</li>
+<li><strong>Pirate hunts.</strong> A pirate bastion (a <code>Station</code> with <code>hunterTemplate</code>) runs a
+<code>PirateHunterBay</code> that periodically launches hunters up to a cap and points
+them at gather ships. A hunter is a plain <code>ShipBrain</code> on the <strong>Pursue</strong>
+doctrine with a <strong>prey preference</strong> (<code>ShipBrain.PreyGroup</code> +
+<code>Targeting.Acquire</code>): a hostile in the gatherers group within range is chosen
+ahead of a closer non-prey hostile, so a hunter goes for a defenceless
+prospector over the armed player. No prey left in the system → the base
+recalls (despawns) its hunters.</li>
+<li><strong>Gated response.</strong> A watch station (a <code>Station</code> with <code>defenderTemplate</code>) runs
+a <code>DefenseDispatch</code> that listens for distress from its own or a <strong>friendly</strong>
+faction and scrambles a defender (<code>ShipBrain</code>, Pursue — engages the raiders by
+standings, no per-attacker wiring) — <strong>but only if its <code>DefenseLedger</code> can
+pay.</strong> A starved ledger cannot, so the call goes unanswered and
+<code>EventBus.DefenseStarved</code> fires. Defenders stand down (despawn) once the
+shooting stops.</li>
+</ol>
+<p>Everything is sim-time (accumulated scaled delta), so <code>Engine.TimeScale</code>
+compresses the whole loop honestly. Both role components are children of a
+sim-tier <code>Station</code>, so they inherit presence gating for free — a frozen system&rsquo;s
+base spawns nothing.</p>
+<h2 id="the-ledger-and-its-seam-the-owners-explicit-requirement">The ledger, and its seam (the owner&rsquo;s explicit requirement)</h2>
+<p>The gate is grounded in something real: a station&rsquo;s <strong>defense materials</strong>, the
+worth of the ore its prospectors bring home. <code>GatherBrain</code> banks the value of
+each unloaded hold (<code>DefenseLedger.ValueOf</code>, units × commodity base worth) into
+the destination station&rsquo;s <code>DefenseLedger</code>; <code>DefenseDispatch</code> spends it,
+<code>DefenderCost</code> per defender. A well-worked belt funds its own guardians; a dead
+one defends no one. The ledger is a pure, Godot-free class so the credit/debit
+math is unit-tested without a runtime, and <code>StationDef.DefenseMaterials</code> seeds a
+starting balance (and is the knob the &ldquo;starved variant&rdquo; test zeroes).</p>
+<p><strong>SEAM:</strong> <code>DefenseLedger</code> is a deliberate stand-in for real per-commodity station
+stock (docs/design-stations.md, docs/design-economy.md &ldquo;Trade data access&rdquo;, the
+<code>EconomySnapshot</code> <code>Quantity</code> plug point that reads 0 today). It is a bare float
+on purpose. When station stock lands, a defender debit becomes a withdrawal of a
+munitions/alloy commodity from that stock and this class retires — nothing above
+the ledger (the dispatch logic) knows or cares that today it is a float. The
+class header and <code>StationDef.DefenseMaterials</code> both mark this.</p>
+<h2 id="why-these-factions-why-a-militia-watch">Why these factions / why a militia watch</h2>
+<p>The prey are <strong>independent</strong> prospectors (<code>ship.independent_miner_xs</code>, the
+existing gather hull). The hunters are <strong>pirates</strong> (<code>ship.raider_fighter_xs</code>).
+The responders are <strong>militia</strong> (<code>ship.militia_fighter_xs</code> — the one combat hull
+that ships for a non-pirate/civilian faction). <code>DefenseDispatch</code> answers a
+distress call from its own faction OR a friendly one, so a militia watch
+answering independent prospectors (standings +50) is exactly the &ldquo;someone who
+can afford to come&rdquo; story — and it sidesteps the fact that no independent combat
+hull exists yet. A future all-independent variant needs only an independent
+fighter template; the dispatch logic is faction-agnostic.</p>
+<p><code>GatherBrain.NearestStation</code> now also skips stations its faction is <strong>hostile</strong>
+to — a prospector will not haul its cargo into a pirate bastion (which would
+also wrongly bank the ore into the enemy&rsquo;s ledger). Sensible on its own; load-
+bearing here.</p>
+<h2 id="testbed-how-to-run-it">Testbed + how to run it</h2>
+<p><code>--vindicator-conflict-sim</code> (<code>ConflictSim</code> autoload, mirrors <code>EconomySim</code>) swaps
+the universe for the single compact system under
+<code>features/universe/data/conflict/</code> (<code>conflict_karda</code>), force-presents it, and
+accelerates. <code>scripts/conflict-sim.ps1</code> launches it windowed;
+<code>scripts/capture.ps1 -ConflictSim</code> grabs a still (both belt roles and the star
+sit within ~1900px so one frame holds miners, hunters, and defenders). The
+system is one belt, a militia watch (seeded ledger), a pirate bastion, and four
+independent miners — laid out so the fight converges bottom-center for capture.</p>
+<h2 id="alternatives-considered-rejected">Alternatives considered / rejected</h2>
+<ul>
+<li><strong>Raise distress from <code>Ship.OnDamaged</code>.</strong> Rejected: it couples the central
+<code>Ship</code> to the conflict feature and every hull would carry the check. The gather
+ship&rsquo;s own brain owning the behavior is cleaner and confines the coupling to
+the Ai/Conflict features that already depend on each other.</li>
+<li><strong>A dedicated <code>HunterBrain</code> / <code>DefenderBrain</code>.</strong> Rejected as over-built: a
+hunter is <code>ShipBrain</code> + Pursue + a prey preference; a defender is <code>ShipBrain</code> +
+Pursue + standings. The only genuinely new AI is the optional prey preference,
+a no-op default added to <code>ShipBrain</code>/<code>Targeting</code> so every existing brain is
+unchanged.</li>
+<li><strong>Enable hunts on the shipping Karda bastions (<code>karda.thornpicket</code>,
+<code>marches.gibbet</code>).</strong> Deferred: it changes shipping balance and is out of the
+MVP&rsquo;s scope, which is the deterministic testbed. The mechanic is wired
+generically — any bastion opts in by adding <code>hunterTemplate</code> to its def — so
+turning it on in the live universe later is a one-line content change.</li>
+<li><strong>Full station stock now.</strong> Out of scope (see the SEAM above). A minimal
+per-station materials counter fed by unloads is enough to prove the gate and
+wires cleanly for the real system to replace.</li>
+<li><strong>Force-present skipped (single system at origin).</strong> The player already keeps
+<code>conflict_karda</code> present, but <code>ConflictSim</code> still force-presents it (matching
+the documented economy-sim landmine) so the sandbox runs even without a ship
+resolving into it.</li>
+</ul>
+      </div>
+      <nav class="doc-pager" aria-label="Adjacent articles">
+        <a class="doc-pager__link" href="design-battle-stations.html">← Battle-station designs — dedicated defensive station identities</a>
+        <a class="doc-pager__link" href="design-munitions.html">Munitions — ammo &amp; kinetic fabrication (design capture) →</a>
+      </nav>
+    </article>
+  </main>
+  <footer class="footer">
+    <span>Built 2026-08-10 from game sources</span>
+    <span><a href="../index.html">Home</a> · <a href="mailto:vincent@vandenbraken.com">Contact</a></span>
+    <span>© Vincent van den Braken</span>
+  </footer>
+</body>
+</html>

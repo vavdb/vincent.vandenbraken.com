@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ship Modules — Vindicator</title>
+  <meta name="description" content="Grid-mounted hardware — weapons, engines, and hull tweaks — tested in the arena before it ever reaches a shop." />
+  <link rel="stylesheet" href="../vindicator.css" />
+</head>
+<body class="doc-body">
+  <header class="site-nav">
+    <a class="site-nav__brand" href="../index.html">VINDICATOR</a>
+    <nav class="site-nav__links" aria-label="Section">
+      <a href="../index.html">Home</a>
+      <a href="../codex/index.html" class="is-active">Codex</a>
+      <a href="../design/index.html">Design</a>
+      <a href="../design-language.html">UI language</a>
+      <a href="../index.html#devlog">Devlog</a>
+    </nav>
+    <a class="site-nav__ext" href="../../index.html">Vincent van den Braken</a>
+  </header>
+  <main class="doc-main">
+    <article class="doc-article">
+      <header class="doc-article__head">
+        <a class="doc-back" href="index.html">← Codex</a>
+        <span class="vchip">Combat</span>
+        <h1 class="vtitle-display">Ship Modules</h1>
+        <p class="doc-article__summary">Grid-mounted hardware — weapons, engines, and hull tweaks — tested in the arena before it ever reaches a shop.</p>
+        
+      </header>
+      <div class="prose">
+<p>Every hull has a grid. Not a metaphor — an actual gridded bay behind the
+plating, sized to the ship, where hardware bolts in cell by cell. The
+bay started as a prototype rig — engineers running loadouts through the
+<strong>Arena</strong> (a sealed test bout, two hulls, one timer) before anything
+reaches a real deck — and the rig is still where fitting happens. But
+hardware reaches you from the field now: blocks come off the wrecks you
+make (see below). What follows is what the rig can mount.</p>
+<h2 id="weapon-modules">Weapon modules</h2>
+<p>A gun, gridded instead of hard-mounted. Functionally identical to the
+weapon bolted straight to a hardpoint (see <a href="weapons.html">Weapons</a>) — same
+bolt speed, same beam tick, same faction-tinted fire. The only thing that
+changes is where it lives: a slot in the grid instead of a fixed mount,
+so the same Pulse Cannon or Energy Beam that ships built-in on the
+Vindicator can also be drawn from a loadout and dropped into a bay.</p>
+<p>The Vindicator test rig now exposes <strong>three hardpoints</strong>. A module weapon
+fills the next open hardpoint, in order, and each hardpoint has its own
+physical muzzle. Three weapon modules means three simultaneous firing
+sources from three mount points. Zero weapon modules means exactly what it
+says: an unarmed hull for that run, no fallback beam sneaking in from the
+base template.</p>
+<p>The rig also carries variant weapon blocks now: ordinary beam and cannon
+fits, a heavier crackling beam, and a railgun whose shot drags a bright
+trail wrapped in a double-helix spiral instead of a flat bolt bloom.</p>
+<p>Every block carries a manufacturing envelope and one actual roll. The envelope
+is the honest minimum and maximum; <strong>CURRENT</strong> is what this physical block
+delivers. Quality runs from worn through standard and refined to exceptional.
+It is not a hidden rarity multiplier: the current numbers are the item.</p>
+<p>That sentence stopped being theoretical the day blocks started coming off
+wrecks. Kill a ship and sometimes a module block tumbles out — usually
+hardware matching what the victim actually flew, a raider&rsquo;s pulse cannon
+dropping a pulse-cannon block, though pirates scavenge widely enough that
+anything can turn up. The block lands with its own fresh roll, and the roll
+is the gamble: the name tells you what dropped, the numbers wait until it&rsquo;s
+aboard. Salvaged blocks are <strong>yours</strong> — a finite stash, each block one
+physical item with its one roll, unlike the rig&rsquo;s bottomless test-issue
+stacks. The stash shows up in the arena bay as its own SALVAGE shelf: a
+block of yours that&rsquo;s sitting in a grid greys out on the shelf until you
+lift it back off.</p>
+<p>The Arena&rsquo;s compare selector targets LEFT, RIGHT, or OFF. Hovering a weapon
+block opens the same compact card used for equipped hardware: candidate first,
+then one identical card per occupied hardpoint. Damage, range, rate of fire,
+sustained damage, and energy show direct replacement deltas. A high headline
+damage roll can therefore still lose on cadence, range, or capacitor cost.</p>
+<p>Drone links are now launch hardware, not disguised hardpoints. <strong>Beam</strong> and
+<strong>Cannon Drones</strong> use the escort doctrine: defend their carrier inside a tight
+leash, break off when a threat leaves it, then return to formation. <strong>Mining</strong>
+and <strong>Salvage Drones</strong> work matching nodes inside that leash until their small
+hold is full, return to the carrier, unload beside it, then resume. A <strong>Repair
+Drone</strong> circles close and patches armor before hull. Every active drone draws
+continuous carrier energy; an empty capacitor cuts control and weapons until
+power returns. Drone blocks do not consume one of the Vindicator&rsquo;s three gun
+hardpoints.</p>
+<p>Beam and cannon blocks both roll their combat properties, including range.
+Green, blue, yellow, and red families each carry normal and heavy variants;
+the chosen block color drives the beam, bolt glow, and heavy trail rather than
+the firing faction. A <strong>heavy beam</strong> block behaves like the pattern in
+<a href="weapons.html">Weapons</a>: its bite ramps up while you hold it on one hull and
+resets the moment you release or switch, so a heavy-beam boat wants a gunner
+who commits to a target rather than sweeping.</p>
+<h2 id="engine-modules">Engine modules</h2>
+<ul>
+<li><strong>Vector Thrusters</strong> favor sustained cruise speed and corrections.</li>
+<li><strong>Afterburner Coil</strong> favors boost-like acceleration and raw punch.</li>
+<li><strong>Capacitor Injector</strong> favors repeated burns by adding energy capacity and
+regeneration instead of winning the speed roll outright.</li>
+</ul>
+<p>Capacitor note: engines, shield recharge, and power-weapon fire now pull
+from the same ship energy pool. Running all three at once is a real budget,
+not free overlap.</p>
+<h2 id="ship-tweaks">Ship tweaks</h2>
+<p>Not weapons, not engines — everything else a hull can carry. Two of the
+three below are new hardware; read them as prototypes, the same
+&ldquo;tested, not yet in the field&rdquo; status the Repair Bolt carries in
+<a href="weapons.html">Weapons</a> — except these three actually work end to end in
+the arena rig, bolt to result, right now.</p>
+<ul>
+<li><p><strong>Shield Capacitor</strong>: extra capacitor banked straight into the shield
+emitter. Raises how much a shield can soak <em>and</em> how fast it climbs
+back once you stop taking fire — the same regen-after-a-quiet-moment
+rule every shield already runs on (see the shield note under
+<a href="weapons.html">Weapons</a>'s defensive emplacements), just with a deeper well
+and a faster refill.</p>
+</li>
+<li><p><strong>Repair Bot</strong>: a palm-sized drone that never stops crawling the hull.
+This is the one genuinely new trick — every other defense layer on a
+ship holds still until you dock at a station. The Repair Bot doesn&rsquo;t
+wait. It patches armor plate first, then works on the frame
+underneath, continuously, whether or not you&rsquo;re still taking fire.
+Slow — a station repair is instant and total, this is a trickle — but
+a trickle that runs mid-fight is worth more than it looks on paper.</p>
+</li>
+<li><p><strong>Scanner Array</strong>: a wider dish bolted where the stock antenna sat.
+Stretches how far a hull&rsquo;s own scanner projects before a contact
+drops off the chart (see <a href="scanners.html">Scanners</a> — &ldquo;no swapping or
+upgrading yet&hellip; until module hardware reaches the market&rdquo;). The
+module hardware exists now. The market still doesn&rsquo;t — but wrecks
+deliver where the aftermarket won&rsquo;t: the field is the shop, and the
+price is whoever was flying the hardware before you.</p>
+</li>
+</ul>
+<h2 id="the-grid-itself">The grid itself</h2>
+<p>The arena palette groups related blocks into vertical weapon-family, drone,
+engine, and system stacks, with scrolling instead of one line escaping the
+screen. Drag a block from the palette into a bay cell to fit it; drag a fitted
+block to another cell to move it, or off the grid to pull it. If a drag ever
+feels fiddly, <strong>right-click a fitted cell to clear it outright</strong> — the block
+just unequips: a test-issue stack always has another, and a salvaged block of
+yours lights back up on the SALVAGE shelf, never lost. Every module tested so
+far fits one cell. That&rsquo;s not a rule, it&rsquo;s where
+the rig starts: engineers expect denser, oddly-shaped hardware later —
+a compact rare capacitor next to a clunky common one carrying the same
+numbers — and the grid was built cell-list-first so that day doesn&rsquo;t
+need a rebuild, just more content.</p>
+<p>Arena duels also run with selectable tactics per side: hold position,
+keep max range, keep all weapons in range, evade, or pursue. Think of it
+as pilot doctrine layered on top of the loadout: the same guns read very
+different depending on whether the hull backs off, presses in, or jinks.</p>
+<p>A pilot pressing in will <strong>burn boost to get there</strong>. Retro thrusters are
+as strong as main engines out here, so a hull backing away from you is
+running exactly as fast as you are chasing it — follow on engines alone
+and the gap never shrinks by a metre. The overburn is the only way through
+it, and it is paid for out of the same capacitor the guns draw on. Every
+doctrine keeps roughly a third of the bank in reserve rather than arriving
+on empty with nothing left to shoot with, so a chase runs in surges: close
+hard, settle, let the bank refill. Bring the longer gun and a coward&rsquo;s
+doctrine and you can hold someone off for a while — but not forever, and
+not once their bank is full again.</p>
+<p><em>See also: <a href="weapons.html">Weapons</a> for what a Weapon module actually fires;
+<a href="scanners.html">Scanners</a> for what a Sensor tweak extends; <a href="ships.html">Ships</a>
+for the hulls these bays are cut into.</em></p>
+      </div>
+      <nav class="doc-pager" aria-label="Adjacent articles">
+        <a class="doc-pager__link" href="battle-stations.html">← Battle Stations</a>
+        <a class="doc-pager__link" href="conflict-ecology.html">When the Belt Fights Back →</a>
+      </nav>
+    </article>
+  </main>
+  <footer class="footer">
+    <span>Built 2026-08-10 from game sources</span>
+    <span><a href="../index.html">Home</a> · <a href="mailto:vincent@vandenbraken.com">Contact</a></span>
+    <span>© Vincent van den Braken</span>
+  </footer>
+</body>
+</html>

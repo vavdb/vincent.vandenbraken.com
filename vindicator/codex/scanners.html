@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scanners — Vindicator</title>
+  <meta name="description" content="Your scanner reports nearby vessels and stations within a limited live-intel bubble." />
+  <link rel="stylesheet" href="../vindicator.css" />
+</head>
+<body class="doc-body">
+  <header class="site-nav">
+    <a class="site-nav__brand" href="../index.html">VINDICATOR</a>
+    <nav class="site-nav__links" aria-label="Section">
+      <a href="../index.html">Home</a>
+      <a href="../codex/index.html" class="is-active">Codex</a>
+      <a href="../design/index.html">Design</a>
+      <a href="../design-language.html">UI language</a>
+      <a href="../index.html#devlog">Devlog</a>
+    </nav>
+    <a class="site-nav__ext" href="../../index.html">Vincent van den Braken</a>
+  </header>
+  <main class="doc-main">
+    <article class="doc-article">
+      <header class="doc-article__head">
+        <a class="doc-back" href="index.html">← Codex</a>
+        <span class="vchip">Flight</span>
+        <h1 class="vtitle-display">Scanners</h1>
+        <p class="doc-article__summary">Your scanner reports nearby vessels and stations within a limited live-intel bubble.</p>
+        
+      </header>
+      <div class="prose">
+<p>Space does not report to you. Your scanner does.</p>
+<p>Every hull carries one, and it projects a live-intel bubble around the
+ship: any vessel or station inside that radius shows on your charts:
+a dot on the corner radar, a mark on the zoomed-out schematic. Outside
+the bubble, nothing. Not &ldquo;hidden behind something&rdquo;, just unreported.
+Space is big and your antenna is only so long.</p>
+<h2 id="range">Range</h2>
+<p>Range is a hull stat. The Vindicator mounts a survey-grade unit that
+covers roughly a whole system from anywhere inside it; the scrap most
+raiders and haulers fly sees a fraction of that. No swapping or
+upgrading yet. The range you launched with is the range you have,
+until module hardware reaches the market.</p>
+<h2 id="astronomy-is-free">Astronomy is free</h2>
+<p>Stars, planets, moons, belts, gates: charted forever, fog or no fog.
+Orbits do not sneak around. The scanner&rsquo;s job is everything the
+almanac cannot tell you: who is flying where, right now.</p>
+<h2 id="charted-not-watched">Charted, not watched</h2>
+<p>Zoom out and every known system is drawn; existence is never a secret.
+But a system with none of your ships in it renders as a dark
+silhouette: dim rings, dim name, no contacts. Charted, not watched.
+Nothing you own is there to do the watching. Fly in and it lights up;
+leave and it goes dark again behind you.</p>
+<p>The rule is presence: anything of yours keeps its system lit. Today
+that mostly means the one you are sitting in. The day you own more hulls, a
+freighter parked in a quiet system is also a watchtower.</p>
+<p>A station counts too, and it never leaves. Plant one and its system stays lit
+behind you — you keep watching that sky from the moment you build there,
+whether or not you ever come back. It is the difference between an outpost and
+a rumour: the belt you claimed keeps working, and you keep seeing who comes
+calling on it.</p>
+<h2 id="picking-a-target">Picking a target</h2>
+<p>Put the cursor on something and it becomes your target. That is the whole
+gesture. The mark stays where you put it: slide the cursor away, roll the
+ship, look somewhere else — the target holds until you pick another one,
+or until the thing you were reading stops existing.</p>
+<p><strong>Tab</strong> walks the target outward instead, nearest contact first, then the
+next one out, and around again from the front when it runs out of sky.
+Faster than chasing a moving hull with a cursor, and it works when you
+would rather keep the pointer on your guns.</p>
+<p>Whatever you have marked wears a set of thin brackets, and the panel
+under your radar reads it out.</p>
+<h2 id="what-the-panel-can-answer">What the panel can answer</h2>
+<p>Four headings, and they do not all come from the same place.</p>
+<p><strong>Identity</strong> — name, class, size, faction. The transponder gives this up
+whether its owner likes it or not. Enough to know whether that dot is a
+hauler minding its business or a raider minding yours.</p>
+<p><strong>Activity</strong> — what it is <em>doing</em>, right now. This one costs nothing at
+all, because it is not a scan: you are watching a ship hold a beam on a
+rock, or turn and run. Eyes work at any range you can see.</p>
+<p><strong>Manifest</strong> — what is in the hold. That takes a real cargo scan, and the
+unit your hull came with does it.</p>
+<p><strong>Condition and loadout</strong> — hull, shield, armor, the guns it has bolted
+on, and the rack those guns sit in, cell by cell. Those need a
+battle-grade scanner, and you are not flying one. The panel lists both
+headings and then says <strong>NO READ</strong> under each, because your antenna knows
+they exist and cannot open them. That is not a bug in the readout. It is
+the readout being honest about the hardware.</p>
+<p>Better units exist. Nobody sells them yet. The aftermarket keeps
+promising.</p>
+<h2 id="reading-intent">Reading intent</h2>
+<p>Activity is the line to watch, because it is the only one that tells you
+what happens next.</p>
+<p>Prospecting. Working a rock. Hauling to station. In transit, loitering,
+departing via gate. Patrolling, hunting, engaging. Loading run, delivery
+run, awaiting cargo, standing by. A freight hull that reads <strong>AWAITING
+CARGO</strong> is parked at a pad with nothing worth carrying — its station is
+out of surplus, and it will sit right there until that changes rather
+than burn laps with an empty hold.</p>
+<p>And under the activity, the intent — the thing it is shouting about.
+A miner that has been shot at breaks off, screams <strong>CALLING FOR HELP</strong> on
+its faction band, and runs for the nearest friendly guns: <strong>RUNNING FOR
+SHELTER</strong> while it is still crossing, <strong>SHELTERING</strong> once it is parked
+in the dock ring and refusing to come back out. Watching that line is how
+you learn a system&rsquo;s temper — who answers a call, how fast, and how long
+it takes the belt to go back to work.</p>
+<h2 id="the-codex-fills-itself-in">The codex fills itself in</h2>
+<p>This archive is not a textbook you were handed. It is your own log, and
+it writes itself from what your scanner actually registers. An entry you
+have not earned reads only <strong>UNDISCOVERED</strong> and the field it belongs to —
+never a title, never a summary, nothing to spoil. Cross a black hole&rsquo;s
+well, meet a faction&rsquo;s ships, dock somewhere new, and the matching page
+fills in the moment it happens; if you have the codex open when it lands,
+you watch the placeholder turn into a page. What you have not seen, you do
+not get to read. That is the whole rule.</p>
+<p><em>See also: the chart itself in <a href="navigation.html">Navigation</a>; pilot
+roles in <a href="pilots.html">Pilots &amp; Behaviour</a></em></p>
+      </div>
+      <nav class="doc-pager" aria-label="Adjacent articles">
+        <a class="doc-pager__link" href="navigation.html">← Navigation</a>
+        <a class="doc-pager__link" href="ships.html">Ships &amp; Hull Classes →</a>
+      </nav>
+    </article>
+  </main>
+  <footer class="footer">
+    <span>Built 2026-08-10 from game sources</span>
+    <span><a href="../index.html">Home</a> · <a href="mailto:vincent@vandenbraken.com">Contact</a></span>
+    <span>© Vincent van den Braken</span>
+  </footer>
+</body>
+</html>

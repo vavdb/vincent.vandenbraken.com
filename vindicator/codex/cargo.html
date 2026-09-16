@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cargo &amp; Commodities — Vindicator</title>
+  <meta name="description" content="Your cargo hold carries valuable commodities, and everything aboard is lost with your hull." />
+  <link rel="stylesheet" href="../vindicator.css" />
+</head>
+<body class="doc-body">
+  <header class="site-nav">
+    <a class="site-nav__brand" href="../index.html">VINDICATOR</a>
+    <nav class="site-nav__links" aria-label="Section">
+      <a href="../index.html">Home</a>
+      <a href="../codex/index.html" class="is-active">Codex</a>
+      <a href="../design/index.html">Design</a>
+      <a href="../design-language.html">UI language</a>
+      <a href="../index.html#devlog">Devlog</a>
+    </nav>
+    <a class="site-nav__ext" href="../../index.html">Vincent van den Braken</a>
+  </header>
+  <main class="doc-main">
+    <article class="doc-article">
+      <header class="doc-article__head">
+        <a class="doc-back" href="index.html">← Codex</a>
+        <span class="vchip">Economy</span>
+        <h1 class="vtitle-display">Cargo &amp; Commodities</h1>
+        <p class="doc-article__summary">Your cargo hold carries valuable commodities, and everything aboard is lost with your hull.</p>
+        
+      </header>
+      <div class="prose">
+<p>Anything worth hauling has to fit in your hold, and anything in your hold
+dies with your hull. That&rsquo;s the whole economy in one sentence — everything
+else is detail.</p>
+<h2 id="the-hold">The hold</h2>
+<p>Every hull that&rsquo;s built to carry cargo has a hold, measured in plain
+units. Fill it with any mix of commodities you like; there&rsquo;s no sorting
+by type, just space. Run it empty and you&rsquo;re a pure combat loadout — run
+it full and you&rsquo;re a target worth boarding.</p>
+<h2 id="whats-in-it">What&rsquo;s in it</h2>
+<p>Commodities come from three places: things you mine out of a belt,
+things you salvage off a derelict, and things you take off a wreck you
+made yourself. All of it pays off the same way — credits per unit, no
+haggling, no grading. Every commodity carries its own mark — the little
+silhouette beside its name in the dock&rsquo;s cargo table, and again on the
+toast when you fly through a canister and scoop it — so a full hold
+reads at a glance without reading a word. What you&rsquo;re hauling:</p>
+<ul>
+<li><strong>Ferrite</strong> — the baseline ore. Common, cheap per unit, and the reason
+the hold exists in the first place.</li>
+<li><strong>Gem</strong> — a rare strike. It doesn&rsquo;t replace a Ferrite haul, it rides
+along on top of one: mine normally and sometimes the rock throws in a
+Gem for free.</li>
+<li><strong>Generic Salvage</strong> — stripped parts and plating off a derelict hull.
+Unglamorous, still worth the trip.</li>
+<li><strong>Ancient/Exotic Salvage</strong> — the rare version of the same proc. Most
+wrecks give you scrap; some give you something nobody can date.</li>
+<li><strong>Civilian Goods</strong> — furniture, ration packs, someone&rsquo;s mail. Every
+civilian hull you scan is carrying crates of it, and it&rsquo;s worth
+almost nothing per crate. If you shoot a freighter open expecting
+treasure, this is what you get, and it serves you right.</li>
+</ul>
+<h2 id="the-mineral-ladder">The mineral ladder</h2>
+<p>Ferrite is only the floor. Five tiers of ore exist, and where you can
+mine each one is tied straight to how dangerous the system is:</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Mineral</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T1</td>
+<td>Ferrite</td>
+<td>every belt, everywhere</td>
+</tr>
+<tr>
+<td>T2</td>
+<td>Silica</td>
+<td>common, but only in belts that carry it</td>
+</tr>
+<tr>
+<td>T2</td>
+<td>Ice</td>
+<td>cold outer belts only</td>
+</tr>
+<tr>
+<td>T3</td>
+<td>Titanium</td>
+<td>frontier belts</td>
+</tr>
+<tr>
+<td>T4</td>
+<td>Iridium</td>
+<td>rare belts, thin even where found</td>
+</tr>
+<tr>
+<td>T5</td>
+<td>Voidite</td>
+<td>only near a black hole</td>
+</tr>
+</tbody>
+</table>
+<p>A belt has one <strong>dominant</strong> ore (most of its rocks) and sometimes a
+<strong>trace</strong> ore (a smaller share of rocks) — work a belt long enough and
+you&rsquo;ll pull both. The trace is why a belt is worth a second pass instead
+of a one-and-done strip. Danger and richness climb together: the safest
+belts only ever give up Ferrite and its trace, the deadliest ones sit on
+Voidite and nothing lower.</p>
+<h2 id="the-good-rock-sits-where-the-guns-are">The good rock sits where the guns are</h2>
+<p>That climb isn&rsquo;t a suggestion, it&rsquo;s a hard ceiling on every belt in the
+galaxy: how dangerous a system is caps how good its ore can get. A safe
+system never rolls better than Silica. A frontier belt can tempt you with
+Titanium or Iridium. Voidite exists in exactly one place, and it&rsquo;s the
+one place with a black hole hanging over it. There&rsquo;s no quiet corner of
+known space where the rare stuff turns up cheap — if a belt is rich, that
+richness is the reason something is shooting at the miners working it.</p>
+<p>That&rsquo;s why the loop isn&rsquo;t &ldquo;find the best belt and camp it.&rdquo; It&rsquo;s &ldquo;decide
+how much risk this haul is worth,&rdquo; every time you point a hold at a
+belt past the safe ones.</p>
+<h2 id="wrecks-spill">Wrecks spill</h2>
+<p>Destruction isn&rsquo;t tidy. Kill a ship and part of whatever it was carrying
+survives the blast — a canister tumbling where the hull came apart,
+holding a share of the cargo plus whatever plating and parts the wreck
+itself gave up. Fly over it and your hold scoops what fits; if you&rsquo;re
+full it keeps the rest, so making space and coming back beats watching
+it drift. It won&rsquo;t wait forever — a canister that sits too long is gone.</p>
+<p>You can&rsquo;t tell what&rsquo;s inside from range. A canister reads as a canister
+until it&rsquo;s in your hold — the aftermarket keeps promising scanner
+hardware that reads manifests at a distance, and hasn&rsquo;t delivered.</p>
+<p>Two things worth knowing about who drops what. A working hauler spills
+what it was hauling, which is exactly why raiders hunt them. And pirate
+hulls are flying strongboxes: raiders carry their plunder with them, so
+a dead raider always pays out over and above the scrap — ore they stole
+from someone, sometimes something better. Hunting the hunters is a
+living.</p>
+<h2 id="the-risk">The risk</h2>
+<p>Cargo is not banked anywhere until you sell it. It rides in your hold the
+whole way home, through however much pirate space sits between the belt
+and the buyer. Lose the hull, lose the hold — the value only becomes
+yours the moment it&rsquo;s off the ship, and no canister of yours outlives
+you: what spills from other ships&rsquo; wrecks died with THEIR ledger, not
+yours. That&rsquo;s what makes a loaded run worth escorting and an empty one
+worth risking alone.</p>
+      </div>
+      <nav class="doc-pager" aria-label="Adjacent articles">
+        <a class="doc-pager__link" href="black-holes.html">← Black Holes</a>
+        <a class="doc-pager__link" href="refining.html">Refining →</a>
+      </nav>
+    </article>
+  </main>
+  <footer class="footer">
+    <span>Built 2026-08-10 from game sources</span>
+    <span><a href="../index.html">Home</a> · <a href="mailto:vincent@vandenbraken.com">Contact</a></span>
+    <span>© Vincent van den Braken</span>
+  </footer>
+</body>
+</html>

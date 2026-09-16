@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visual combat system spine — Vindicator</title>
+  <meta name="description" content="That sentence is the production contract. A faction owns the readable body and markings of its craft. A weapon owns its reusable mount and shot language. Content chooses which weap…" />
+  <link rel="stylesheet" href="../vindicator.css" />
+</head>
+<body class="doc-body">
+  <header class="site-nav">
+    <a class="site-nav__brand" href="../index.html">VINDICATOR</a>
+    <nav class="site-nav__links" aria-label="Section">
+      <a href="../index.html">Home</a>
+      <a href="../codex/index.html">Codex</a>
+      <a href="../design/index.html" class="is-active">Design</a>
+      <a href="../design-language.html">UI language</a>
+      <a href="../index.html#devlog">Devlog</a>
+    </nav>
+    <a class="site-nav__ext" href="../../index.html">Vincent van den Braken</a>
+  </header>
+  <main class="doc-main">
+    <article class="doc-article">
+      <header class="doc-article__head">
+        <a class="doc-back" href="index.html">← Design</a>
+        <span class="vchip">Design</span>
+        <h1 class="vtitle-display">Visual combat system spine</h1>
+        <p class="doc-article__summary">That sentence is the production contract. A faction owns the readable body and markings of its craft. A weapon owns its reusable mount and shot language. Content chooses which weap…</p>
+        <p class="banner banner--warn">Design note — systems rationale, not player-facing codex text.</p>
+      </header>
+      <div class="prose">
+<p><strong>Read this first.</strong> This page routes visual-combat decisions to one owner; it
+does not restate those decisions. Follow the links before adding a parallel
+taxonomy, asset rule, or content table.</p>
+<h2 id="system-spine">System spine</h2>
+<p><strong>Hull = faction body; Hardpoints = neutral sockets; Weapon = modular item
+(template plus optional module wrapper); FX/art = item family and recolorable;
+Default loadout is not a unique inseparable gun.</strong></p>
+<p>That sentence is the production contract. A faction owns the readable body and
+markings of its craft. A weapon owns its reusable mount and shot language.
+Content chooses which weapons a hull starts with, while salvage, fabrication,
+shops, and loadout tools may move the same item family onto another hull.</p>
+<h2 id="ownership-map">Ownership map</h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Source of truth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Faction silhouettes, palette, materials, wear, hull/station grammar, reveal-safe names</td>
+<td><a href="design-faction-art-language.html">Faction art language</a></td>
+</tr>
+<tr>
+<td>Shared camera, scale, cel/pixel presentation, export and technical art rules</td>
+<td>Art style guide</td>
+</tr>
+<tr>
+<td>Modular weapon items, hardpoints, FX families, and art-to-template/module mapping</td>
+<td><a href="design-weapons-modules.html">Weapons and modules</a></td>
+</tr>
+<tr>
+<td>Ammo, capacitor, and firing-resource rules</td>
+<td><a href="design-munitions.html">Munitions</a></td>
+</tr>
+<tr>
+<td>Per-hardpoint heat and overmount behavior</td>
+<td><a href="design-combat-heat.html">Combat heat</a></td>
+</tr>
+<tr>
+<td>Runtime IDs, hull ladder, default loadouts, and temporary proxy-pack mapping</td>
+<td><a href="design-fleets-content.html">Fleet content</a></td>
+</tr>
+<tr>
+<td>Station structure and battle-station behavior</td>
+<td><a href="design-battle-stations.html">Battle stations</a></td>
+</tr>
+<tr>
+<td>Fabrication, construction, modules, shops, and the arena&rsquo;s economy role</td>
+<td><a href="design-economy.html">Economy</a></td>
+</tr>
+<tr>
+<td>Only what has shipped and can be known by the player</td>
+<td><a href="../codex/weapons.html">Weapons codex</a>, <a href="../codex/ship-modules.html">Ship Modules codex</a>, and <a href="../codex/ships.html">Ships codex</a></td>
+</tr>
+</tbody>
+</table>
+<p>If two documents appear to own the same decision, fix the cross-link or move
+the detail to the owner above. Do not solve the conflict by copying it.</p>
+      </div>
+      <nav class="doc-pager" aria-label="Adjacent articles">
+        
+        <a class="doc-pager__link" href="design-weapons-modules.html">Modular weapons and modules →</a>
+      </nav>
+    </article>
+  </main>
+  <footer class="footer">
+    <span>Built 2026-08-10 from game sources</span>
+    <span><a href="../index.html">Home</a> · <a href="mailto:vincent@vandenbraken.com">Contact</a></span>
+    <span>© Vincent van den Braken</span>
+  </footer>
+</body>
+</html>

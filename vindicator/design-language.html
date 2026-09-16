@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UI language — Vindicator</title>
+  <meta name="description" content="The Vindicator cognitive-overlay UI language, explained in CSS terms: tokens, typography, the chamfer shape model, and the shared panel, button and chip components." />
+  <link rel="stylesheet" href="vindicator.css" />
+  <style>
+    /* Page-local demo widgets — everything else comes from vindicator.css. */
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: var(--space-3);
+      margin: 0 0 var(--space-3);
+    }
+    .swatch {
+      border: var(--rail-width) solid var(--rail);
+      background: color-mix(in srgb, var(--panel-base) 60%, transparent);
+    }
+    .swatch__color {
+      height: 56px;
+    }
+    .swatch__meta {
+      padding: var(--space-2);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+    .swatch__name {
+      color: var(--nav-ink);
+      display: block;
+    }
+    .swatch__hex {
+      color: var(--text-dim);
+      display: block;
+    }
+    .swatch__role {
+      color: var(--text-muted);
+      display: block;
+      font-family: var(--font-body);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+    .type-sample {
+      margin: 0 0 var(--space-2);
+    }
+    .type-sample small {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 1px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+    .chamfer-demo-row {
+      display: flex;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+      align-items: flex-end;
+      margin: 0 0 var(--space-3);
+    }
+    .chamfer-demo {
+      width: 140px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      background: var(--panel-base);
+      border: var(--rail-width) solid var(--rail);
+      clip-path: polygon(
+        var(--c) 0, 100% 0,
+        100% calc(100% - var(--c)), calc(100% - var(--c)) 100%,
+        0 100%, 0 var(--c)
+      );
+    }
+    .grid-demo {
+      height: 160px;
+      border: var(--rail-width) solid var(--rail);
+      background-color: var(--panel-base);
+      background-image:
+        linear-gradient(var(--grid-major) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+        linear-gradient(var(--grid-minor) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
+      background-size: 64px 64px, 64px 64px, 16px 16px, 16px 16px;
+      margin: 0 0 var(--space-3);
+    }
+    .btn-demo-row {
+      display: flex;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+      align-items: center;
+      margin: 0 0 var(--space-3);
+    }
+    .voice-list span {
+      font-family: var(--font-mono);
+    }
+  </style>
+</head>
+<body class="doc-body">
+
+  <header class="site-nav">
+    <a class="site-nav__brand" href="index.html">VINDICATOR</a>
+    <nav class="site-nav__links" aria-label="Section">
+      <a href="index.html">Home</a>
+      <a href="codex/index.html">Codex</a>
+      <a href="design/index.html">Design</a>
+      <a href="design-language.html" class="is-active">UI language</a>
+      <a href="index.html#devlog">Devlog</a>
+    </nav>
+    <a class="site-nav__ext" href="../index.html">Vincent van den Braken</a>
+  </header>
+
+  <main class="doc-main">
+    <header class="doc-hero">
+      <span class="vchip">SYS // UI LANGUAGE</span>
+      <h1 class="vtitle-display">The cognitive overlay, in CSS terms</h1>
+      <p class="doc-hero__lede">In fiction the interface is Vann's cognitive overlay: chamfered navy panels drawn over a signal-blue grid. This page documents that visual system as design tokens and CSS. Both stylesheets are vendored from the game code (<a href="tokens.css">tokens.css</a> from <code>UiThemeTokens</code>, <a href="components.css">components.css</a> from <code>VindicatorWebStyle</code>), so every demo below renders with the shipped classes rather than a copy of them.</p>
+    </header>
+
+    <section class="doc-section">
+      <h2 class="doc-section__title vtitle">Color tokens</h2>
+      <div class="prose">
+        <p>Six base tokens carry the whole interface. Everything else is derived by mixing or fading them.</p>
+      </div>
+      <div class="swatch-grid">
+        <div class="swatch">
+          <div class="swatch__color" style="background: var(--bg-deep)"></div>
+          <div class="swatch__meta"><span class="swatch__name">--bg-deep</span><span class="swatch__hex">#060B12</span><span class="swatch__role">Deep navy-black. The space background.</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__color" style="background: var(--panel-base)"></div>
+          <div class="swatch__meta"><span class="swatch__name">--panel-base</span><span class="swatch__hex">#0E1826</span><span class="swatch__role">Panel glass fill.</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__color" style="background: var(--signal)"></div>
+          <div class="swatch__meta"><span class="swatch__name">--signal</span><span class="swatch__hex">#83C3FF</span><span class="swatch__role">Primary structure: rails, headers, hover, grid.</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__color" style="background: var(--cassius)"></div>
+          <div class="swatch__meta"><span class="swatch__name">--cassius</span><span class="swatch__hex">#F59A56</span><span class="swatch__role">Reserved for CASSIUS comms.</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__color" style="background: var(--fold)"></div>
+          <div class="swatch__meta"><span class="swatch__name">--fold</span><span class="swatch__hex">#91A6FF</span><span class="swatch__role">Exotic tech: the fold drive.</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__color" style="background: var(--online)"></div>
+          <div class="swatch__meta"><span class="swatch__name">--online</span><span class="swatch__hex">#05C6C1</span><span class="swatch__role">Online, success, pressed.</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__color" style="background: var(--nav-ink)"></div>
+          <div class="swatch__meta"><span class="swatch__name">--nav-ink</span><span class="swatch__hex">#D0D0D0</span><span class="swatch__role">Body, data, resting button labels.</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__color" style="background: var(--steel-rail)"></div>
+          <div class="swatch__meta"><span class="swatch__name">--steel-rail</span><span class="swatch__hex">#B5CBE0</span><span class="swatch__role">mix(nav-ink, signal 35%), the resting button rail.</span></div>
+        </div>
+      </div>
+      <div class="prose">
+        <p>Derived tokens are alpha fades of the base set:</p>
+<pre><code>--rail:       rgba(131, 195, 255, 0.55);  /* signal @ 55% — the 1px outline everywhere */
+--grid-major: rgba(131, 195, 255, 0.11);  /* signal @ 11% — 64px grid lines */
+--grid-minor: rgba(131, 195, 255, 0.05);  /* signal @ 5%  — 16px grid lines */
+--muted-ink:  rgba(208, 208, 208, 0.50);  /* nav-ink @ 50% — footnotes, version tags */
+--steel-rail: #B5CBE0;  /* color-mix(in srgb, var(--nav-ink) 65%, var(--signal)) */</code></pre>
+      </div>
+    </section>
+
+    <section class="doc-section">
+      <h2 class="doc-section__title vtitle">Color semantics: four voices</h2>
+      <div class="prose voice-list">
+        <ul>
+          <li><span style="color: var(--signal)">SIGNAL CYAN</span> is the overlay's own voice: structure, rails, headers, anything active or hovered.</li>
+          <li><span style="color: var(--online)">ONLINE GREEN</span> is confirmation: systems online, success, credits, a pressed button.</li>
+          <li><span style="color: var(--cassius)">CASSIUS ORANGE</span> is reserved. Only CASSIUS speaks in orange, so the companion can annotate the interface without appearing to own it.</li>
+          <li><span style="color: var(--fold)">FOLD PERIWINKLE</span> marks fold-drive tech and nothing mundane.</li>
+        </ul>
+        <p>The reservations are strict on purpose. If any element could take any accent, the accents would stop carrying information; as it stands, orange on this screen is always someone talking to you from outside.</p>
+      </div>
+    </section>
+
+    <section class="doc-section">
+      <h2 class="doc-section__title vtitle">Typography</h2>
+      <div class="prose">
+        <p>Three working faces plus one reserve, each with one job:</p>
+      </div>
+      <p class="type-sample"><small>Asimovian: display, titles only</small><span style="font-family: var(--font-display); font-size: 30px; color: var(--signal)">VINDICATOR // COGNITIVE OVERLAY</span></p>
+      <p class="type-sample"><small>Titillium Web: body and chrome copy</small><span style="font-family: var(--font-body); font-size: 14px">The gates are dark. Fold anyway. Body text is the only lowercase voice in the interface.</span></p>
+      <p class="type-sample"><small>Maple Mono NF: data and chips (uppercase, letter-spaced)</small><span style="font-family: var(--font-mono); font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;">FOLD CHARGE 87% · HULL 100 · CREDITS 4,210</span></p>
+      <p class="type-sample"><small>Doto: reserved numeric face (in repo, unused by the HUD yet)</small><span style="font-family: var(--font-numeric); font-size: 20px; color: var(--online)">00:42:17</span></p>
+      <div class="prose">
+        <p>The in-game size ladder, in px, top to bottom:</p>
+        <table>
+          <thead><tr><th>Step</th><th>px</th><th>Used for</th></tr></thead>
+          <tbody>
+            <tr><td>display</td><td>30</td><td>screen titles (Asimovian)</td></tr>
+            <tr><td>dialog title</td><td>26</td><td>pause / codex / gallery dialogs</td></tr>
+            <tr><td>panel title</td><td>22</td><td>large panel headings</td></tr>
+            <tr><td>subheader</td><td>16</td><td>section headers</td></tr>
+            <tr><td>body</td><td>14</td><td>default text (Titillium Web)</td></tr>
+            <tr><td>mono</td><td>13</td><td>mono body labels</td></tr>
+            <tr><td>data</td><td>12</td><td>telemetry values, buttons, chips</td></tr>
+            <tr><td>header</td><td>11</td><td>section kickers, CASSIUS comms</td></tr>
+            <tr><td>muted</td><td>10</td><td>footnotes</td></tr>
+            <tr><td>label</td><td>9</td><td>version tags, map labels</td></tr>
+            <tr><td>micro</td><td>8</td><td>map controls, legends, nameplates</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="doc-section">
+      <h2 class="doc-section__title vtitle">Shape: chamfer, never radius</h2>
+      <div class="prose">
+        <p>Every surface cuts its corners at 45°. There is no <code>border-radius</code> anywhere in the language. On the web the cut is a <code>clip-path</code> octagon:</p>
+<pre><code>clip-path: polygon(
+  var(--c) 0,  100% 0,
+  100% calc(100% - var(--c)),  calc(100% - var(--c)) 100%,
+  0 100%,  0 var(--c)
+);</code></pre>
+        <p>The cut size is per surface class:</p>
+      </div>
+      <div class="chamfer-demo-row">
+        <div class="chamfer-demo" style="--c: var(--chamfer-panel)">PANEL 14px</div>
+        <div class="chamfer-demo" style="--c: var(--chamfer-tooltip)">TOOLTIP 10px</div>
+        <div class="chamfer-demo" style="--c: var(--chamfer-button)">BUTTON 8px</div>
+        <div class="chamfer-demo" style="--c: var(--chamfer-chip-sm)">CHIP 6px</div>
+      </div>
+      <div class="prose">
+        <p>Around every cut runs a 1px rail (<code>--rail</code>, signal @ 55%). In-game, <code>ChamferStyleBox</code> strokes the whole octagon, diagonals included. A CSS border cannot: a single element's <code>border</code> is cut away by its own <code>clip-path</code> at the four diagonal segments. So the web version splits by construction. Panels close the octagon by nesting: a clipped <code>.vframe</code> carries the rail color as its background, and 1px of padding reveals it around the clipped <code>.vpanel</code> child. Buttons and chips stay single elements and leave their corners open. At a 6 to 8px cut on a 1px rail that gap is invisible; at panel scale it is not, which is why panels pay for the extra element.</p>
+      </div>
+    </section>
+
+    <section class="doc-section">
+      <h2 class="doc-section__title vtitle">Panel anatomy</h2>
+      <div class="vframe" style="margin-bottom: var(--space-3)">
+        <div class="vpanel wide">
+          <span class="vchip">SELECTION</span>
+          <div class="prose" style="margin-top: var(--space-2)">
+            <p style="margin: 0">This panel renders from the live components.css recipe: a rail frame around a flat panel-base face, with a static signal glow outside the cut.</p>
+          </div>
+        </div>
+      </div>
+      <div class="prose">
+        <p>Three layers, outside in:</p>
+        <ol>
+          <li>The glow is a <code>drop-shadow(0 0 7px …)</code> at signal @ 40% on the frame, so the halo follows the chamfered silhouette instead of the element's rectangle. In the game this glow breathes via shader; the web version holds still.</li>
+          <li>The rail is the frame's own background, revealed as a 1px line by the frame's padding. It is <code>--rail</code> by default, <code>--cassius</code> under <code>.vframe.cassius</code>, and <code>--signal</code> when the frame is a link under the pointer.</li>
+          <li>The fill is flat <code>--panel-base</code>. The quiet pass removed the gradient, the top highlight line, and the panel scanlines from the game, and the site follows.</li>
+        </ol>
+        <p>Panels sit on a signal-tinted grid substrate: 16px minor lines at 5%, and every fourth line (64px) major at 11%:</p>
+      </div>
+      <div class="grid-demo" role="img" aria-label="Panel grid substrate: 16px minor and 64px major signal-tinted lines"></div>
+      <div class="prose">
+        <p>The language allows one decorative motion: a slow additive shimmer band in the signal tint, travelling top to bottom at roughly 20 seconds per pass and 10% alpha. It never strobes. Surfaces opt into it individually, and on this site only the landing hero uses it.</p>
+      </div>
+    </section>
+
+    <section class="doc-section">
+      <h2 class="doc-section__title vtitle">Buttons</h2>
+      <div class="btn-demo-row">
+        <button class="vbtn" type="button">Autopilot</button>
+        <button class="vbtn" type="button">Fold</button>
+        <a class="vbtn go" href="#" onclick="return false">Play / Wishlist</a>
+      </div>
+      <div class="prose">
+        <p>The secondary <code>.vbtn</code> (hover it) is a steel hairline over the grid tint. The primary <code>.vbtn.go</code> drops the rail entirely and fills with the accent, so the committed action is marked by fill instead of a brighter outline:</p>
+        <table>
+          <thead><tr><th>State</th><th>Rail</th><th>Fill</th><th>Label</th></tr></thead>
+          <tbody>
+            <tr><td><code>.vbtn</code> rest</td><td><code>--steel-rail</code></td><td><code>--grid-minor</code></td><td><code>--nav-ink</code></td></tr>
+            <tr><td><code>.vbtn</code> hover</td><td><code>--signal</code></td><td><code>--grid-major</code></td><td>white</td></tr>
+            <tr><td><code>.vbtn.go</code></td><td>none</td><td><code>--online</code></td><td><code>--bg-deep</code>, 600</td></tr>
+          </tbody>
+        </table>
+        <p>The resting rail is desaturated on purpose: <code>mix(nav-ink, signal 35%)</code>. Against that steel, the cyan hover registers as a clear step up. Both buttons use a 7px cut with open corners, and both labels are sans; the quiet pass reserved mono for data, and a button label is chrome. Pages may adjust padding and font size for their own scale, as the landing hero does. Colors, rails, and geometry stay the component's.</p>
+<pre><code>.vbtn {
+  border: 1px solid var(--steel-rail);
+  color: var(--nav-ink);
+  background: var(--grid-minor);
+  clip-path: polygon(7px 0, 100% 0, 100% calc(100% - 7px),
+                     calc(100% - 7px) 100%, 0 100%, 0 7px);
+}
+.vbtn:hover { border-color: var(--signal); color: #fff; background: var(--grid-major); }
+.vbtn.go    { border: none; background: var(--online); color: var(--bg-deep); font-weight: 600; }</code></pre>
+      </div>
+    </section>
+
+    <section class="doc-section">
+      <h2 class="doc-section__title vtitle">Chips</h2>
+      <div class="btn-demo-row">
+        <span class="vchip">SYS // VINDICATOR</span>
+        <span class="vchip online">CREDITS 4,210</span>
+        <span class="vchip cassius">CASSIUS // EXTERNAL</span>
+      </div>
+      <div class="prose">
+        <p>Chips are the smallest surface and the only chrome set in mono, because a chip's content is data: a system name, a credit count, a comms tag. The recipe is a 6px cut (<code>--chamfer-chip-sm</code>), 12px caps at 2px letter-spacing, an accent rail at 90%, and the same accent mixed 10% into panel navy for the fill. Scanlines are omitted; at this size they read as noise. A chip makes one decision, its accent, chosen with the <code>.online</code> / <code>.cassius</code> modifiers under the voice rules above. Chips never mint their own colors.</p>
+      </div>
+    </section>
+
+    <section class="doc-section">
+      <h2 class="doc-section__title vtitle">Provenance</h2>
+      <div class="prose">
+        <p>The authoritative source is the game code: <code>common/UiThemeTokens.cs</code> (tokens, size ladder, state tables) and <code>common/ChamferStyleBox.cs</code> (the chamfered draw model). The Godot theme resource <code>vindicator_theme.tres</code> is an editor preview mirror, normalized from those tokens at startup. <code>build_docs.cs</code> generates the two stylesheets this page loads from that code, byte-identical to what the in-game state server serves, and <a href="vindicator.css">vindicator.css</a> adds layout only. When a page needs a chrome look the components cannot give, the knob grows in <code>VindicatorWebStyle</code> and re-vendors; the site does not fork recipes. This page used to keep its own panel styles and drifted a full design pass behind the game, which is why the rule exists.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>Live spec, rendered from the same tokens it documents</span>
+    <span><a href="index.html">Home</a> · <a href="mailto:vincent@vandenbraken.com">Contact</a></span>
+    <span>© Vincent van den Braken</span>
+  </footer>
+
+</body>
+</html>

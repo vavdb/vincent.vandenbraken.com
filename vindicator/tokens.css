@@ -1,0 +1,36 @@
+:root {
+  --bg-deep: #060B12;
+  --panel-base: #0E1826;
+  --signal: #83C3FF;
+  --cassius: #F59A56;
+  --fold: #91A6FF;
+  --online: #05C6C1;
+  --online-peak: #00F8F8;
+  --nav-ink: #D0D0D0;
+  --grid-major-solid: #1B2B3E;
+  --grid-minor-solid: #142131;
+  --rail: rgba(131, 195, 255, 0.55);
+  --muted-ink: rgba(208, 208, 208, 0.5);
+  --steel-rail: rgba(181, 203, 224, 1);
+  --grid-major: rgba(131, 195, 255, 0.11);
+  --grid-minor: rgba(131, 195, 255, 0.05);
+  --hull-red: #E05555;
+  --armor-yellow: #E0C060;
+  --shield-blue: #7FD6FF;
+  --energy-blue: #4FA8E0;
+  --chamfer-panel: 14px;
+  --chamfer-tooltip: 10px;
+  --chamfer-button: 8px;
+  --chamfer-chip-sm: 6px;
+  --rail-width: 1px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 40px;
+  --space-6: 64px;
+  --space-7: 96px;
+  --font-display: "Asimovian", "Titillium Web", sans-serif;
+  --font-body: "Titillium Web", "Geist", "Inter", system-ui, sans-serif;
+  --font-mono: "Maple Mono NF", "Maple Mono", "JetBrains Mono", Consolas, monospace;
+}

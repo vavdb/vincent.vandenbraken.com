@@ -1,0 +1,66 @@
+/* ==========================================================================
+   Self-hosted fonts — vendored 2026-08-09 from the game repo's
+   assets/fonts/ (single source: P:\Vindicator). TTF, not woff2: identical
+   files across game, this site, and the state server keeps the three
+   surfaces byte-honest; woff2 conversion is an optimization for later.
+   Licenses: OFL for every family — texts beside the files in /fonts/.
+   Type stack (quiet-pass ruling): Asimovian display >=15px, Titillium Web
+   chrome/body, Maple Mono NF data. Geist/JetBrains/Doto remain for legacy
+   page styles until those migrate.
+   ========================================================================== */
+
+@font-face {
+  font-family: "Asimovian";
+  src: url("fonts/Asimovian-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Titillium Web";
+  src: url("fonts/TitilliumWeb-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Titillium Web";
+  src: url("fonts/TitilliumWeb-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Maple Mono NF";
+  src: url("fonts/MapleMono-NF-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist";
+  src: url("fonts/Geist-Variable.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("fonts/JetBrainsMono-Variable.ttf") format("truetype");
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Doto";
+  src: url("fonts/Doto-Variable.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}

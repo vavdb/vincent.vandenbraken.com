@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trading — Vindicator</title>
+  <meta name="description" content="Dock at a buyer to turn the commodities in your hold into credits, and pay the yard to put your hull back together." />
+  <link rel="stylesheet" href="../vindicator.css" />
+</head>
+<body class="doc-body">
+  <header class="site-nav">
+    <a class="site-nav__brand" href="../index.html">VINDICATOR</a>
+    <nav class="site-nav__links" aria-label="Section">
+      <a href="../index.html">Home</a>
+      <a href="../codex/index.html" class="is-active">Codex</a>
+      <a href="../design/index.html">Design</a>
+      <a href="../design-language.html">UI language</a>
+      <a href="../index.html#devlog">Devlog</a>
+    </nav>
+    <a class="site-nav__ext" href="../../index.html">Vincent van den Braken</a>
+  </header>
+  <main class="doc-main">
+    <article class="doc-article">
+      <header class="doc-article__head">
+        <a class="doc-back" href="index.html">← Codex</a>
+        <span class="vchip">Economy</span>
+        <h1 class="vtitle-display">Trading</h1>
+        <p class="doc-article__summary">Dock at a buyer to turn the commodities in your hold into credits, and pay the yard to put your hull back together.</p>
+        
+      </header>
+      <div class="prose">
+<p>A full hold is worth nothing until you&rsquo;re docked and someone&rsquo;s buying.
+Selling is the last step of every mine and every salvage run — the moment
+the risk you carried actually turns into credits.</p>
+<h2 id="selling-at-a-station">Selling at a station</h2>
+<p>Dock, open the shop slot, and every commodity you&rsquo;re carrying shows up as
+its own row: name, quantity, unit price, and the credits it&rsquo;s worth right
+here, right now. Sell one stack at a time or hit SELL ALL to empty the
+hold in one pass. Either way the credits land in your wallet immediately
+and the cargo&rsquo;s gone — there&rsquo;s no partial haggling, no waiting for a buyer.</p>
+<p>The port doesn&rsquo;t stop for you, either. The world keeps running while
+you&rsquo;re docked — drones land their deliveries, the station hold ticks up
+under your DEPOSIT button, and the hauler you just undercut is still
+inbound. You&rsquo;re parked inside the station&rsquo;s shield dome, not frozen in
+time; press Esc or DEPART and you&rsquo;re flying again where you left off.</p>
+<h2 id="selling-isnt-the-only-way-out-of-the-hold">Selling isn&rsquo;t the only way out of the hold</h2>
+<p>At any station that keeps a hold of its own, each cargo row carries a
+<strong>DEPOSIT</strong> button as well as SELL. Depositing hands the goods over instead
+of selling them — the same act as one of that station&rsquo;s own haulers
+arriving with a load, and the way you feed a refinery its raw material. No
+credits change hands.</p>
+<p>A trade station is the one place that won&rsquo;t take it. It buys, it doesn&rsquo;t
+warehouse. See <em>Refining</em> for what the receiving station does with it after.</p>
+<h2 id="paying-to-get-patched-up">Paying to get patched up</h2>
+<p>The dock sells you something else, too. <strong>REPAIR</strong> puts hull and armor back,
+and it is priced by the point: one credit for every point of damage the yard
+has to undo. Nothing is missing, nothing is charged — the button tells you the
+bill before you press it, so a scratch costs a rounding error and a bad fight
+costs real money.</p>
+<p>Shields are not on the bill. They come back on their own wherever you are, and
+no yard is going to charge you for waiting.</p>
+<p>Where you dock changes the rate. A <strong>shipyard</strong> does it for nothing — the yards
+that build hulls do not nickel you for mending one. A <strong>defense platform</strong>
+charges double; the militia is doing you a favour between patrols and it prices
+like it. Everywhere else is the flat one-for-one.</p>
+<h3 id="when-you-cant-cover-it">When you can&rsquo;t cover it</h3>
+<p>You get what you can pay for. Hand over a purse that doesn&rsquo;t cover the whole
+job and the yard patches as far as your credits reach and stops — armor plate
+first, then the frame under it, same order a Repair Bot works in. You leave
+lighter and still dented, which beats leaving dented and broke.</p>
+<p>It is never free and it never runs you into debt. Whatever you spent, you
+bought that many points; the rest is still waiting for you when you can afford
+it. Limp to a shipyard instead if there&rsquo;s one in reach — that trip costs fuel
+and nothing else.</p>
+<h2 id="what-a-station-is-asking-for">What a station is asking for</h2>
+<p>Dock anywhere that&rsquo;s short of something and the panel shows <strong>WANTED HERE</strong>:
+what it needs, how much, and what it&rsquo;ll pay a unit. That&rsquo;s a standing order,
+not a mood — it sits there until somebody fills it, so a station that put the
+call out while every hauler was busy is still asking when you arrive.</p>
+<p>Filling one isn&rsquo;t the same as depositing. A deposit is a gift into their hold;
+filling an order is a sale at a price the shortage itself set. The scarcer the
+thing, the better it pays — up to about triple what the same cargo fetches
+somewhere comfortable.</p>
+<p>Which is the real reason to read the chart for trouble. A refinery cut off
+from its ore, a cluster whose cell works went quiet — those are stations
+paying over the odds for exactly what they can&rsquo;t get, and the run nobody else
+wants to make is the one worth making.</p>
+<p>Their own people move goods between themselves for nothing, so you&rsquo;re not
+competing with a faction&rsquo;s internal haulage on price. You&rsquo;re the one they call
+when their own supply can&rsquo;t reach.</p>
+<p>An order outranks the corner store at the exporter&rsquo;s end too. A station
+sitting on stock somebody has asked for holds its own market runs until the
+answering hauler has loaded and gone — no dumping the goods at the local
+exchange out from under a neighbour who posted for them. And a hauler that
+arrives at the pad to find the stock already sold doesn&rsquo;t fly the crossing
+empty; it stands down and the station picks again when there&rsquo;s something to
+carry.</p>
+<h2 id="why-the-same-cargo-pays-differently-everywhere">Why the same cargo pays differently everywhere</h2>
+<p>Every commodity has a base worth, but no two stations pay it out the same.
+Two things skew the price:</p>
+<ul>
+<li><strong>How dangerous the system is.</strong> Selling in a system pirates actually
+patrol pays better than selling in a system that&rsquo;s never seen a raid —
+the extra credits are what made hauling it here worth the risk in the
+first place. Safe systems pay baseline; frontier systems pay more;
+the deadliest systems pay the most.</li>
+<li><strong>What the station already has.</strong> Some stations run a standing markup
+or markdown on top of the danger skew, station by station — the same
+hold of Ferrite is never worth chasing the same price twice.</li>
+</ul>
+<p>Stack a dangerous system and a hungry station and the same cargo that
+barely covered fuel back home suddenly pays for the whole run.</p>
+<h2 id="reading-the-flow-on-the-chart">Reading the flow on the chart</h2>
+<p>The galaxy chart has two reads of the same picture. Open the map and press
+<strong>L</strong> — or hit the LENS chip on the selection panel — and NAV swaps to
+ECON. Nothing else moves: the same systems, the same lanes, the same
+selection you had. Only what the chart is telling you changes.</p>
+<p>In ECON, each system&rsquo;s dot is colored by what its markets are paying:</p>
+<ul>
+<li><strong>Orange</strong> — they pay OVER the odds here. Somebody is short of
+something. This is where a full hold turns into credits.</li>
+<li><strong>Green</strong> — cheap. Goods are sitting around and nobody is bidding. This
+is where you buy, or where you don&rsquo;t bother selling.</li>
+<li><strong>Plain grey</strong> — nothing much either way.</li>
+</ul>
+<p>The stronger the color, the steeper the skew, so a starving system reads
+across the whole chart at a glance instead of needing a table.</p>
+<p>Around each dot is a <strong>stock arc</strong> — how much cargo that system is
+actually holding, measured against the fullest system you can see. A
+system burning orange with almost no arc is short and empty: the run
+worth making. Orange with a fat arc is a system that pays well and is
+already stocked.</p>
+<p>The moving dots on the lanes are <strong>shipments in flight</strong> — cargo already
+crossing between two systems, riding the same lane curve a ship flies.
+The line runs orange where the goods are leaving and purple where they&rsquo;re
+arriving, so direction reads without an arrow. Watch them for a minute and
+you can see who supplies whom — and where a route already has competition.</p>
+<h2 id="how-far-the-lens-can-see">How far the lens can see</h2>
+<p>The chart is not a telescope. Every one of those readings comes from your
+trade-data interface, so it stops exactly where your subscription does
+(see <a href="trade-data.html">Trade Data</a>). Systems past your range still chart —
+they exist, and navigation never cared what you can afford — but they
+draw dim and undressed: no tint, no arc, no shipments. The footer says it
+plainly: your tier, and how many systems it currently reaches.</p>
+<p>Two consequences worth knowing. A shipment only shows when BOTH its ends
+are in range — watching cargo leave is market data too. And on the
+cracked pirated client the crossings still show, but the manifests come
+up unnamed for every commodity feed it never broke: you can see the
+hulls moving, not what&rsquo;s in them.</p>
+<h2 id="the-math-if-you-want-it">The math, if you want it</h2>
+<p>Selling one commodity pays <code>base worth x quantity x station skew</code>, where
+the station skew is the danger multiplier times whatever local markup
+that station is running. Sell everything at once and it&rsquo;s just that sum
+across your whole hold — there&rsquo;s no bonus or penalty for bulk, only for
+where you chose to sell it.</p>
+      </div>
+      <nav class="doc-pager" aria-label="Adjacent articles">
+        <a class="doc-pager__link" href="refining.html">← Refining</a>
+        <a class="doc-pager__link" href="trade-data.html">Trade Data →</a>
+      </nav>
+    </article>
+  </main>
+  <footer class="footer">
+    <span>Built 2026-08-10 from game sources</span>
+    <span><a href="../index.html">Home</a> · <a href="mailto:vincent@vandenbraken.com">Contact</a></span>
+    <span>© Vincent van den Braken</span>
+  </footer>
+</body>
+</html>

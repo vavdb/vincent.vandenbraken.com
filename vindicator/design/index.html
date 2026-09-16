@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design notes — Vindicator</title>
+  <meta name="description" content="Curated Vindicator design documents." />
+  <link rel="stylesheet" href="../vindicator.css" />
+</head>
+<body class="doc-body">
+  <header class="site-nav">
+    <a class="site-nav__brand" href="../index.html">VINDICATOR</a>
+    <nav class="site-nav__links" aria-label="Section">
+      <a href="../index.html">Home</a>
+      <a href="../codex/index.html">Codex</a>
+      <a href="../design/index.html" class="is-active">Design</a>
+      <a href="../design-language.html">UI language</a>
+      <a href="../index.html#devlog">Devlog</a>
+    </nav>
+    <a class="site-nav__ext" href="../../index.html">Vincent van den Braken</a>
+  </header>
+  <main class="doc-main">
+    <header class="doc-hero">
+      <span class="vchip">Design</span>
+      <h1 class="vtitle-display">Curated design notes</h1>
+      <p class="doc-hero__lede">Systems and production WHY for a subset of design docs. Story-bible and spoiler-heavy captures stay offline. The codex still owns player-facing truth.</p>
+      <p class="banner banner--warn">Developer-facing notes. May describe unshipped systems or change without notice.</p>
+    </header>
+    <section class="doc-section">
+      <ul class="doc-list">
+        <li><a class="vframe" href="design-visual-combat-spine.html"><div class="vpanel"><span class="doc-list__title">Visual combat system spine</span><span class="doc-list__summary">That sentence is the production contract. A faction owns the readable body and markings of its craft. A weapon owns its reusable mount and shot language. Content chooses which weap…</span></div></a></li>
+        <li><a class="vframe" href="design-weapons-modules.html"><div class="vpanel"><span class="doc-list__title">Modular weapons and modules</span><span class="doc-list__summary">&gt; Start at the [visual combat system spine](design-visual-combat-spine.md).</span></div></a></li>
+        <li><a class="vframe" href="design-faction-art-language.html"><div class="vpanel"><span class="doc-list__title">Faction art language — production implementation</span><span class="doc-list__summary">Start at the [visual-combat spine](design-visual-combat-spine.md). This bible owns silhouette, palette, materials, wear, hull and station grammar, and reveal-safe labels. It does *…</span></div></a></li>
+        <li><a class="vframe" href="design-economy.html"><div class="vpanel"><span class="doc-list__title">Mining → trading → construction → modules — design capture</span><span class="doc-list__summary">Captured 2026-07-10. The economy spine; precedes the fleet design (docs/design-fleet.md) which consumes it. Not yet scheduled.</span></div></a></li>
+        <li><a class="vframe" href="design-fleet.html"><div class="vpanel"><span class="doc-list__title">Fleet, crew, and role AI — design capture</span><span class="doc-list__summary">Captured 2026-07-10 from the owner&#x27;s spec (Star Valor inspiration). Not yet scheduled; depends on the economy foundation. This closes the loop on the original vision: the ship-clas…</span></div></a></li>
+        <li><a class="vframe" href="design-fleets-content.html"><div class="vpanel"><span class="doc-list__title">Fleet content — runtime IDs, hull ladder, and default loadouts</span><span class="doc-list__summary">This document owns fleet **content wiring**: runtime faction and ship IDs, the hull ladder, default loadout lists, and temporary asset-pack mappings. Final silhouettes, palettes, m…</span></div></a></li>
+        <li><a class="vframe" href="design-stations.html"><div class="vpanel"><span class="doc-list__title">Player-owned stations — design capture</span><span class="doc-list__summary">Captured 2026-07-19. The &quot;stations design&quot; cross-referenced by docs/design-fleet.md (&quot;[Haulers]&quot;/&quot;[Traders]&quot; require player stations) and docs/design-economy.md. Sequenced **step 2…</span></div></a></li>
+        <li><a class="vframe" href="design-battle-stations.html"><div class="vpanel"><span class="doc-list__title">Battle-station designs — dedicated defensive station identities</span><span class="doc-list__summary">Captured 2026-07-19. The &quot;[Structures] Battle station designs&quot; card. Stations that fight (pirate pickets, militia defense platforms) were borrowing ship capital-hull art (`Station.…</span></div></a></li>
+        <li><a class="vframe" href="design-conflict.html"><div class="vpanel"><span class="doc-list__title">Conflict ecology — the economy fights back (MVP)</span><span class="doc-list__summary">Captured 2026-07-19. The &quot;[Combat/AI] Conflict ecology MVP + fleet combat test&quot; card. The codex states what IS (`assets/codex/conflict-ecology.md`); this states WHY, and where the…</span></div></a></li>
+        <li><a class="vframe" href="design-munitions.html"><div class="vpanel"><span class="doc-list__title">Munitions — ammo &amp; kinetic fabrication (design capture)</span><span class="doc-list__summary">Captured 2026-07-19. Design-only pass for the PLAN card *&quot;[Economy] Missile ammo + kinetic fabrication&quot;*, whose own note says **&quot;Needs economy UX/storage/source design first, then…</span></div></a></li>
+        <li><a class="vframe" href="design-combat-heat.html"><div class="vpanel"><span class="doc-list__title">Hardpoint heat + overmount — design capture</span><span class="doc-list__summary">Captured 2026-07-19 from the owner&#x27;s spec (Star Valor inspiration): the owner liked Star Valor-style weapon heat, and hardpoints that can mount MORE than one gun at a heat cost. Th…</span></div></a></li>
+        <li><a class="vframe" href="design-generation.html"><div class="vpanel"><span class="doc-list__title">Universe generation: building blocks — design capture</span><span class="doc-list__summary">Captured 2026-07-10 from owner spec. Universes assemble from BLOCKS, so every galaxy is random yet always carries its [markers].</span></div></a></li>
+        <li><a class="vframe" href="design-universe.html"><div class="vpanel"><span class="doc-list__title">Continuous universe + travel feel + planet art — design capture</span><span class="doc-list__summary">Captured 2026-07-10 from owner feedback. Three connected shifts.</span></div></a></li>
+      </ul>
+    </section>
+  </main>
+  <footer class="footer">
+    <span>Built 2026-08-10 from game sources</span>
+    <span><a href="../index.html">Home</a> · <a href="mailto:vincent@vandenbraken.com">Contact</a></span>
+    <span>© Vincent van den Braken</span>
+  </footer>
+</body>
+</html>

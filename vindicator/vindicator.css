@@ -1,0 +1,721 @@
+/* ==========================================================================
+   Vindicator — page styles over the game's own design tokens.
+
+   tokens.css and components.css are GENERATED, never hand-edited: the game
+   emits both (UiThemeTokens.ToCssVariables + VindicatorWebStyle.Components)
+   and `dotnet run --file build_docs.cs` vendors them here byte-identical to
+   what the in-game state server serves at /tokens.css and /components.css.
+   Colors, rails, grids, meters, chamfer sizes, the spacing ladder and the
+   type stack all live there — this file owns layout and page components
+   only, plus the handful of site-scope tokens below.
+
+   CHROME IS THE COMPONENTS, not this file. Panels are `.vframe > .vpanel`,
+   buttons `.vbtn` / `.vbtn.go`, tags `.vchip`, headings `.vtitle` /
+   `.vtitle-display`. Rules here may SIZE and SPACE those classes; they must
+   never restate a fill, rail, glow or corner cut. A look the components
+   cannot give grows a knob in VindicatorWebStyle and re-vendors — the site
+   does not fork the recipe (the game's UI rule, applied to the web twin).
+
+   Fonts are self-hosted from /vindicator/fonts/ (fonts.css); nothing on
+   this site fetches a webfont host.
+   ========================================================================== */
+
+@import url("fonts.css");
+@import url("tokens.css");
+@import url("components.css");
+
+:root {
+  /* Site-scope only — deliberately NOT in the emitter, because the game has
+     no equivalent and a token nothing else can honour does not belong in a
+     shared ladder.
+     Reading inks: --muted-ink (NavInk @ 50%) is decorative in the HUD and
+     fails WCAG AA on this site's small copy, so long-form text uses these
+     raised, blue-leaning tones instead. */
+  --text-muted: #8FA3B8;
+  --text-dim: #7C93A5;
+  /* Marketing-only pairing: Doto ships in-repo but no game surface sets it. */
+  --font-numeric: "Doto", "JetBrains Mono", monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-deep);
+  color: var(--nav-ink);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--signal);
+}
+
+/* --------------------------------------------------------------------
+   Shared chrome, sized for marketing scale
+
+   The recipes themselves are in components.css. Only measurements here.
+   -------------------------------------------------------------------- */
+
+a.vbtn {
+  text-decoration: none;
+}
+
+.hero__actions .vbtn,
+.manual-split__action .vbtn {
+  padding: var(--space-2) var(--space-4);
+  font-size: 13px;
+}
+
+/* --------------------------------------------------------------------
+   Layout — hero
+   -------------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: var(--space-6) var(--space-5);
+  overflow: hidden;
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+.hero__scanlines {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(131, 195, 255, 0.05) 0 1px,
+    transparent 1px 3px
+  );
+  pointer-events: none;
+}
+
+.hero__scanlines::after {
+  /* panel_shimmer.gdshader: additive Signal-tinted band, ~12% band width, one pass every ~20s */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(131, 195, 255, 0.1) 50%,
+    transparent 100%
+  );
+  height: 40%;
+  animation: shimmer 20s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(350%);
+  }
+}
+
+.hero__title {
+  /* face from .vtitle-display; only the marketing size lives here */
+  font-size: clamp(40px, 8vw, 96px);
+  margin: 0 0 var(--space-2);
+  letter-spacing: 1px;
+}
+
+.hero__pitch {
+  font-family: var(--font-mono);
+  font-size: clamp(14px, 2vw, 18px);
+  color: var(--text-muted);
+  max-width: 46ch;
+  margin: 0 0 var(--space-4);
+}
+
+.hero__actions {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+/* --------------------------------------------------------------------
+   Layout — three-panel section
+   -------------------------------------------------------------------- */
+
+.section {
+  padding: var(--space-7) var(--space-5);
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.panel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+}
+
+/* manual & notes: asymmetric two-up (codex leads) + colophon note */
+.manual-split {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+}
+
+.manual-split__action {
+  margin: var(--space-3) 0 0;
+}
+
+.manual-note {
+  margin: var(--space-3) 0 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  color: var(--text-dim);
+}
+
+.panel-grid__item img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  margin-bottom: var(--space-3);
+  border: var(--rail-width) solid var(--rail);
+}
+
+.panel-grid__item h3 {
+  margin: 0 0 var(--space-2);
+}
+
+.panel-grid__item p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.panel-grid__item p + p {
+  margin-top: var(--space-3);
+}
+
+/* --------------------------------------------------------------------
+   Devlog
+   -------------------------------------------------------------------- */
+
+.devlog-list {
+  list-style: none;
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.devlog-list li {
+  display: flex;
+  gap: var(--space-4);
+  padding: var(--space-2) 0;
+  border-bottom: var(--rail-width) solid var(--rail);
+}
+
+.devlog-list li:first-child {
+  border-top: var(--rail-width) solid var(--rail);
+}
+
+.devlog-list time {
+  flex: 0 0 auto;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+
+.devlog-list span {
+  color: var(--nav-ink);
+}
+
+.devlog-intro {
+  margin: var(--space-3) 0 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.devlog-intro time {
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+
+.devlog-group {
+  margin-top: var(--space-5);
+}
+
+.devlog-group__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.devlog-group__head h3 {
+  margin: 0;
+}
+
+.devlog-group__range {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+}
+
+.devlog-group .devlog-list {
+  margin-top: var(--space-2);
+}
+
+.devlog-figures {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.devlog-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.devlog-figure {
+  margin: 0;
+}
+
+.devlog-figure img {
+  width: 100%;
+  height: auto;
+  border: var(--rail-width) solid var(--rail);
+}
+
+.devlog-figure figcaption {
+  margin-top: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  color: var(--text-dim);
+}
+
+.devlog-strip {
+  margin-top: var(--space-3);
+}
+
+.devlog-strip__scroll {
+  overflow-x: auto;
+  border: var(--rail-width) solid var(--rail);
+}
+
+.devlog-strip__scroll img {
+  width: auto;
+  max-width: none;
+  height: 220px;
+  border: 0;
+}
+
+/* --------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------- */
+
+.footer {
+  padding: var(--space-5);
+  border-top: var(--rail-width) solid var(--rail);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.footer a {
+  color: var(--text-dim);
+}
+
+.footer a:hover {
+  color: var(--signal);
+}
+
+/* --------------------------------------------------------------------
+   Site nav (landing + docs)
+   -------------------------------------------------------------------- */
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  padding: var(--space-3) var(--space-5);
+  border-bottom: var(--rail-width) solid var(--rail);
+  background: rgba(6, 11, 18, 0.92);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  backdrop-filter: blur(8px);
+}
+
+.site-nav__brand {
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  color: var(--nav-ink);
+}
+
+.site-nav__links {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.site-nav__links a,
+.site-nav__ext {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--text-dim);
+}
+
+.site-nav__links a:hover,
+.site-nav__ext:hover,
+.site-nav__links a.is-active {
+  color: var(--signal);
+}
+
+/* --------------------------------------------------------------------
+   Hero readability scrim
+   -------------------------------------------------------------------- */
+
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    rgba(6, 11, 18, 0.25) 0%,
+    rgba(6, 11, 18, 0.55) 45%,
+    rgba(6, 11, 18, 0.92) 100%
+  );
+  pointer-events: none;
+}
+
+.hero > .vchip,
+.hero > .hero__title,
+.hero > .hero__pitch,
+.hero > .hero__actions {
+  position: relative;
+  z-index: 1;
+}
+
+.section > .vchip {
+  margin-bottom: var(--space-2);
+}
+
+/* --------------------------------------------------------------------
+   Docs layout + prose
+   -------------------------------------------------------------------- */
+
+.doc-body {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+.doc-main {
+  flex: 1;
+  width: min(920px, 100%);
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-5);
+}
+
+.doc-hero {
+  margin-bottom: var(--space-6);
+}
+
+.doc-hero h1 {
+  font-size: clamp(28px, 5vw, 44px);
+  margin: var(--space-3) 0 var(--space-2);
+  letter-spacing: 1px;
+}
+
+.doc-hero__lede {
+  color: var(--text-muted);
+  max-width: 62ch;
+  margin: 0;
+}
+
+.doc-section {
+  margin-bottom: var(--space-6);
+}
+
+.doc-section__title {
+  margin: 0 0 var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: var(--rail-width) solid var(--rail);
+}
+
+.doc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.doc-list li + li {
+  margin-top: var(--space-2);
+}
+
+.doc-list a {
+  text-decoration: none;
+}
+
+.doc-list__title {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--nav-ink);
+  margin-bottom: 4px;
+}
+
+.doc-list__summary {
+  display: block;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.banner {
+  margin: var(--space-3) 0 0;
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  border: var(--rail-width) solid var(--rail);
+  color: var(--text-muted);
+}
+
+.banner--warn {
+  border-color: rgba(245, 154, 86, 0.55);
+  color: var(--cassius);
+  background: rgba(245, 154, 86, 0.06);
+}
+
+.doc-article__head {
+  margin-bottom: var(--space-5);
+}
+
+.doc-back {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-decoration: none;
+  color: var(--text-dim);
+  margin-bottom: var(--space-3);
+}
+
+.doc-back:hover {
+  color: var(--signal);
+}
+
+.doc-article__head h1 {
+  font-size: clamp(28px, 4.5vw, 40px);
+  margin: var(--space-3) 0 var(--space-2);
+}
+
+.doc-article__summary {
+  color: var(--text-muted);
+  max-width: 60ch;
+  margin: 0;
+}
+
+.prose {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--nav-ink);
+}
+
+.prose > *:first-child {
+  margin-top: 0;
+}
+
+.prose h2 {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--signal);
+  margin: var(--space-5) 0 var(--space-3);
+  padding-top: var(--space-3);
+  border-top: var(--rail-width) solid var(--rail);
+}
+
+.prose h3 {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: var(--fold);
+  margin: var(--space-4) 0 var(--space-2);
+}
+
+.prose p,
+.prose ul,
+.prose ol,
+.prose table,
+.prose blockquote,
+.prose pre {
+  margin: 0 0 var(--space-3);
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.25em;
+}
+
+.prose li + li {
+  margin-top: 0.35em;
+}
+
+.prose a {
+  color: var(--signal);
+}
+
+.prose a.dead-link {
+  color: var(--text-dim);
+  text-decoration: line-through;
+  cursor: help;
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: rgba(131, 195, 255, 0.08);
+  padding: 0.1em 0.35em;
+  border: 1px solid rgba(131, 195, 255, 0.15);
+}
+
+.prose pre {
+  overflow-x: auto;
+  padding: var(--space-3);
+  background: rgba(6, 11, 18, 0.9);
+  border: var(--rail-width) solid var(--rail);
+  font-size: 13px;
+}
+
+.prose pre code {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.prose blockquote {
+  margin-left: 0;
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--rail);
+  color: var(--text-muted);
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  font-family: var(--font-mono);
+}
+
+.prose th,
+.prose td {
+  border: var(--rail-width) solid var(--rail);
+  padding: var(--space-2);
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose th {
+  color: var(--signal);
+  background: rgba(131, 195, 255, 0.06);
+}
+
+.prose hr {
+  border: none;
+  border-top: var(--rail-width) solid var(--rail);
+  margin: var(--space-5) 0;
+}
+
+.prose strong {
+  color: #e8eef4;
+}
+
+.doc-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: var(--rail-width) solid var(--rail);
+}
+
+.doc-pager__link {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-decoration: none;
+  color: var(--signal);
+  max-width: 45%;
+}
+
+/* --------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .panel-grid,
+  .manual-split {
+    grid-template-columns: 1fr;
+  }
+
+  .site-nav {
+    padding: var(--space-3);
+  }
+
+  .doc-main {
+    padding: var(--space-5) var(--space-3);
+  }
+
+  .devlog-figures,
+  .devlog-tiles {
+    grid-template-columns: 1fr;
+  }
+
+  .devlog-strip__scroll img {
+    height: 160px;
+  }
+}
