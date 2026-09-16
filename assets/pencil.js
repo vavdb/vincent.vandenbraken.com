@@ -1,4 +1,4 @@
-// Pencil layer: roots from the hero sketch down into each project row,
+// Pencil layer: a root down the left margin branching into each project row,
 // and loose drafting frames around the banners. Seeded, so the drawing
 // is identical on every load; measured from the live layout.
 (() => {
@@ -104,24 +104,16 @@
 
     document.querySelectorAll('.software-project__visual, .built-plate img').forEach((el) => frame(rel(el)));
 
-    const art = rel(document.querySelector('.hero-art'));
     const rows = [...document.querySelectorAll('.software-project')];
     if (!rows.length) return;
     const copies = rows.map((r) => rel(r.querySelector('.software-project__copy')));
     if (copies[0].left < 160) return; // no left margin to grow roots in
     const gutterX = copies[0].left - 64;
 
-    // trunk: thin strands leave real root tips in the sketch (measured from the
-    // image), braid together just below it, then thicken toward the gutter
+    // trunk: starts at the section heading and runs down the left margin
     const heading = rel(document.querySelector('#work .section-heading'));
-    const at = (fx, fy) => [art.left + (art.right - art.left) * fx, art.top + (art.bottom - art.top) * fy];
-    const merge = at(0.13, 1.12);
-    [[0.23, 0.80], [0.30, 0.84], [0.37, 0.86]].forEach(([fx, fy], i) =>
-      root(at(fx, fy), [merge[0] + i * 3, merge[1] + i * 2], 1.2 + i * 0.25, [-14 - i * 10, 26 + i * 8], 4, 2));
-    const bend = root(merge, [gutterX, heading.top - 26], 2, [0, 14], 10, 3);
     const last = copies[copies.length - 1];
-    const trunkEnd = [gutterX + 10, last.top + 16];
-    root(bend[bend.length - 1], trunkEnd, 2.4, [-18, 0], 18, 2);
+    root([gutterX + 4, heading.top + 4], [gutterX + 10, last.top + 16], 2.2, [-18, 0], 18, 2);
 
     // one branch into each row, ending just before the title
     copies.forEach((c, i) => {
