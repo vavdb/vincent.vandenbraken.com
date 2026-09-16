@@ -14,6 +14,7 @@
     <a class="wordmark" href="#top" aria-label="Vincent van den Braken home"><span>V</span> Vincent van den Braken</a>
     <nav aria-label="Primary navigation">
       <a href="#work">Work</a>
+      <a href="#built">Built by hand</a>
       <a class="nav-cta" href="cv/index.html">CV <span aria-hidden="true">↗</span></a>
     </nav>
   </header>
@@ -21,70 +22,71 @@
   <main id="main-content">
     <section class="hero shell" id="top" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow">Independent builder / Urmond, NL</p>
-        <h1 id="hero-title">I make systems that have a world around them.</h1>
-        <p class="hero-lead">I’m Vincent. I work as a technical consultant and developer, and I keep making things after the client work stops: tools, games, interfaces, and the connective tissue between them.</p>
-        <div class="hero-actions">
-          <a class="button button--gold" href="#work">See the work <span aria-hidden="true">↓</span></a>
-          <a class="button button--quiet" href="cv/index.html">Read the CV <span aria-hidden="true">↗</span></a>
-        </div>
-        <dl class="hero-facts" aria-label="Professional focus">
-          <div><dt>focus</dt><dd>.NET / Azure / tools</dd></div>
-          <div><dt>mode</dt><dd>lead / build / explain</dd></div>
-        </dl>
+        <p class="eyebrow">Builder / consultant / curious human</p>
+        <h1 id="hero-title">I build things <em>I want to understand.</em></h1>
+        <p class="hero-lead">Tools, games, systems, and the occasional rabbit hole.</p>
+        <a class="text-link" href="cv/index.html">CV <span aria-hidden="true">↗</span></a>
       </div>
-
-      <figure class="portrait-panel">
-        <div class="portrait-panel__rail"><span>PERSON / 01</span><span>AVAILABLE FOR GOOD PROBLEMS</span></div>
-        <div class="portrait-panel__image"><img src="assets/portrait.png" alt="Vincent van den Braken smiling outdoors" width="1032" height="1228" fetchpriority="high"></div>
-        <figcaption><span>Vincent van den Braken</span><span>software / systems / small worlds</span></figcaption>
+      <figure class="hero-art">
+        <img src="assets/vincent-sketch-wide.png" alt="Graphite portrait of Vincent growing into tree roots, roads, and a small medieval city" width="1920" height="768" fetchpriority="high">
       </figure>
     </section>
 
-    <section class="workbench shell" id="work" aria-labelledby="work-title">
-      <div class="section-intro">
-        <p class="eyebrow">The workbench / 04 projects</p>
-        <h2 id="work-title">Four different ways of being curious.</h2>
-        <p>Some are games. Some are tools. Together they show the range I want my work to have: precise enough to trust, strange enough to remember.</p>
+    <section class="software shell" id="work" aria-labelledby="work-title">
+      <div class="section-heading">
+        <p class="eyebrow">Selected projects</p>
+        <h2 id="work-title">Software and game work.</h2>
       </div>
 
-      <div class="project-layout">
-        <article class="project project--groot">
+      <div class="software-list">
+        <article class="software-project software-project--groot">
           <a href="groot/">
-            <div class="project__image"><img src="assets/groot-growth-rings.png" alt="Groot growth rings interface" loading="lazy"></div>
-            <div class="project__body"><div class="project__label"><span>01 / HABITS</span><span class="project__arrow" aria-hidden="true">↗</span></div><h3>Groot</h3><p>A gentle, data-rich habit system built around rings, cells, and the small satisfaction of showing up.</p></div>
+            <div class="software-project__meta"><span>01</span><span>Groot</span></div>
+            <div class="software-project__copy"><h3>Groot</h3><p>A small system for turning effort into something you can see.</p><span class="project-link">Open project ↗</span></div>
+            <figure class="software-project__visual"><img src="assets/groot-growth-rings.png" alt="Groot growth rings interface" loading="lazy"></figure>
           </a>
         </article>
 
-        <article class="project project--uermend">
+        <article class="software-project software-project--uermend">
           <a href="uermend/">
-            <div class="project__image"><img src="assets/uermend-builder-detail.png" alt="Uermend builder interface showing a settlement detail" loading="lazy"></div>
-            <div class="project__body"><div class="project__label"><span>02 / WORLD BUILDING</span><span class="project__arrow" aria-hidden="true">↗</span></div><h3>Uermend</h3><p>A historical city builder where roads, resources, and the shape of a place matter.</p></div>
+            <div class="software-project__meta"><span>02</span><span>Uermend</span></div>
+            <div class="software-project__copy"><h3>Uermend</h3><p>A city builder about roads, resources, and the places they make.</p><span class="project-link">Open project ↗</span></div>
+            <figure class="software-project__visual"><img src="assets/uermend-builder-detail.png" alt="Uermend builder interface showing a settlement detail" loading="lazy"></figure>
           </a>
         </article>
 
-        <article class="project project--qubit">
+        <article class="software-project software-project--qubit">
           <a href="qubit/">
-            <div class="project__mark"><img src="assets/qubit-icon.png" alt="" width="128" height="128"></div>
-            <div class="project__body"><div class="project__label"><span>03 / DESKTOP TOOL</span><span class="project__arrow" aria-hidden="true">↗</span></div><h3>Qubit</h3><p>A qBittorrent remote with enough context to make a media-aware setup easier to operate.</p></div>
+            <div class="software-project__meta"><span>03</span><span>Qubit</span></div>
+            <div class="software-project__copy"><h3>Qubit</h3><p>A desktop control room for servers, files, and the media around them.</p><span class="project-link">Open project ↗</span></div>
+            <figure class="software-project__visual software-project__visual--qubit"><img src="assets/qubit-icon.png" alt="Qubit icon" loading="lazy"></figure>
           </a>
         </article>
 
-        <article class="project project--vindicator">
+        <article class="software-project software-project--vindicator">
           <a href="vindicator/">
-            <div class="project__image"><img src="assets/vindicator-blackhole.png" alt="Vindicator black hole system artwork" loading="lazy"></div>
-            <div class="project__body"><div class="project__label"><span>04 / SPACE STRATEGY</span><span class="project__arrow" aria-hidden="true">↗</span></div><h3>Vindicator</h3><p>A space strategy game about fleets, factions, and making a readable system out of a lot of moving parts.</p></div>
+            <div class="software-project__meta"><span>04</span><span>Vindicator</span></div>
+            <div class="software-project__copy"><h3>Vindicator</h3><p>A space strategy game where fleets are only half the problem.</p><span class="project-link">Open project ↗</span></div>
+            <figure class="software-project__visual"><img src="assets/vindicator-blackhole.png" alt="Vindicator black hole system artwork" loading="lazy"></figure>
           </a>
         </article>
       </div>
     </section>
 
-    <section class="closing shell" aria-labelledby="closing-title">
-      <div class="closing__rule" aria-hidden="true"></div>
-      <p class="eyebrow">Elsewhere on this site</p>
-      <h2 id="closing-title">Want the professional version?</h2>
-      <p>For the longer route through my experience, client work, and technical background, start with the CV.</p>
-      <a class="text-link" href="cv/index.html">Open the CV <span aria-hidden="true">↗</span></a>
+    <section class="built shell" id="built" aria-labelledby="built-title">
+      <div class="section-heading section-heading--built">
+        <p class="eyebrow">Outside the screen</p>
+        <h2 id="built-title">Built by hand.</h2>
+        <p>An indoor treehouse in the living room, designed in Autodesk and built in wood. 2023.</p>
+      </div>
+      <div class="build-journey" aria-label="Boomhut build journey">
+        <div class="build-journey__line" aria-hidden="true"></div>
+        <figure><img src="boomhut/images/01-plan.jpg" alt="Boomhut construction planning and early frame" loading="lazy"><figcaption><span>01</span> plan</figcaption></figure>
+        <figure><img src="boomhut/images/02-build.jpg" alt="Boomhut timber construction" loading="lazy"><figcaption><span>02</span> build</figcaption></figure>
+        <figure><img src="boomhut/images/03-finish.jpg" alt="Finished Boomhut interior" loading="lazy"><figcaption><span>03</span> finish</figcaption></figure>
+        <figure><img src="boomhut/images/04-use.jpg" alt="Boomhut in use" loading="lazy"><figcaption><span>04</span> use</figcaption></figure>
+      </div>
+      <a class="text-link" href="boomhut/">See the Boomhut project <span aria-hidden="true">↗</span></a>
     </section>
   </main>
 
